@@ -1,0 +1,9 @@
+/* The program's own look, laid over Trindle's sheet name by name. Try it by
+   copying it to ~/.config/trindle/style.css while the program runs: it shows
+   at once, and any problem is written to the program's log. Check it with
+   trindle-sheet-check share/style.css. Every name it may hold is in the
+   toolkit's share/style.css, with its limits beside it. */
+
+:root {
+  --trindle-card-corner: 12; /* (0 to 999) */
+}

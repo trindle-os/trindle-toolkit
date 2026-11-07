@@ -1,0 +1,117 @@
+Source: rust-trindle-toolkit
+Section: rust
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+ dh-sequence-cargo,
+ cargo:native,
+ rustc:native (>= 1.85),
+ libstd-rust-dev,
+ librust-wayland-client-0.31+default-dev,
+ librust-wayland-client-0.31+system-dev,
+ librust-wayland-protocols-0.32+client-dev,
+ librust-wayland-protocols-0.32+staging-dev,
+ librust-wayland-protocols-0.32+unstable-dev,
+ librust-wayland-protocols-wlr-0.3+client-dev,
+ librust-wayland-scanner-0.31+default-dev,
+ librust-serde-1+derive-dev,
+ librust-flate2-1+default-dev,
+ librust-libc-0.2+default-dev,
+ librust-xkbcommon-0.9+default-dev,
+ librust-image-0.25+png-dev,
+ librust-image-0.25+jpeg-dev,
+ librust-image-0.25+webp-dev,
+ librust-image-0.25+bmp-dev,
+ librust-image-0.25+tiff-dev,
+ librust-image-0.25+gif-dev,
+ librust-tiny-skia-0.12+std-dev,
+ librust-tiny-skia-0.12+simd-dev,
+ librust-resvg-0.49-dev,
+ librust-fontdb-0.24+default-dev,
+ librust-harfrust-0.15+default-dev,
+ librust-skrifa-0.49+default-dev,
+ librust-ab-glyph-rasterizer-0.1+default-dev,
+ librust-unicode-bidi-0.3+default-dev,
+ librust-unicode-segmentation-1+default-dev,
+ librust-unicode-linebreak-0.1+default-dev,
+ librust-accesskit-0.25.0+default-dev,
+ librust-accesskit-unix-0.23+default-dev,
+ librust-zbus-5+default-dev,
+ librust-futures-lite-2+default-dev,
+ librust-async-io-2+default-dev,
+ librust-zeroize-1+default-dev
+Maintainer: Trindle <toolkit@trindle.org>
+Standards-Version: 4.7.0
+Vcs-Browser: https://github.com/trindle-os/trindle-toolkit
+Homepage: https://trindle.org
+Rules-Requires-Root: no
+
+Package: librust-trindle-toolkit-dev
+Architecture: all
+Multi-Arch: foreign
+Section: rust
+Depends:
+ ${misc:Depends},
+ librust-wayland-client-0.31+default-dev,
+ librust-wayland-client-0.31+system-dev,
+ librust-wayland-protocols-0.32+client-dev,
+ librust-wayland-protocols-0.32+staging-dev,
+ librust-wayland-protocols-0.32+unstable-dev,
+ librust-wayland-protocols-wlr-0.3+client-dev,
+ librust-wayland-scanner-0.31+default-dev,
+ librust-serde-1+derive-dev,
+ librust-flate2-1+default-dev,
+ librust-libc-0.2+default-dev,
+ librust-xkbcommon-0.9+default-dev,
+ librust-image-0.25+png-dev,
+ librust-image-0.25+jpeg-dev,
+ librust-image-0.25+webp-dev,
+ librust-image-0.25+bmp-dev,
+ librust-image-0.25+tiff-dev,
+ librust-image-0.25+gif-dev,
+ librust-tiny-skia-0.12+std-dev,
+ librust-tiny-skia-0.12+simd-dev,
+ librust-resvg-0.49-dev,
+ librust-fontdb-0.24+default-dev,
+ librust-harfrust-0.15+default-dev,
+ librust-skrifa-0.49+default-dev,
+ librust-ab-glyph-rasterizer-0.1+default-dev,
+ librust-unicode-bidi-0.3+default-dev,
+ librust-unicode-segmentation-1+default-dev,
+ librust-unicode-linebreak-0.1+default-dev,
+ librust-accesskit-0.25.0+default-dev,
+ librust-accesskit-unix-0.23+default-dev,
+ librust-zbus-5+default-dev,
+ librust-futures-lite-2+default-dev,
+ librust-async-io-2+default-dev,
+ librust-zeroize-1+default-dev
+Provides:
+ librust-trindle-toolkit+default-dev (= ${binary:Version}),
+ librust-trindle-toolkit+core-dev (= ${binary:Version}),
+ librust-trindle-toolkit+ui-dev (= ${binary:Version}),
+ librust-trindle-toolkit+gpu-dev (= ${binary:Version}),
+ librust-trindle-toolkit+testing-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0+default-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0+core-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0+ui-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0+gpu-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0+testing-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9+default-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9+core-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9+ui-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9+gpu-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9+testing-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1+default-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1+core-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1+ui-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1+gpu-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.0-beta.1+testing-dev (= ${binary:Version})
+Description: Trindle Toolkit - Rust source code
+ Windows on Wayland, drawing, text, icons, a style sheet, the screen reader
+ link and the input method, in plain Rust. Trindle and its programs
+ build-depend on this package.
+ .
+ This package contains the source for the Rust crate trindle-toolkit,
+ packaged for use by cargo and the Debian Rust build tools.

@@ -1,0 +1,99 @@
+[package]
+name = "trindle-toolkit"
+version = "0.9.0-beta.1"
+edition = "2021"
+rust-version = "1.85"
+license = "GPL-3.0-or-later"
+description = "The Trindle Toolkit: windows on Wayland, drawing, text, icons, a style sheet, the screen reader and the input method, in plain Rust"
+repository = "https://github.com/trindle-os/trindle-toolkit"
+
+[workspace]
+members = ["trindle-common"]
+
+[features]
+default = ["ui", "gpu"]
+# The plumbing and Wayland client pieces for a program with no window: the
+# clipboard, the bus, files, plumbing helpers, language files and the
+# windowless Wayland setup. No window, drawing or text code is built.
+core = []
+# Everything: windows, drawing, text, widgets and the screen reader link.
+ui = ["core", "dep:tiny-skia", "dep:resvg", "dep:harfrust", "dep:skrifa", "dep:ab_glyph_rasterizer", "dep:unicode-bidi", "dep:unicode-segmentation", "dep:unicode-linebreak", "dep:accesskit", "dep:accesskit_unix", "dep:xkbcommon", "dep:zeroize", "dep:flate2", "dep:image"]
+# What Trindle's own tests read of the toolkit: the tables of what was drawn
+# on what, a window's parts and words, stand-in mice and keyboards. Never on
+# in a program a person runs.
+testing = ["ui", "dep:wayland-protocols-misc", "dep:accesskit_consumer"]
+# Raw display and surface pointers on `GpuSurface` for EGL, Vulkan or wgpu.
+# Links libwayland-client; leave it out for a Wayland connection in pure Rust.
+gpu = ["ui", "wayland-client/system"]
+
+[dependencies]
+trindle-common = { path = "trindle-common", version = "0.9.0-beta.1" }
+wayland-client = "0.31"
+wayland-protocols = { version = "0.32", features = ["client", "staging", "unstable"] }
+wayland-protocols-wlr = { version = "0.3", features = ["client"] }
+wayland-scanner = "0.31"
+serde = { version = "1", features = ["derive"] }
+flate2 = { version = "1", optional = true }
+libc = "0.2"
+xkbcommon = { version = "0.9", optional = true }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "bmp", "tiff", "gif"], optional = true }
+tiny-skia = { version = "0.12", default-features = false, features = ["std", "simd"], optional = true }
+resvg = { version = "0.49", default-features = false, optional = true }
+fontdb = "0.24"
+harfrust = { version = "0.15", optional = true }
+skrifa = { version = "0.49", optional = true }
+ab_glyph_rasterizer = { version = "0.1", optional = true }
+unicode-bidi = { version = "0.3", optional = true }
+unicode-segmentation = { version = "1", optional = true }
+unicode-linebreak = { version = "0.1", optional = true }
+# accesskit 0.25.1 and accesskit_unix 0.24 (and zbus 5.19 under it) need Rust 1.87; these hold while the toolkit builds on 1.85.
+accesskit = { version = "=0.25.0", optional = true }
+accesskit_unix = { version = "0.23", optional = true }
+zbus = "5"
+futures-lite = "2"
+async-io = "2"
+zeroize = { version = "1.9", optional = true }
+wayland-protocols-misc = { version = "0.3", features = ["client"], optional = true }
+accesskit_consumer = { version = "=0.39.0", optional = true }
+
+[build-dependencies]
+trindle-common = { path = "trindle-common", version = "0.9.0-beta.1" }
+
+[dev-dependencies]
+wayland-protocols-misc = { version = "0.3", features = ["client"] }
+accesskit_consumer = "=0.39.0"
+# A stand-in compositor with only the core protocols, for the test that a
+# window opens on any desktop. Already built for Trindle's compositor.
+wayland-server = { version = "0.31", features = ["libwayland_1_23"] }
+wayland-protocols = { version = "0.32", features = ["client", "staging", "unstable", "server"] }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(trindle_shipped)"] }
+
+[lints.clippy]
+undocumented_unsafe_blocks = "deny"
+missing_safety_doc = "deny"
+type_complexity = "allow"
+single_range_in_vec_init = "allow"
+too_many_arguments = "allow"
+
+[[bin]]
+name = "trindle-sheet-check"
+required-features = ["ui"]
+
+[[bin]]
+name = "trindle-draw"
+required-features = ["ui"]
+
+[[bin]]
+name = "trindle-lang-check"
+required-features = ["core"]
+
+[[bin]]
+name = "trindle-new"
+required-features = ["core"]
+
+[[example]]
+name = "widget-pictures"
+required-features = ["testing"]

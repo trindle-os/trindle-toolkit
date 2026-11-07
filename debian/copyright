@@ -1,0 +1,22 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: trindle-toolkit
+Source: https://github.com/trindle-os/trindle-toolkit
+
+Files: *
+Copyright: 2026 Trindle
+License: GPL-3.0-or-later
+
+Files: share/fonts/*
+Copyright: 2010, 2012-2020 Google Inc.
+           2015-2020 Google LLC
+License: OFL-1.1
+ The full text of the SIL Open Font License 1.1 is in share/fonts/OFL.txt.
+
+License: GPL-3.0-or-later
+ This program is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the Free
+ Software Foundation, either version 3 of the License, or (at your option)
+ any later version.
+ .
+ On Debian systems, the full text of the GNU General Public License
+ version 3 can be found in /usr/share/common-licenses/GPL-3.

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" font-family="Noto Sans">
+  <rect width="1280" height="360" fill="#0a111e"/>
+  <g>
+    <rect x="40" y="50" width="360" height="260" rx="20" fill="#172640"/>
+    <rect x="460" y="50" width="360" height="260" rx="20" fill="#172640"/>
+    <rect x="880" y="50" width="360" height="260" rx="20" fill="#172640"/>
+  </g>
+  <g fill="#fbc711">
+    <circle cx="82" cy="92" r="20"/><circle cx="502" cy="92" r="20"/><circle cx="922" cy="92" r="20"/>
+  </g>
+  <g font-size="22" font-weight="700" fill="#0a111e" text-anchor="middle">
+    <text x="82" y="100">1</text><text x="502" y="100">2</text><text x="922" y="100">3</text>
+  </g>
+  <g font-size="30" font-weight="700" fill="#ecf2fb">
+    <text x="116" y="102">Describe</text>
+    <text x="536" y="102">Draw</text>
+    <text x="956" y="102">Show</text>
+  </g>
+  <g font-size="20" fill="#aebdd4">
+    <text x="70" y="160">Your program says what it holds</text>
+    <text x="70" y="192">and what a person can ask for.</text>
+    <text x="70" y="240">A Msg type, update and view.</text>
+    <text x="490" y="160">The toolkit lays out the widgets</text>
+    <text x="490" y="192">and paints them to a style sheet.</text>
+    <text x="490" y="240">Text, icons and shapes, no GTK.</text>
+    <text x="910" y="160">A window opens on any Wayland</text>
+    <text x="910" y="192">compositor, and a screen reader</text>
+    <text x="910" y="224">can read every part of it.</text>
+  </g>
+  <g fill="none" stroke="#fbc711" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M412 180h36m-12-12 12 12-12 12"/>
+    <path d="M832 180h36m-12-12 12 12-12 12"/>
+  </g>
+</svg>

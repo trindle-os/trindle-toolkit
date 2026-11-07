@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+# Library source package for the Trindle Toolkit; the tests run with cargo test.
+export DEB_CARGO_CRATE=trindle-toolkit_$(subst ~,-,$(DEB_VERSION_UPSTREAM))
+
+%:
+	dh $@
+
+override_dh_auto_test:
+	true
