@@ -215,11 +215,12 @@ fn dark(tree: Node<Msg>) -> Ui<Msg> {
 }
 
 #[test]
-fn an_icon_button_has_no_disc_and_a_card_no_edge() {
+fn an_icon_button_is_a_dark_well_and_a_card_has_no_edge() {
     let mut ui = dark(ww::column(vec![ww::button("list-add-symbolic", "Add").on_press(Msg::Other)]).padding(24.0));
     let r = first_spot(&ui);
     let pix = shot(&mut ui);
-    assert_eq!(colour_at(&pix, (r.x + r.w / 2.0 - 13.0) as u32, (r.y + r.h / 2.0) as u32), colour_at(&pix, 4, 4));
+    let well = Theme::chosen().well.to_skia().to_color_u8();
+    assert_eq!(colour_at(&pix, (r.x + 3.0) as u32, (r.y + r.h / 2.0) as u32)[..3], [well.red(), well.green(), well.blue()]);
     let mut ui = dark(ww::column(vec![ww::card(ww::label("Words".to_string()))]).padding(24.0));
     let r = first_spot(&ui);
     let pix = shot(&mut ui);

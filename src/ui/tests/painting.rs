@@ -13,6 +13,7 @@ fn what_moves_by_itself_is_painted_alone_and_matches_the_whole() {
         scroll("area", column(rows)).height(Length::Fixed(90.0)),
     ]);
     let mut ui = Ui::new(view, Theme::new(false, "#fbc711"));
+    crate::text::paint_until_settled(|| ui.paint(&mut tiny_skia::Pixmap::new(400, 300).unwrap().as_mut(), 1.0));
     ui.moving = false;
     for scale in [1.0, 2.0] {
         let (w, h) = ((400.0 * scale) as u32, (300.0 * scale) as u32);

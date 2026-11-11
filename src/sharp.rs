@@ -189,8 +189,11 @@ pub(super) struct Lookups(Arc<Inner>);
 struct Inner {
     program: String,
     done: Mutex<HashMap<Vec<String>, Option<String>>>,
+    failed: Mutex<HashMap<Vec<String>, std::time::Instant>>,
     arrived: Condvar,
 }
+
+const RETRY_AFTER: Duration = Duration::from_secs(5);
 
 static ARRIVALS: AtomicU32 = AtomicU32::new(0);
 static LISTENERS: Mutex<Vec<Box<dyn Fn() -> bool + Send>>> = Mutex::new(Vec::new());
@@ -219,10 +222,13 @@ pub(super) fn fc() -> &'static Lookups {
 
 impl Lookups {
     pub(super) fn new(program: &str) -> Lookups {
-        Lookups(Arc::new(Inner { program: program.to_string(), done: Mutex::default(), arrived: Condvar::new() }))
+        Lookups(Arc::new(Inner { program: program.to_string(), done: Mutex::default(), failed: Mutex::default(), arrived: Condvar::new() }))
     }
 
     pub(super) fn ask(&self, args: &[String]) {
+        if self.0.failed.lock().is_ok_and(|f| f.get(args).is_some_and(|at| at.elapsed() < RETRY_AFTER)) {
+            return;
+        }
         let Ok(mut done) = self.0.done.lock() else { return };
         if done.contains_key(args) {
             return;
@@ -232,11 +238,11 @@ impl Lookups {
         let (me, own) = (self.0.clone(), args.to_vec());
         let run = std::thread::Builder::new().name("fontconfig".into()).spawn(move || {
             let answer = Command::new(&me.program).args(&own).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::null()).spawn().ok()
-                .and_then(|mut child| answer_within(&mut child, ANSWER_WITHIN)).unwrap_or_default();
+                .and_then(|mut child| answer_within(&mut child, ANSWER_WITHIN));
             me.finish(own, answer);
         });
         if run.is_err() {
-            self.0.finish(args.to_vec(), String::new());
+            self.0.finish(args.to_vec(), None);
         }
     }
 
@@ -244,24 +250,33 @@ impl Lookups {
         self.ask(args);
         let mut done = self.0.done.lock().ok()?;
         loop {
-            if let Some(Some(a)) = done.get(args) {
-                return Some(a.clone());
+            match done.get(args) {
+                Some(Some(a)) => return Some(a.clone()),
+                Some(None) if wait => done = self.0.arrived.wait(done).ok()?,
+                _ => return None,
             }
-            if !wait {
-                return None;
-            }
-            done = self.0.arrived.wait(done).ok()?;
         }
     }
 }
 
 impl Inner {
-    fn finish(&self, args: Vec<String>, answer: String) {
+    fn finish(&self, args: Vec<String>, answer: Option<String>) {
+        let arrived_now = answer.is_some();
         if let Ok(mut done) = self.done.lock() {
-            done.insert(args, Some(answer));
+            match answer {
+                Some(a) => done.insert(args, Some(a)),
+                None => {
+                    if let Ok(mut failed) = self.failed.lock() {
+                        failed.insert(args.clone(), std::time::Instant::now());
+                    }
+                    done.remove(&args)
+                }
+            };
         }
         self.arrived.notify_all();
-        arrived();
+        if arrived_now {
+            arrived();
+        }
     }
 }
 
@@ -493,9 +508,14 @@ mod tests {
     }
 
     #[test]
-    fn a_missing_program_answers_empty_so_the_defaults_are_used() {
+    fn a_missing_program_answers_nothing_so_the_defaults_are_used() {
         let none = Lookups::new("/nonexistent/fc-match");
-        assert_eq!(none.answer(&mono_args(), true).as_deref(), Some(""));
+        assert_eq!(none.answer(&mono_args(), true), None);
+        assert_eq!(none.answer(&mono_args(), false), None, "a failure is not kept, so the next ask runs again");
+        for _ in 0..100 {
+            assert_eq!(none.answer(&mono_args(), true), None);
+        }
+        assert!(none.0.done.lock().unwrap().is_empty(), "no run is left waiting after a failure");
         assert_eq!(read_fontconfig(""), Render::default());
     }
 }

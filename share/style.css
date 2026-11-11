@@ -532,9 +532,9 @@
      the screen's corner, the thin dark edge round each (its width and how
      dark), how far round them the pointer still counts as on them, and the
      room round the label's words. */
-  --trindle-dots-size: 14; /* (8 to 24) */
+  --trindle-dots-size: 28; /* (16 to 48) */
   --trindle-dots-gap: 8; /* (2 to 16) */
-  --trindle-dots-margin: 10; /* (0 to 24) */
+  --trindle-dots-margin: 0; /* (0 to 24) */
   --trindle-dots-edge: 2; /* (0 to 3) */
   --trindle-dots-edge-strength: 0.55; /* (0 to 1) */
   --trindle-dots-reach: 10; /* (0 to 20) */

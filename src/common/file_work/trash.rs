@@ -207,11 +207,27 @@ pub fn origin(trashed: &Path) -> Option<PathBuf> {
     let text = crate::common::files::read_string(info).ok()?;
     let line = text.lines().find_map(|l| l.strip_prefix("Path="))?;
     let path = unpercent(line.trim());
-    if path.is_absolute() {
-        Some(path)
-    } else {
-        top.map(|t| t.join(path))
+    match top {
+        Some(t) => {
+            let rel = if path.is_absolute() { path.strip_prefix(&t).ok()?.to_path_buf() } else { path };
+            contained(&t, &rel)
+        }
+        None => path.is_absolute().then_some(path),
     }
+}
+
+fn contained(top: &Path, rel: &Path) -> Option<PathBuf> {
+    let mut at = top.to_path_buf();
+    for c in rel.components() {
+        if !matches!(c, std::path::Component::Normal(_)) {
+            return None;
+        }
+        at.push(c);
+        if fs::symlink_metadata(&at).is_ok_and(|m| m.file_type().is_symlink()) {
+            return None;
+        }
+    }
+    Some(at)
 }
 
 pub fn note(trashed: &Path) -> Option<String> {
@@ -303,7 +319,19 @@ mod tests {
         fs::create_dir_all(third.join("deep")).unwrap();
         let went = put_in(&drive, &third, "2026-10-03T12:00:02").unwrap();
         assert!(fs::read_to_string(drive.info.join("inner.trashinfo")).unwrap().contains("\nPath=inner\n"));
-        assert_eq!(origin(&went), Some(third));
+        assert_eq!(origin(&went), Some(third.clone()));
+        let under = format!("Path={}\n", percent(&third));
+        fs::write(drive.info.join("under.trashinfo"), format!("[Trash Info]\n{under}")).unwrap();
+        assert_eq!(origin(&drive.files.join("under")), Some(third.clone()), "an absolute path under the drive is taken");
+        let outside = dir.join("outside");
+        fs::create_dir_all(&outside).unwrap();
+        std::os::unix::fs::symlink(&outside, dir.join("link")).unwrap();
+        fs::write(drive.info.join("linked.trashinfo"), "[Trash Info]\nPath=link/evil.desktop\n").unwrap();
+        assert_eq!(origin(&drive.files.join("linked")), None, "a link on the way is refused");
+        for path in ["/etc/passwd", "../outside", "inner/../../outside"] {
+            fs::write(drive.info.join("bad.trashinfo"), format!("[Trash Info]\nPath={path}\n")).unwrap();
+            assert_eq!(origin(&drive.files.join("bad")), None, "{path} is refused");
+        }
         fs::remove_dir_all(&dir).unwrap();
     }
 

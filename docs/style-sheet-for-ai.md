@@ -651,9 +651,9 @@ The dots in a screen's top right corner that say the microphone, camera, screen 
 
 | Key | Trindle's own | Takes |
 | --- | --- | --- |
-| `--trindle-dots-size` | `14` | a number, 8 to 24 |
+| `--trindle-dots-size` | `28` | a number, 16 to 48 |
 | `--trindle-dots-gap` | `8` | a number, 2 to 16 |
-| `--trindle-dots-margin` | `10` | a number, 0 to 24 |
+| `--trindle-dots-margin` | `0` | a number, 0 to 24 |
 | `--trindle-dots-edge` | `2` | a number, 0 to 3 |
 | `--trindle-dots-edge-strength` | `0.55` | a number, 0 to 1 |
 | `--trindle-dots-reach` | `10` | a number, 0 to 20 |

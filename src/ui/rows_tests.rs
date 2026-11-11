@@ -8,9 +8,8 @@ const SIZE: (u32, u32) = (300, 150);
 fn list(n: usize, by: f32) -> Ui<()> {
     let rows = (0..n).map(|i| label(format!("Row number {i}")).key(format!("r{i}"))).collect();
     let mut ui = Ui::new(scroll("list", column(rows)), Theme::new(false, "#fbc711"));
-    ui.lay_at(SIZE.0, SIZE.1);
     ui.scrolls.insert("list".into(), by);
-    ui.settle();
+    ui.lay_at(SIZE.0, SIZE.1);
     ui
 }
 
@@ -28,7 +27,7 @@ fn pixels(ui: &Ui<()>) -> Vec<u8> {
 
 #[test]
 fn a_long_list_paints_no_more_than_a_short_one_that_shows_the_same_rows() {
-    let (short, long) = (list(12, 17.0), list(2000, 17.0));
+    let (short, long) = (list(12, 4.0), list(2000, 4.0));
     assert!(short.spot("r11").is_some() && long.spot("r1999").is_some());
     assert_eq!(ops(&short), ops(&long), "rows out of sight were painted");
     assert!(ops(&long) > 0);
@@ -36,7 +35,12 @@ fn a_long_list_paints_no_more_than_a_short_one_that_shows_the_same_rows() {
 
 #[test]
 fn rows_cut_by_an_edge_are_still_painted_and_the_pixels_do_not_depend_on_the_rows_waiting() {
-    let (a, b) = (pixels(&list(12, 17.0)), pixels(&list(2000, 17.0)));
+    let (short, long) = (list(12, 4.0), list(2000, 4.0));
+    crate::text::paint_until_settled(|| {
+        pixels(&short);
+        pixels(&long);
+    });
+    let (a, b) = (pixels(&short), pixels(&long));
     let bar = (SIZE.0 as usize - 24) * 4;
     let line = SIZE.0 as usize * 4;
     for y in 0..SIZE.1 as usize {
@@ -75,7 +79,7 @@ fn a_long_list_in_no_scrolling_area_lays_out_only_the_words_on_the_canvas() {
 fn words_painted_last_frame_are_not_laid_out_again_when_the_window_is_laid_out_twice_between_frames() {
     let _fonts = FONTS_STILL.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
     let mut ui = many_rows(5000, true);
-    paint_once(&mut ui);
+    crate::text::paint_until_settled(|| paint_once(&mut ui));
     let before = ui.texts.laid();
     for by in [10.0, 20.0] {
         ui.laid = None;
@@ -90,7 +94,7 @@ fn words_painted_last_frame_are_not_laid_out_again_when_the_window_is_laid_out_t
 fn a_window_is_laid_out_again_when_the_fonts_arrive() {
     let _fonts = FONTS_STILL.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
     let mut ui = many_rows(20, false);
-    paint_once(&mut ui);
+    crate::text::paint_until_settled(|| paint_once(&mut ui));
     ui.spots.clear();
     paint_once(&mut ui);
     assert!(ui.spots.is_empty(), "laid out again with nothing changed");

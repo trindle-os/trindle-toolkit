@@ -5,7 +5,7 @@ const LEDGER: [(&str, usize); 10] = [
     ("src/sys/fd.rs", 13),
     ("src/sys/gbm.rs", 11),
     ("src/sys/gl.rs", 31),
-    ("src/sys/lean.rs", 2),
+    ("src/sys/lean.rs", 1),
     ("src/sys/mem.rs", 10),
     ("src/sys/os.rs", 14),
     ("src/sys/signal.rs", 7),

@@ -319,6 +319,15 @@ pub(crate) fn waits() -> bool {
     BUILT_IN_ONLY.load(Ordering::Relaxed) || cfg!(test)
 }
 
+#[cfg(test)]
+pub(crate) fn paint_until_settled(mut paint: impl FnMut()) {
+    let mut seen = None;
+    while seen != Some(sharp::arrivals()) {
+        seen = Some(sharp::arrivals());
+        paint();
+    }
+}
+
 pub(crate) fn on_fonts_ready(call: impl Fn() -> bool + Send + 'static) {
     sharp::on_arrival(call);
 }

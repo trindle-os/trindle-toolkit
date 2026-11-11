@@ -28,8 +28,8 @@ impl<M: Clone> Ui<M> {
             let pointed = lit && used;
             let tinted = node.tint > 0.0 && !(armed || on || pointed);
             let resting = if node.tint > 0.0 { theme::mix(self.control_at(&spot.path), t.accent, node.tint) } else { t.hover };
-            let square = if armed { Some(t.accent) } else if confirm { Some(pale) } else if on { Some(t.card(self.card_depth(&spot.path).max(1))) } else if pointed { Some(t.hover) }
-                else if tinted { Some(resting) } else { None };
+            let square = if armed { Some(t.accent) } else if confirm { Some(pale) } else if on { Some(t.picked) } else if pointed { Some(t.hover) }
+                else if tinted { Some(resting) } else { Some(t.well) };
             if let Some(square) = square {
                 let corner = self.corner(if node.tint > 0.0 { theme::Part::RingButton } else { theme::Part::IconButton });
                 fill(canvas, b, corner, square);
@@ -46,7 +46,7 @@ impl<M: Clone> Ui<M> {
                     canvas.stroke_path(&arc, &paint(state(t, *tone, theme::calm())), &stroke, Transform::identity(), None);
                 }
             }
-            let ink = if armed { t.on_accent } else if confirm { theme::on(pale) } else if tinted { theme::on(resting) } else if on || pointed { t.fg } else { t.muted };
+            let ink = if armed { t.on_accent } else if confirm { theme::on(pale) } else if tinted { theme::on(resting) } else if on { t.on_picked } else if pointed { t.fg } else { t.muted };
             let i = self.px((across * theme::icon() / theme::icon_button()).round());
             let (ix, iy) = ((b.x + (size - i) / 2.0) as i32, (b.y + (size - i) / 2.0) as i32);
             match face {

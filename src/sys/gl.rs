@@ -210,11 +210,7 @@ pub struct Instances {
 
 fn egl() -> Option<&'static Egl> {
     static T: OnceLock<Option<Egl>> = OnceLock::new();
-    T.get_or_init(|| {
-        super::lean::note_libraries();
-        Egl::load(&Library::open(c"libEGL.so.1")?)
-    })
-    .as_ref()
+    T.get_or_init(|| Egl::load(&Library::open(c"libEGL.so.1")?)).as_ref()
 }
 
 fn gles() -> Option<&'static Gles> {
