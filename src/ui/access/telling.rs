@@ -261,7 +261,7 @@ impl<M: Clone> Ui<M> {
         let What::Entry { text, tip, secret, spoken, misspelt, .. } = &n.what else { return };
         let part = &mut o.part;
         let dots = *secret;
-        part.set_role(if dots { Role::PasswordInput } else { Role::TextInput });
+        part.set_role(if dots { Role::PasswordInput } else if self.entry_lines(&s.id) > 1 { Role::MultilineTextInput } else { Role::TextInput });
         if matches!(n.what, What::Entry { updown: Some(_), .. }) && !dots {
             part.set_role(Role::ComboBox);
             part.set_auto_complete(accesskit::AutoComplete::List);

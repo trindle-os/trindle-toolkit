@@ -1,7 +1,7 @@
 # machine translated (Vietnamese), not yet reviewed by a native speaker.
 
 kit-chart-part = Phần { $n }
-kit-chart-empty = { $name }: biểu đồ không có giá trị.
+kit-chart-empty = { $name }: biểu đồ này không có giá trị.
 kit-chart-line =
     { $n ->
        *[other] { $name }: biểu đồ đường, { $n } giá trị, đầu tiên { $first }, cuối cùng { $last }, thấp nhất { $low }, cao nhất { $high }.

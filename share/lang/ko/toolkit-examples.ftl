@@ -1,7 +1,7 @@
 # machine translated (Korean), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = 창을 열 Wayland 데스크톱이 없습니다
-kit-run-no-window = 데스크톱이 창을 열지 않았습니다
+kit-run-no-desktop = 응답한 Wayland 데스크톱이 없어서 창을 열 수 없습니다
+kit-run-no-window = 데스크톱이 창을 열 수 없었습니다.
 kit-example-hello-title = 안녕하세요
 kit-example-hello-button = 눌러 보세요
 kit-example-hello-none = 아직 누르지 않았습니다
@@ -38,7 +38,7 @@ kit-example-gallery-hello = 안녕하세요, { $name }님
 kit-example-gallery-progress = 진행률
 
 kit-example-context-title = 상황에 맞는 메뉴
-kit-example-context-how = 카드를 마우스 오른쪽 버튼으로 누르거나, 손가락을 길게 누르거나, 메뉴 키를 누르세요
+kit-example-context-how = 카드를 마우스 오른쪽 버튼으로 누르거나, 길게 누르거나, 메뉴 키를 누르세요
 kit-example-context-note = 장보기 목록
 kit-example-context-pinned = 고정됨
 kit-example-context-unpinned = 고정 안 됨

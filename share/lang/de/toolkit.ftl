@@ -88,61 +88,61 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = Aus dem Abgelegten ist nichts geworden.
+kit-dropped-empty = Mit den Elementen, die du abgelegt hast, konnte Trindle nichts anfangen.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = Das Abgelegte ist zu groß, um auf diese Weise übernommen zu werden.
+kit-dropped-too-big = Was du abgelegt hast, ist zu groß, um es hineinzuziehen.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = Das Abgelegte kam zu langsam an und wurde deshalb liegen gelassen.
+kit-dropped-too-slow = Was du abgelegt hast, kam zu langsam an, deshalb hat Trindle nicht länger gewartet.
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = Es wurden zu viele Dinge auf einmal abgelegt. Lege weniger auf einmal ab.
+kit-dropped-too-many = Du hast zu viele Elemente auf einmal abgelegt. Lege weniger auf einmal ab.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = Das Abgelegte ist keine Liste von Dateien auf diesem Computer.
+kit-dropped-not-files = Die Elemente, die du abgelegt hast, sind keine Dateien auf diesem Computer.
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = Keine Webadresse
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = Öffnet eine mailto-Adresse
+kit-link-mailto = E-Mail-Adresse
 
 # Label of a link button whose address opens a file.
-kit-link-file = Öffnet eine Datei
+kit-link-file = Datei auf diesem Computer
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = Link zu { $label }
 
 # Said under whatever asked for a file or folder, when the window for choosing did not answer.
-kit-chooser-no-answer = Das Auswahlfenster hat nicht geantwortet. Versuche es noch einmal.
+kit-chooser-no-answer = Das Auswahlfenster hat nicht reagiert. Versuche es noch einmal.
 
 # Starts a fault found in a theme file the person is trying. $line is the line number in the file, $why what is wrong.
 kit-theme-line = Zeile { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = Die Datei ist zu groß für ein Design. Ein Design ist höchstens 64 KB groß.
+kit-theme-too-big = Diese Designdatei ist zu groß. Die maximale Größe beträgt 64 KB.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = Die Datei ist kein Stylesheet: Sie enthält mehr als Wörter.
+kit-theme-not-sheet = Diese Datei ist kein Stylesheet. Sie enthält mehr als reinen Text.
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = ein Design kann keine andere Datei und keine Webadresse einbinden.
+kit-theme-imports = ein Design kann keine andere Datei und keine Webadresse importieren.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } ist zu lang für einen Wert.
+kit-theme-too-long = Der Wert von --{ $name } ist zu lang.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } ist keine Farbe, die Trindle lesen kann.
+kit-theme-not-colour = Trindle kann --{ $name } nicht als Farbe lesen.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } ist keine Zahl, die Trindle lesen kann.
+kit-theme-not-number = Trindle kann --{ $name } nicht als Zahl lesen.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } ist kein Schatten, den Trindle lesen kann.
+kit-theme-not-shadow = Trindle kann --{ $name } nicht als Schatten lesen.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = Nichts in der Datei ist ein Wert, den Trindle kennt, deshalb würde sie nichts ändern.
+kit-theme-nothing-known = Trindle erkennt in dieser Datei keine Einstellungen, deshalb würde sich nichts ändern.
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = Fortschritt
@@ -159,9 +159,9 @@ kit-row-sub =
        *[other] { $words }, Untermenü, { $n } Zeilen
     }
 kit-row-keys = { $words }, { $keys }
-kit-drop-target = Ablageziel
-kit-theme-not-step = --{ $name } akzeptiert nur eine dieser Stufen: { $steps }. Alles andere wird übergangen. Siehe { $guide }.
-kit-sheet-not-watched = Änderungen am Stylesheet in { $folder } werden erst nach einem Neustart sichtbar: { $why }
+kit-drop-target = Ablegebereich
+kit-theme-not-step = --{ $name } darf nur einer dieser Werte sein: { $steps }. Trindle ignoriert jeden anderen Wert. Siehe { $guide }.
+kit-sheet-not-watched = Starte neu, um Änderungen am Stylesheet in { $folder } zu sehen. { $why }
 kit-menu-bar = Menüleiste
 kit-cancel = Abbrechen
 kit-toolbar = Werkzeuge
@@ -171,8 +171,8 @@ kit-path = Pfad
 kit-path-more = Weitere Orte
 kit-range-low = unteres Ende
 kit-range-high = oberes Ende
-kit-spin-less = Weniger { $what }
-kit-spin-more = Mehr { $what }
+kit-spin-less = { $what } verringern
+kit-spin-more = { $what } erhöhen
 kit-spin-not-number = Gib eine Zahl von { $min } bis { $max } ein
 kit-tab-close = Schließen
 kit-tab-more = Weitere Tabs
@@ -185,16 +185,16 @@ kit-colour-swatch = Gewählte Farbe { $colour }
 kit-colour-hue = Farbton
 kit-colour-hex = Hex-Code
 kit-look-title = Aussehen
-kit-look-lead = Wie dieses Programm aussieht, unabhängig davon, was der Rest des Desktops macht.
+kit-look-lead = Lege fest, wie dieses Programm aussieht, unabhängig vom Rest der Arbeitsoberfläche.
 kit-look-group = Aussehen
 kit-look-shade = Hell oder dunkel
-kit-look-shade-help = Dem Desktop folgen oder immer ein Look.
-kit-look-desktop = Wie der Desktop
+kit-look-shade-help = Der Arbeitsoberfläche folgen oder immer hell oder dunkel verwenden.
+kit-look-desktop = Wie die Arbeitsoberfläche
 kit-look-dark = Dunkel
 kit-look-light = Hell
 kit-look-highlight = Hervorhebungsfarbe
-kit-look-highlight-help = Die Farbe der Hauptaktion und des Gewählten.
-kit-look-highlight-desktop = Die des Desktops verwenden
+kit-look-highlight-help = Die Farbe von Hauptschaltflächen und ausgewählten Elementen.
+kit-look-highlight-desktop = Wie die Arbeitsoberfläche
 kit-date-previous = Zurück
 kit-date-next = Weiter
 kit-date-month-year = { $month } { $year }
@@ -213,6 +213,19 @@ kit-month-9 = September
 kit-month-10 = Oktober
 kit-month-11 = November
 kit-month-12 = Dezember
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = Januar
+kit-month-in-date-2 = Februar
+kit-month-in-date-3 = März
+kit-month-in-date-4 = April
+kit-month-in-date-5 = Mai
+kit-month-in-date-6 = Juni
+kit-month-in-date-7 = Juli
+kit-month-in-date-8 = August
+kit-month-in-date-9 = September
+kit-month-in-date-10 = Oktober
+kit-month-in-date-11 = November
+kit-month-in-date-12 = Dezember
 kit-weekday-1 = Mo
 kit-weekday-2 = Di
 kit-weekday-3 = Mi
@@ -230,11 +243,11 @@ kit-weekday-full-7 = Sonntag
 kit-key-ctrl = Strg
 kit-key-shift = Umschalt
 kit-key-alt = Alt
-kit-key-logo = Logo
+kit-key-logo = Super
 kit-key-left = Links
 kit-key-right = Rechts
-kit-key-up = Hoch
-kit-key-down = Runter
+kit-key-up = Nach oben
+kit-key-down = Nach unten
 kit-key-page-up = Bild hoch
 kit-key-page-down = Bild runter
 kit-key-home = Pos1
@@ -247,8 +260,8 @@ kit-key-backspace = Rücktaste
 kit-key-delete = Entf
 kit-key-insert = Einfg
 kit-shortcuts = Tastenkürzel
-kit-shortcut-kept-window = Das Fenster behält diese Taste zum Wechseln zwischen Bereichen und zum Schließen.
-kit-shortcut-kept-typing = Ein Textfeld bekommt diese Taste zuerst, während du tippst.
+kit-shortcut-kept-window = Diese Taste ist zum Wechseln zwischen Bedienelementen und zum Schließen des Fensters reserviert.
+kit-shortcut-kept-typing = Beim Tippen bekommt zuerst das Textfeld diese Taste.
 kit-emoji = Emoji
 kit-emoji-search = Emoji nach Namen suchen
 kit-emoji-none = Kein Emoji hat diesen Namen.
@@ -436,8 +449,8 @@ kit-emoji-refresh = Aktualisieren
 kit-emoji-forbidden = Verboten
 kit-emoji-recycling = Recycling
 kit-emoji-sleep = Schlaf
-kit-only-your-own = Hier funktioniert nur dein eigener Tastendruck.
-kit-no-layout = Das Tastaturlayout konnte nicht gelesen werden, deshalb bewirkt Tippen nichts.
+kit-only-your-own = Nur du kannst diese Schaltfläche drücken.
+kit-no-layout = Trindle konnte die Tastaturbelegung nicht lesen, deshalb kannst du nichts eingeben.
 kit-scene =
     { $count ->
         [one] Eine Szene mit 1 Element
@@ -454,11 +467,11 @@ kit-player-back = 5 Sekunden zurück
 kit-player-forward = 5 Sekunden vor
 kit-player-seek = Position
 kit-player-mute = Stummschalten
-kit-player-unmute = Ton ein
+kit-player-unmute = Ton einschalten
 kit-player-volume = Lautstärke
 kit-player-time = { $at } von { $length }
 kit-crash-title = Etwas ist schiefgelaufen
-kit-crash-lead = { $program } wurde wegen eines Fehlers beendet. Kopiere den Bericht unten und sende ihn mit deiner Fehlermeldung, damit der Fehler behoben werden kann.
+kit-crash-lead = { $program } wurde beendet, weil etwas schiefgelaufen ist. Kopiere den Bericht unten und sende ihn mit deiner Fehlermeldung, damit das Problem behoben werden kann.
 kit-crash-copy = Bericht kopieren
 kit-help-code = Code
 kit-complete-count =
@@ -472,9 +485,9 @@ kit-frame-restore = Wiederherstellen
 kit-frame-close = Schließen
 kit-frame-move = Verschieben
 kit-frame-resize = Größe ändern
-kit-numerals-title = Ziffern
+kit-numerals-title = Zahlendarstellung
 kit-numerals-help = Wie Zahlen, Daten und Uhrzeiten geschrieben werden.
-kit-numerals-auto = Wie es die Region üblicherweise schreibt
+kit-numerals-auto = Üblich für deine Region
 kit-numerals-latin = Immer 0 bis 9
 kit-numerals-native = Die eigenen Ziffern der Sprache
 kit-date-week-short = Wo

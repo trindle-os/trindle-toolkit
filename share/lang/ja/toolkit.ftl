@@ -101,19 +101,19 @@ kit-row-sub =
 kit-row-keys = { $words }、{ $keys }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = ドロップしたものからは何も得られませんでした。
+kit-dropped-empty = ドロップした項目を Trindle は処理できませんでした。
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = ドロップしたものが大きすぎるため、この方法では受け取れません。
+kit-dropped-too-big = ドロップしたものが大きすぎて、取り込めません。
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = ドロップしたものの到着に時間がかかりすぎたため、破棄しました。
+kit-dropped-too-slow = ドロップしたものの到着に時間がかかりすぎたため、Trindle は待つのをやめました。
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = 一度にドロップしたものが多すぎます。数を減らしてもう一度お試しください。
+kit-dropped-too-many = 一度にドロップした項目が多すぎます。数を減らしてもう一度ドロップしてください。
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = ドロップしたものは、このコンピューター上のファイルの一覧ではありません。
+kit-dropped-not-files = ドロップした項目は、このコンピューター上のファイルではありません。
 
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
 kit-drop-target = ドロップ先
@@ -122,10 +122,10 @@ kit-drop-target = ドロップ先
 kit-link-not-web = ウェブアドレスではありません
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = メールアドレスを開きます
+kit-link-mailto = メールアドレス
 
 # Label of a link button whose address opens a file.
-kit-link-file = ファイルを開きます
+kit-link-file = このコンピューター上のファイル
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = { $label } へのリンク
@@ -137,31 +137,31 @@ kit-chooser-no-answer = 選択ウィンドウから応答がありませんで�
 kit-theme-line = { $line } 行目：{ $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = ファイルが大きすぎてテーマにできません。テーマは最大 64 KB です。
+kit-theme-too-big = このテーマファイルは大きすぎます。上限は 64 KB です。
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = このファイルはスタイルシートではありません。文字以外のものが含まれています。
+kit-theme-not-sheet = このファイルはスタイルシートではありません。テキスト以外のものが含まれています。
 
 # Fault in a theme file the person is trying: it brings in another file.
 kit-theme-imports = テーマから別のファイルやウェブアドレスを読み込むことはできません。
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } が長すぎて値にできません。
+kit-theme-too-long = --{ $name } の値が長すぎます。
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } は Trindle が読み取れる色ではありません。
+kit-theme-not-colour = Trindle は --{ $name } を色として読み取れません。
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } は Trindle が読み取れる数ではありません。
+kit-theme-not-number = Trindle は --{ $name } を数として読み取れません。
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } は Trindle が読み取れる影ではありません。
+kit-theme-not-shadow = Trindle は --{ $name } を影として読み取れません。
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = ファイルに Trindle が認識できる値がないため、何も変わりません。
+kit-theme-nothing-known = このファイルには Trindle が認識できる設定がないため、何も変わりません。
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = { $folder } にあるスタイルシートの変更は、再起動後に反映されます：{ $why }
+kit-sheet-not-watched = { $folder } にあるスタイルシートの変更を反映するには、再起動してください。{ $why }
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = 進行状況
@@ -233,15 +233,15 @@ kit-colour-hex = 16 進コード
 # The ready settings page for a program's own look (settings::look_page).
 kit-look-title = 外観
 
-kit-look-lead = デスクトップの設定に関係なく、このプログラムの外観を決めます。
+kit-look-lead = このプログラムの外観を、デスクトップの他の部分とは別に選べます。
 
 kit-look-group = 外観
 
 kit-look-shade = ライトまたはダーク
 
-kit-look-shade-help = デスクトップに合わせるか、常にどちらかに固定します。
+kit-look-shade-help = デスクトップに合わせるか、常に明るい配色または暗い配色にします。
 
-kit-look-desktop = デスクトップに合わせる
+kit-look-desktop = デスクトップと同じ
 
 kit-look-dark = ダーク
 
@@ -249,10 +249,10 @@ kit-look-light = ライト
 
 kit-look-highlight = 強調色
 
-kit-look-highlight-help = 主な操作と選択中の項目の色です。
+kit-look-highlight-help = 主なボタンと選択中の項目の色です。
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = デスクトップの色を使う
+kit-look-highlight-desktop = デスクトップと同じ
 
 # Buttons either side of the month in a date picker.
 kit-date-previous = 前へ
@@ -294,6 +294,19 @@ kit-month-10 = 10月
 kit-month-11 = 11月
 
 kit-month-12 = 12月
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = 1月
+kit-month-in-date-2 = 2月
+kit-month-in-date-3 = 3月
+kit-month-in-date-4 = 4月
+kit-month-in-date-5 = 5月
+kit-month-in-date-6 = 6月
+kit-month-in-date-7 = 7月
+kit-month-in-date-8 = 8月
+kit-month-in-date-9 = 9月
+kit-month-in-date-10 = 10月
+kit-month-in-date-11 = 11月
+kit-month-in-date-12 = 12月
 
 kit-weekday-1 = 月
 
@@ -330,7 +343,7 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = ロゴ
+kit-key-logo = Super
 
 # The names of keys that are words, in a shortcut such as Ctrl+Page down.
 kit-key-left = 左
@@ -367,10 +380,10 @@ kit-key-insert = Insert
 kit-shortcuts = キーボードショートカット
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = このキーは、パーツ間の移動とウィンドウを閉じる操作のためにウィンドウが先に使います。
+kit-shortcut-kept-window = このキーは、パーツ間の移動とウィンドウを閉じる操作のために確保されています。
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = 入力中は、このキーをテキストボックスが先に使います。
+kit-shortcut-kept-typing = 入力中は、このキーが先にテキストボックスに渡されます。
 
 # The heading of the page of emoji to pick from.
 kit-emoji = 絵文字
@@ -753,10 +766,10 @@ kit-emoji-recycling = リサイクル
 kit-emoji-sleep = 睡眠
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = ここでは、あなた自身の操作だけが有効です。
+kit-only-your-own = このボタンを押せるのはあなただけです。
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = キーボード配列を読み取れなかったため、入力できません。
+kit-no-layout = Trindle がキーボード配列を読み取れなかったため、入力できません。
 
 # What a screen reader is told of a scene of items: how many, and the one chosen.
 kit-scene =
@@ -781,7 +794,7 @@ kit-player-seek = 再生位置
 
 kit-player-mute = ミュート
 
-kit-player-unmute = 音を出す
+kit-player-unmute = ミュート解除
 
 kit-player-volume = 音量
 
@@ -790,7 +803,7 @@ kit-player-time = { $length } 中 { $at }
 
 kit-crash-title = 問題が発生しました
 
-kit-crash-lead = { $program } は問題のため停止しました。下のレポートをコピーして、不具合の報告と一緒に送ってください。修正に役立ちます。
+kit-crash-lead = 問題が起きたため、{ $program } が停止しました。下のレポートをコピーして、不具合の報告と一緒に送ってください。問題の修正に役立ちます。
 
 kit-crash-copy = レポートをコピー
 
@@ -815,13 +828,13 @@ kit-frame-move = 移動
 
 kit-frame-resize = サイズ変更
 
-kit-theme-not-step = --{ $name } に使えるステップは次のいずれかだけです: { $steps }。それ以外は無視されます。{ $guide } を参照してください。
+kit-theme-not-step = --{ $name } に使えるのは、次のいずれかだけです: { $steps }。それ以外の値は Trindle が無視します。{ $guide } を参照してください。
 
-kit-numerals-title = 数字
+kit-numerals-title = 数字の表示形式
 
 kit-numerals-help = 数字、日付、時刻の書き方です。
 
-kit-numerals-auto = 地域の通常の書き方に従う
+kit-numerals-auto = 地域で一般的なもの
 
 kit-numerals-latin = 常に 0 から 9
 

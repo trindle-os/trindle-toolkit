@@ -216,6 +216,9 @@ pub fn english() -> Bundle {
 
 fn catalogue() -> &'static Catalogue {
     CATALOGUE.get_or_init(|| {
+        #[cfg(test)]
+        return Catalogue::new(load(&[], &[]), english());
+        #[cfg(not(test))]
         Catalogue::new(load(&choice(), &folders()), english())
     })
 }

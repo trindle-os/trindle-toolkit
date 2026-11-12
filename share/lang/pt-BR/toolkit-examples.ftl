@@ -1,7 +1,7 @@
 # machine translated (Brazilian Portuguese), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Não há área de trabalho Wayland para abrir uma janela
-kit-run-no-window = A área de trabalho não quis abrir uma janela
+kit-run-no-desktop = Nenhuma área de trabalho Wayland respondeu, então a janela não pode ser aberta
+kit-run-no-window = A área de trabalho não conseguiu abrir uma janela.
 kit-example-hello-title = Olá
 kit-example-hello-button = Pressione
 kit-example-hello-none = Ainda não pressionado
@@ -25,7 +25,7 @@ kit-example-gallery-main = Salvar
 kit-example-gallery-remove = Remover
 kit-example-gallery-count = Pressionado { $n } vezes
 kit-example-gallery-choices = Escolhas
-kit-example-gallery-switch-name = Avisos
+kit-example-gallery-switch-name = Notificações
 kit-example-gallery-size-name = Tamanho
 kit-example-gallery-size-small = Pequeno
 kit-example-gallery-size-medium = Médio
@@ -39,7 +39,7 @@ kit-example-gallery-hello = Olá, { $name }
 kit-example-gallery-progress = Progresso
 
 kit-example-context-title = Menu de contexto
-kit-example-context-how = Clique com o botão direito no cartão, mantenha um dedo sobre ele ou pressione a tecla Menu
+kit-example-context-how = Clique com o botão direito no cartão, toque e segure nele, ou aperte a tecla Menu
 kit-example-context-note = Lista de compras
 kit-example-context-pinned = Fixado
 kit-example-context-unpinned = Não fixado

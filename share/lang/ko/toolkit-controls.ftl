@@ -1,9 +1,9 @@
 # machine translated (Korean), not yet reviewed by a native speaker.
 
-kit-palette-search = 입력하여 동작 찾기
+kit-palette-search = 동작 검색
 kit-palette-none = 일치하는 동작이 없습니다.
 kit-check-phone = 7자리에서 15자리 사이의 전화번호를 입력하세요.
-kit-check-date = 2026-10-30처럼 연-월-일 형식의 실제 날짜를 입력하세요.
+kit-check-date = 2026-10-30처럼 연-월-일 형식으로 날짜를 입력하세요.
 kit-check-hex = #fbc711 같은 색상 코드를 입력하세요.
 kit-volume-mute = 음소거
 kit-volume-unmute = 음소거 해제
@@ -19,10 +19,10 @@ kit-dock-right = 오른쪽에 고정
 kit-dock-bottom = 아래쪽에 고정
 kit-dock-float = 페이지 위에 띄우기
 kit-dock-grip = 끌어서 다른 가장자리로 이동
-kit-form-number = 12 또는 3.5 같은 숫자를 입력하세요.
+kit-form-number = 12나 3.5 같은 숫자를 입력하세요.
 kit-files-open-lead = 열 파일을 고르세요.
-kit-files-save-lead = 폴더를 고르고 저장할 이름을 입력하세요.
-kit-files-folder-lead = 폴더를 고르거나 지금 폴더를 그대로 두세요.
+kit-files-save-lead = 폴더를 고른 다음, 파일 이름을 입력하세요.
+kit-files-folder-lead = 폴더를 고르거나, 지금 있는 폴더를 그대로 쓰세요.
 kit-files-open = 열기
 kit-files-save = 저장
 kit-files-folder = 이 폴더 선택
@@ -32,9 +32,9 @@ kit-files-hidden = 숨김 파일 표시
 kit-files-list = 폴더와 파일
 kit-files-name = 파일 이름
 kit-files-empty = 이 폴더는 비어 있습니다.
-kit-filepage-unreadable = 이 폴더를 읽을 수 없습니다. 다른 폴더를 고르세요.
+kit-filepage-unreadable = Trindle이 이 폴더를 열 수 없었습니다. 다른 폴더를 고르세요.
 kit-files-choose-first = 먼저 파일을 고르세요.
-kit-files-name-needed = 슬래시 없이 파일 이름을 입력하세요.
+kit-files-name-needed = 파일 이름을 입력하세요. 슬래시는 넣을 수 없습니다.
 kit-fonts-lead = 글꼴과 크기를 고르세요.
 kit-fonts-search = 이름으로 글꼴 찾기
 kit-fonts-list = 글꼴

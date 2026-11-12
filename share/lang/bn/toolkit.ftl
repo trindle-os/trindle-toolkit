@@ -96,28 +96,28 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = যা ফেলা হয়েছিল তা থেকে কিছু পাওয়া যায়নি।
+kit-dropped-empty = আপনার ফেলা আইটেমগুলো দিয়ে Trindle কিছু করতে পারেনি।
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = যা ফেলা হয়েছে তা এভাবে নেওয়ার জন্য অনেক বড়।
+kit-dropped-too-big = আপনি যা ফেলেছেন তা টেনে আনার জন্য অনেক বড়।
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = যা ফেলা হয়েছিল তা আসতে অনেক সময় নিয়েছে, তাই বাদ দেওয়া হয়েছে।
+kit-dropped-too-slow = আপনার ফেলা জিনিস আসতে অনেক সময় নিয়েছে, তাই Trindle অপেক্ষা করা বন্ধ করেছে।
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = একসঙ্গে অনেক কিছু ফেলা হয়েছে। একবারে কম করে ফেলুন।
+kit-dropped-too-many = আপনি একসঙ্গে অনেকগুলো আইটেম ফেলেছেন। একবারে কম করে ফেলুন।
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = যা ফেলা হয়েছে তা এই কম্পিউটারের ফাইলের তালিকা নয়।
+kit-dropped-not-files = আপনার ফেলা আইটেমগুলো এই কম্পিউটারের ফাইল নয়।
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = ওয়েব ঠিকানা নয়
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = একটি mailto ঠিকানা খোলে
+kit-link-mailto = ইমেইল ঠিকানা
 
 # Label of a link button whose address opens a file.
-kit-link-file = একটি ফাইল খোলে
+kit-link-file = এই কম্পিউটারের ফাইল
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = { $label }-এর লিংক
@@ -129,28 +129,28 @@ kit-chooser-no-answer = বেছে নেওয়ার উইন্ডো �
 kit-theme-line = লাইন { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = ফাইলটি থিম হওয়ার জন্য অনেক বড়। একটি থিম সর্বোচ্চ 64 KB হতে পারে।
+kit-theme-too-big = এই থিম ফাইলটি অনেক বড়। সর্বোচ্চ মাপ 64 KB।
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = ফাইলটি স্টাইল শিট নয়: এতে লেখার চেয়ে বেশি কিছু আছে।
+kit-theme-not-sheet = এই ফাইলটি স্টাইল শিট নয়। এতে সাধারণ লেখার চেয়ে বেশি কিছু আছে।
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = থিম অন্য কোনো ফাইল বা ওয়েব ঠিকানা আনতে পারে না।
+kit-theme-imports = থিম অন্য কোনো ফাইল বা ওয়েব ঠিকানা ইমপোর্ট করতে পারে না।
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } মান হওয়ার জন্য অনেক লম্বা।
+kit-theme-too-long = --{ $name }-এর মানটি অনেক লম্বা।
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } এমন রং নয় যা Trindle পড়তে পারে।
+kit-theme-not-colour = Trindle --{ $name }-কে রং হিসেবে পড়তে পারছে না।
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } এমন সংখ্যা নয় যা Trindle পড়তে পারে।
+kit-theme-not-number = Trindle --{ $name }-কে সংখ্যা হিসেবে পড়তে পারছে না।
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } এমন ছায়া নয় যা Trindle পড়তে পারে।
+kit-theme-not-shadow = Trindle --{ $name }-কে ছায়া হিসেবে পড়তে পারছে না।
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = ফাইলের কোনো কিছুই Trindle-এর জানা মান নয়, তাই এটি কিছুই বদলাবে না।
+kit-theme-nothing-known = এই ফাইলের কোনো সেটিং Trindle চেনে না, তাই কিছুই বদলাবে না।
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = অগ্রগতি
@@ -236,6 +236,19 @@ kit-month-10 = অক্টোবর
 kit-month-11 = নভেম্বর
 
 kit-month-12 = ডিসেম্বর
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = জানুয়ারি
+kit-month-in-date-2 = ফেব্রুয়ারি
+kit-month-in-date-3 = মার্চ
+kit-month-in-date-4 = এপ্রিল
+kit-month-in-date-5 = মে
+kit-month-in-date-6 = জুন
+kit-month-in-date-7 = জুলাই
+kit-month-in-date-8 = আগস্ট
+kit-month-in-date-9 = সেপ্টেম্বর
+kit-month-in-date-10 = অক্টোবর
+kit-month-in-date-11 = নভেম্বর
+kit-month-in-date-12 = ডিসেম্বর
 
 kit-weekday-1 = সোম
 
@@ -272,13 +285,13 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = Logo
+kit-key-logo = Super
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = এখানে শুধু আপনার নিজের চাপই কাজ করে।
+kit-only-your-own = এই বোতাম শুধু আপনিই চাপতে পারবেন।
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = কীবোর্ড লেআউট পড়া যায়নি, তাই টাইপ করলে কিছু হয় না।
+kit-no-layout = Trindle কিবোর্ড লেআউট পড়তে পারেনি, তাই টাইপ করা যাবে না।
 
 
 
@@ -292,10 +305,10 @@ kit-click-again-small = হ্যাঁ
 kit-drop-target = ফেলার জায়গা
 
 # Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
-kit-theme-not-step = --{ $name } এই ধাপগুলোর মধ্যে শুধু একটি নেয়: { $steps }। বাকি সব বাদ যায়। দেখুন { $guide }।
+kit-theme-not-step = --{ $name } শুধু এগুলোর একটি হতে পারে: { $steps }। অন্য কোনো মান Trindle উপেক্ষা করে। দেখুন { $guide }।
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = { $folder }-এর স্টাইল শিটের বদল শুধু আবার চালুর পরে দেখা যায়: { $why }
+kit-sheet-not-watched = { $folder }-এর স্টাইল শিটের বদল দেখতে আবার চালু করুন। { $why }
 
 # What a screen reader calls the row of menu titles across the top of a window.
 kit-menu-bar = মেনু বার
@@ -339,15 +352,15 @@ kit-tab-count = { $title }, { $count }
 # The ready settings page for a program's own look (settings::look_page).
 kit-look-title = চেহারা
 
-kit-look-lead = ডেস্কটপের বাকি অংশ যা-ই করুক, এই প্রোগ্রাম কেমন দেখাবে।
+kit-look-lead = ডেস্কটপের বাকি অংশ থেকে আলাদাভাবে এই প্রোগ্রাম কেমন দেখাবে তা বেছে নিন।
 
 kit-look-group = চেহারা
 
 kit-look-shade = হালকা বা গাঢ়
 
-kit-look-shade-help = ডেস্কটপ অনুসরণ করুন, অথবা সবসময় একই চেহারা।
+kit-look-shade-help = ডেস্কটপের সঙ্গে মিলিয়ে চলুন, অথবা সবসময় হালকা বা গাঢ় রাখুন।
 
-kit-look-desktop = ডেস্কটপের মতো
+kit-look-desktop = ডেস্কটপের মতোই
 
 kit-look-dark = গাঢ়
 
@@ -355,10 +368,10 @@ kit-look-light = হালকা
 
 kit-look-highlight = হাইলাইট রং
 
-kit-look-highlight-help = প্রধান কাজের এবং বেছে নেওয়া জিনিসের রং।
+kit-look-highlight-help = প্রধান বোতাম ও বেছে নেওয়া জিনিসের রং।
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = ডেস্কটপেরটি ব্যবহার করুন
+kit-look-highlight-desktop = ডেস্কটপের মতোই
 
 # Over the column of week numbers in a date picker; keep it as short as the short weekday names.
 kit-date-week-short = সপ্তাহ
@@ -401,10 +414,10 @@ kit-key-insert = Insert
 kit-shortcuts = কিবোর্ড শর্টকাট
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = উইন্ডো এই কী-টি অংশগুলোর মধ্যে যাওয়া ও বন্ধ করার জন্য রাখে।
+kit-shortcut-kept-window = এই কী-টি নিয়ন্ত্রণগুলোর মধ্যে যাওয়া ও উইন্ডো বন্ধ করার জন্য রাখা আছে।
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = আপনি টাইপ করার সময় লেখার বাক্স আগে এই কী-টি নেয়।
+kit-shortcut-kept-typing = আপনি যখন টাইপ করছেন, এই কী-টি আগে লেখার বাক্সে যায়।
 
 # The heading of the page of emoji to pick from.
 kit-emoji = ইমোজি
@@ -812,7 +825,7 @@ kit-player-seek = অবস্থান
 
 kit-player-mute = শব্দ বন্ধ করুন
 
-kit-player-unmute = শব্দ চালু
+kit-player-unmute = শব্দ চালু করুন
 
 kit-player-volume = শব্দের মাত্রা
 
@@ -822,7 +835,7 @@ kit-player-time = { $length }-এর মধ্যে { $at }
 ## The page shown after a program crashed or met a fault
 kit-crash-title = কিছু একটা ভুল হয়েছে
 
-kit-crash-lead = একটি ত্রুটির কারণে { $program } থেমে গেছে। নিচের প্রতিবেদনটি কপি করে আপনার বাগ রিপোর্টের সঙ্গে পাঠান, যাতে এটি ঠিক করা যায়।
+kit-crash-lead = কিছু একটা ভুল হওয়ায় { $program } থেমে গেছে। নিচের প্রতিবেদনটি কপি করে আপনার বাগ প্রতিবেদনের সঙ্গে পাঠান, যাতে সমস্যাটি ঠিক করা যায়।
 
 kit-crash-copy = প্রতিবেদন কপি করুন
 
@@ -853,13 +866,13 @@ kit-frame-move = সরান
 kit-frame-resize = মাপ বদলান
 
 # Settings: which figures numbers are written in.
-kit-numerals-title = সংখ্যা
+kit-numerals-title = সংখ্যার ধরন
 
 kit-numerals-help = সংখ্যা, তারিখ ও সময় কীভাবে লেখা হবে।
 
-kit-numerals-auto = অঞ্চলে সাধারণত যেভাবে লেখা হয়
+kit-numerals-auto = আপনার অঞ্চলে যেমন চলে
 
 kit-numerals-latin = সবসময় 0 থেকে 9
 
-kit-numerals-native = ভাষার নিজের সংখ্যা
+kit-numerals-native = ভাষার নিজস্ব অঙ্ক
 

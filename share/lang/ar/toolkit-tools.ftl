@@ -1,8 +1,8 @@
 # machine translated (Arabic), not yet reviewed by a native speaker.
 
-kit-sheet-out-of-range = السطر { $line }: القيمة --{ $name } هي { $value }، وهي خارج حدودها من { $min } إلى { $max }.
+kit-sheet-out-of-range = السطر { $line }: قيمة --{ $name } هي { $value }. يجب أن تكون بين { $min } و{ $max }.
 
-kit-sheet-short = في مظهر { $look }، نسبة --{ $ink } على { $on } هي { $stands } إلى واحد، أقل من { $floor } إلى واحد المطلوبة.
+kit-sheet-short = في مظهر { $look }، يبلغ التباين بين --{ $ink } و{ $on } { $stands } إلى 1. والحد الأدنى المطلوب { $floor } إلى 1.
 
 kit-sheet-dark = الداكن
 
@@ -20,27 +20,27 @@ kit-inspect-size = { $w } في { $h } بكسل عند { $x }، { $y }
 
 kit-inspect-state = الحالة: { $state }
 
-kit-inspect-keyboard = لوحة المفاتيح عليه
+kit-inspect-keyboard = عليه تركيز لوحة المفاتيح
 
-kit-inspect-pointer = المؤشر عليه
+kit-inspect-pointer = المؤشر فوقه
 
 kit-inspect-pressed = مضغوط
 
-kit-inspect-takes-keys = يستقبل لوحة المفاتيح
+kit-inspect-takes-keys = يقبل الكتابة
 
 kit-inspect-off = لا يمكن استخدامه
 
-kit-inspect-rest = في حالة السكون
+kit-inspect-rest = عادي
 
 kit-inspect-reader = قارئ الشاشة: { $role } "{ $name }"
 
-kit-inspect-unread = قارئ الشاشة: لم يُخبَر بشيء عنه
+kit-inspect-unread = قارئ الشاشة: لا يوجد وصف
 
-kit-speed-paint = الرسم { $ms } مللي ثانية
+kit-speed-paint = وقت الرسم: { $ms } مللي ثانية
 
 kit-speed-memory = الذاكرة { $mb } ميغابايت
 
-kit-speed-damage = أُعيد رسم { $share } بالمئة من النافذة
+kit-speed-damage = أُعيد رسمه: { $share } في المئة من النافذة
 
 kit-speed-gpu = مرسوم بواسطة بطاقة الرسوميات
 
@@ -50,15 +50,15 @@ kit-new-usage =
     الاستخدام: trindle-new <name> [--toolkit <path>]
     ينشئ مجلدًا باسم <name> يحوي برنامجًا بنافذة واحدة وورقة أنماط وملف لغة واختبارًا. مع --toolkit يستخدم مجموعة الأدوات الموجودة في ذلك المسار.
 
-kit-new-bad-name = لا يصلح { $name } اسمًا لبرنامج: استخدم أحرفًا صغيرة وأرقامًا وشرطات، وابدأ بحرف.
+kit-new-bad-name = لا يصلح { $name } اسمًا لبرنامج. استخدم أحرفًا لاتينية صغيرة وأرقامًا وشرطات، وابدأ بحرف.
 
-kit-new-exists = { $name } موجود بالفعل، لذا لم يُكتب شيء.
+kit-new-exists = { $name } موجود بالفعل، فلم يُكتب شيء.
 
 kit-new-no-toolkit = لم تُوجد مجموعة أدوات في { $path }.
 
 kit-new-unwritten = تعذّرت الكتابة في { $path }.
 
-kit-new-made = تم إنشاء { $name }. شغّله بـ cargo run، واختبره بـ cargo test.
+kit-new-made = أُنشئ { $name }. شغّله بالأمر cargo run واختبره بالأمر cargo test.
 
 kit-showcase-title = العناصر وشيفرتها
 
@@ -66,7 +66,7 @@ kit-showcase-words = كلمات عادية
 
 kit-showcase-heading = عنوان
 
-kit-showcase-note = سطر هادئ تحت شيء ما
+kit-showcase-note = نص ثانوي
 
 kit-showcase-add = إضافة
 

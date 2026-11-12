@@ -1,9 +1,9 @@
 ## Said by Shown::run when a program of one window cannot start
 
 # Standard error, when no Wayland desktop answers.
-kit-run-no-desktop = No Wayland desktop to open a window on
+kit-run-no-desktop = No Wayland desktop answered, so the window can't open
 # Standard error, when the desktop would not open the window.
-kit-run-no-window = The desktop would not open a window
+kit-run-no-window = The desktop couldn't open a window.
 
 ## The example programs (examples/)
 
@@ -39,7 +39,7 @@ kit-example-gallery-main = Save
 kit-example-gallery-remove = Remove
 kit-example-gallery-count = Pressed { $n } times
 kit-example-gallery-choices = Choices
-kit-example-gallery-switch-name = Notices
+kit-example-gallery-switch-name = Notifications
 kit-example-gallery-size-name = Size
 kit-example-gallery-size-small = Small
 kit-example-gallery-size-medium = Medium
@@ -52,7 +52,7 @@ kit-example-gallery-entry-hint = Type your name
 kit-example-gallery-hello = Hello, { $name }
 kit-example-gallery-progress = Progress
 # The gallery's number box: the card's heading, and the name of the box.
-kit-example-gallery-copies = Number box
+kit-example-gallery-copies = Number field
 kit-example-gallery-copies-name = Copies
 # The word after the number box's number.
 kit-example-gallery-copies-unit = copies
@@ -62,25 +62,25 @@ kit-example-gallery-span-progress = Volume
 kit-example-gallery-span-name = Price
 kit-example-gallery-span-now = From { $low } to { $high }
 # The gallery's dialog card: its heading, how it behaves, the button that opens the page, and the page's title, message and main answer.
-kit-example-gallery-dialog = Dialog page
-kit-example-gallery-dialog-how = A question takes the whole window, never a pop-up. The keyboard starts on Cancel and Escape cancels.
+kit-example-gallery-dialog = Dialogue page
+kit-example-gallery-dialog-how = Questions fill the whole window instead of popping up. Cancel is selected first, and Escape cancels.
 kit-example-gallery-dialog-open = Reset the count
 kit-example-gallery-ask-title = Reset the count?
-kit-example-gallery-ask-message = The number of presses goes back to nought.
+kit-example-gallery-ask-message = This will reset the press count to zero.
 kit-example-gallery-ask-yes = Reset
 # The gallery's sideways card: the heading, how to move it, and the words on each of twelve buttons in the strip.
-kit-example-gallery-along = Sideways strip
-kit-example-gallery-along-how = Swipe it, use Shift with the wheel, Left and Right, or Tab to a button out of sight.
+kit-example-gallery-along = Horizontal strip
+kit-example-gallery-along-how = Swipe it, hold Shift and turn the mouse wheel, or use the Left and Right arrow keys. Press Tab to reach a button out of sight.
 kit-example-gallery-along-item = Item { $n }
 kit-example-gallery-split = Split
-kit-example-gallery-split-first = Drag the divider, or focus it and use the arrow keys.
-kit-example-gallery-split-second = Home and End take it to either end.
+kit-example-gallery-split-first = Drag the divider, or select it and use the arrow keys.
+kit-example-gallery-split-second = Press Home or End to move the divider to either end.
 kit-example-gallery-menu = Context menu
-kit-example-gallery-menu-how = Right click here, hold a finger, or press the Menu key; type a letter to light a row.
+kit-example-gallery-menu-how = Right-click here, press and hold, or press the Menu key. Type a letter to highlight a row.
 
 # The context menu example: the window's title, what it says to do, the card's words, its menu's rows, and what shows once it is removed.
 kit-example-context-title = Context menu
-kit-example-context-how = Right click the card, hold a finger on it, or press the Menu key
+kit-example-context-how = Right-click the card, press and hold it, or press the Menu key
 kit-example-context-note = Shopping list
 kit-example-context-pinned = Pinned
 kit-example-context-unpinned = Not pinned
@@ -98,7 +98,7 @@ kit-example-bench-rows = Ten thousand rows
 
 # The menu bar example: the window's title, what it says to do, the menus' titles and rows, and what shows once a row is chosen.
 kit-example-bar-title = Menu bar
-kit-example-bar-how = Press a title, or Tab to the bar and use the arrow keys, Return and Escape. Alt with a title's marked letter opens it, and typing a letter lights the next row that starts with it.
+kit-example-bar-how = Click a menu name, or press Tab to reach the menu bar and use the arrow keys, Enter and Escape. Alt with a menu's marked letter opens it. Type a letter to highlight the next row that starts with it.
 kit-example-bar-file = &File
 kit-example-bar-view = &View
 kit-example-bar-new = New
@@ -112,7 +112,7 @@ kit-example-bar-large = Large
 kit-example-bar-chose = You chose { $what }
 # The gallery's column view card: its heading, how it behaves, its name for a screen reader, the two column headings, and the names of the folders and files in it.
 kit-example-gallery-columns = Column view
-kit-example-gallery-columns-how = Rows open under a parent. Press the arrow, double click, or use Right, Left and Enter. Ctrl and Shift choose several rows, and a band dragged from the room below them chooses what it crosses.
+kit-example-gallery-columns-how = Click the arrow or double-click a folder to open it, or use the Right, Left and Enter keys. Hold Ctrl or Shift to select several rows, or drag across rows to select them.
 kit-example-gallery-columns-name = Files
 kit-example-gallery-columns-head-name = Name
 kit-example-gallery-columns-head-kind = Kind

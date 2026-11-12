@@ -1,7 +1,7 @@
 # machine translated (Turkish), not yet reviewed by a native speaker.
 
 kit-chart-part = Bölüm { $n }
-kit-chart-empty = { $name }: değeri olmayan grafik.
+kit-chart-empty = { $name }: bu grafikte hiç değer yok.
 kit-chart-line =
     { $n ->
         [one] { $name }: çizgi grafik, 1 değer: { $first }.

@@ -437,14 +437,26 @@ impl<M: Clone> Ui<M> {
         let secret = self.entry_dots(id);
         let inner = w - 2.0 * self.entry_pad(id);
         let caret = self.px(theme::sheet().caret).max(1.0);
-        let Some((at, text)) = self.edit(id).map(|e| (e.caret, e.text.clone())) else { return };
+        if self.edit(id).is_none() {
+            return;
+        }
+        let Some(e) = self.edits.get(id) else { return };
         let (text, at) = match self.preedit_in(id) {
-            Some((p, c)) => (with_preedit(&text, at, p), at + c.map_or(p.len(), |c| c.1)),
-            None => (text, at),
+            Some((p, c)) => (std::borrow::Cow::Owned(with_preedit(&e.text, e.caret, p)), e.caret + c.map_or(p.len(), |c| c.1)),
+            None => (std::borrow::Cow::Borrowed(e.text.as_str()), e.caret),
         };
         let layout = self.entry_layout(id, &text, secret);
-        let x = layout.caret(if secret { edit::to_dots(&text, at) } else { at }).0;
+        let (x, top, line) = layout.caret(if secret { edit::to_dots(&text, at) } else { at });
+        let len = text.len();
+        let many = self.entry_lines(id) > 1;
+        let tall = if many { self.entry_tall(id) } else { 0.0 };
         let Some(e) = self.edits.get_mut(id) else { return };
+        if many {
+            let key = (at, len);
+            let slid = if e.viewed.replace(key) == Some(key) { e.scroll_y } else { e.scroll_y.max(top + line - tall).min(top) };
+            e.scroll_y = slid.clamp(0.0, (layout.height - tall).max(0.0));
+            return;
+        }
         let room = (inner - caret).max(0.0);
         let mut scroll = e.scroll;
         if x - scroll > room {

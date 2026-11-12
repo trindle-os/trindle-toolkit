@@ -93,28 +93,28 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = С тем, что вы перетащили, ничего не получилось.
+kit-dropped-empty = С перетащенными элементами ничего не удалось сделать.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = Перетащенное слишком велико, чтобы принять его этим способом.
+kit-dropped-too-big = Перетащенные элементы слишком велики, чтобы их принять.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = Перетащенное шло слишком долго, поэтому его оставили.
+kit-dropped-too-slow = Перетащенные элементы поступали слишком долго, поэтому ожидание прекращено.
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = Перетащено слишком много сразу. Перетаскивайте меньше за раз.
+kit-dropped-too-many = Вы перетащили слишком много элементов сразу. Перетаскивайте меньше за раз.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = Перетащенное не является списком файлов на этом компьютере.
+kit-dropped-not-files = Перетащенные элементы не являются файлами на этом компьютере.
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = Не веб-адрес
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = Открывает адрес mailto
+kit-link-mailto = Адрес электронной почты
 
 # Label of a link button whose address opens a file.
-kit-link-file = Открывает файл
+kit-link-file = Файл на этом компьютере
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = Ссылка на { $label }
@@ -126,28 +126,28 @@ kit-chooser-no-answer = Окно выбора не ответило. Попро�
 kit-theme-line = Строка { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = Файл слишком велик для темы. Тема занимает не более 64 КБ.
+kit-theme-too-big = Файл темы слишком велик. Максимальный размер: 64 КБ.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = Файл не является таблицей стилей: в нём не только слова.
+kit-theme-not-sheet = Этот файл не является таблицей стилей. В нём не только простой текст.
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = тема не может подключать другой файл или веб-адрес.
+kit-theme-imports = тема не может импортировать другой файл или веб-адрес.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } слишком длинно для значения.
+kit-theme-too-long = Значение --{ $name } слишком длинное.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } не цвет, который Trindle может прочитать.
+kit-theme-not-colour = Trindle не может прочитать --{ $name } как цвет.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } не число, которое Trindle может прочитать.
+kit-theme-not-number = Trindle не может прочитать --{ $name } как число.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } не тень, которую Trindle может прочитать.
+kit-theme-not-shadow = Trindle не может прочитать --{ $name } как тень.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = Ничто в файле не является значением, известным Trindle, поэтому ничего не изменится.
+kit-theme-nothing-known = Trindle не распознаёт в этом файле ни одной настройки, поэтому ничего не изменится.
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = Ход выполнения
@@ -167,8 +167,8 @@ kit-row-sub =
     }
 kit-row-keys = { $words }, { $keys }
 kit-drop-target = Область для перетаскивания
-kit-theme-not-step = --{ $name } принимает только один из этих шагов: { $steps }. Всё остальное пропускается. См. { $guide }.
-kit-sheet-not-watched = Изменения таблицы стилей в { $folder } появятся только после перезапуска: { $why }
+kit-theme-not-step = --{ $name } может принимать только одно из этих значений: { $steps }. Остальные значения Trindle игнорирует. См. { $guide }.
+kit-sheet-not-watched = Перезапустите программу, чтобы увидеть изменения таблицы стилей в { $folder }. { $why }
 kit-menu-bar = Строка меню
 kit-cancel = Отмена
 kit-toolbar = Инструменты
@@ -176,10 +176,10 @@ kit-more-tools = Другие инструменты
 kit-status = Состояние
 kit-path = Путь
 kit-path-more = Другие места
-kit-range-low = нижняя граница
-kit-range-high = верхняя граница
-kit-spin-less = Меньше: { $what }
-kit-spin-more = Больше: { $what }
+kit-range-low = нижний предел
+kit-range-high = верхний предел
+kit-spin-less = Уменьшить: { $what }
+kit-spin-more = Увеличить: { $what }
 kit-spin-not-number = Введите число от { $min } до { $max }
 kit-tab-close = Закрыть
 kit-tab-more = Другие вкладки
@@ -191,35 +191,48 @@ kit-colour-square = Цвет, насыщенность и яркость
 kit-colour-swatch = Выбранный цвет: { $colour }
 kit-colour-hue = Оттенок
 kit-colour-hex = Шестнадцатеричный код
-kit-look-title = Оформление
-kit-look-lead = Как выглядит эта программа, независимо от остального рабочего стола.
-kit-look-group = Оформление
+kit-look-title = Внешний вид
+kit-look-lead = Выберите, как выглядит эта программа, независимо от остального рабочего стола.
+kit-look-group = Внешний вид
 kit-look-shade = Светлое или тёмное
-kit-look-shade-help = Следовать рабочему столу или всегда использовать один вид.
+kit-look-shade-help = Как на рабочем столе, либо всегда светлая, либо всегда тёмная.
 kit-look-desktop = Как на рабочем столе
 kit-look-dark = Тёмное
 kit-look-light = Светлое
 kit-look-highlight = Цвет выделения
-kit-look-highlight-help = Цвет главного действия и выбранного.
-kit-look-highlight-desktop = Использовать цвет рабочего стола
+kit-look-highlight-help = Цвет главных кнопок и выбранных элементов.
+kit-look-highlight-desktop = Как на рабочем столе
 kit-date-previous = Назад
 kit-date-next = Вперёд
 kit-date-month-year = { $month } { $year }
 kit-date-full = { $weekday } { $day } { $month } { $year }
 kit-time-hours = Часы
 kit-time-minutes = Минуты
-kit-month-1 = января
-kit-month-2 = февраля
-kit-month-3 = марта
-kit-month-4 = апреля
-kit-month-5 = мая
-kit-month-6 = июня
-kit-month-7 = июля
-kit-month-8 = августа
-kit-month-9 = сентября
-kit-month-10 = октября
-kit-month-11 = ноября
-kit-month-12 = декабря
+kit-month-1 = январь
+kit-month-2 = февраль
+kit-month-3 = март
+kit-month-4 = апрель
+kit-month-5 = май
+kit-month-6 = июнь
+kit-month-7 = июль
+kit-month-8 = август
+kit-month-9 = сентябрь
+kit-month-10 = октябрь
+kit-month-11 = ноябрь
+kit-month-12 = декабрь
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = января
+kit-month-in-date-2 = февраля
+kit-month-in-date-3 = марта
+kit-month-in-date-4 = апреля
+kit-month-in-date-5 = мая
+kit-month-in-date-6 = июня
+kit-month-in-date-7 = июля
+kit-month-in-date-8 = августа
+kit-month-in-date-9 = сентября
+kit-month-in-date-10 = октября
+kit-month-in-date-11 = ноября
+kit-month-in-date-12 = декабря
 kit-weekday-1 = Пн
 kit-weekday-2 = Вт
 kit-weekday-3 = Ср
@@ -237,7 +250,7 @@ kit-weekday-full-7 = Воскресенье
 kit-key-ctrl = Ctrl
 kit-key-shift = Shift
 kit-key-alt = Alt
-kit-key-logo = Logo
+kit-key-logo = Super
 kit-key-left = Влево
 kit-key-right = Вправо
 kit-key-up = Вверх
@@ -254,8 +267,8 @@ kit-key-backspace = Backspace
 kit-key-delete = Delete
 kit-key-insert = Insert
 kit-shortcuts = Сочетания клавиш
-kit-shortcut-kept-window = Окно оставляет эту клавишу для перехода между частями и закрытия.
-kit-shortcut-kept-typing = Текстовое поле первым получает эту клавишу, пока вы вводите текст.
+kit-shortcut-kept-window = Эта клавиша зарезервирована для перехода между элементами и закрытия окна.
+kit-shortcut-kept-typing = Пока вы печатаете, эта клавиша сначала достаётся текстовому полю.
 kit-emoji = Эмодзи
 kit-emoji-search = Найти эмодзи по названию
 kit-emoji-none = Эмодзи с таким названием нет.
@@ -443,8 +456,8 @@ kit-emoji-refresh = Обновить
 kit-emoji-forbidden = Запрещено
 kit-emoji-recycling = Переработка
 kit-emoji-sleep = Сон
-kit-only-your-own = Здесь работает только ваше собственное нажатие.
-kit-no-layout = Не удалось прочитать раскладку клавиатуры, поэтому ввод не работает.
+kit-only-your-own = Эту кнопку можете нажать только вы.
+kit-no-layout = Trindle не удалось прочитать раскладку клавиатуры, поэтому ввод невозможен.
 kit-scene =
     { $count ->
         [one] Сцена из { $count } элемента
@@ -469,7 +482,7 @@ kit-player-unmute = Включить звук
 kit-player-volume = Громкость
 kit-player-time = { $at } из { $length }
 kit-crash-title = Что-то пошло не так
-kit-crash-lead = { $program } остановилась из-за сбоя. Скопируйте отчёт ниже и отправьте его вместе с сообщением об ошибке, чтобы её можно было исправить.
+kit-crash-lead = Программа { $program } остановилась, потому что что-то пошло не так. Скопируйте отчёт ниже и отправьте его вместе с сообщением об ошибке, чтобы проблему можно было исправить.
 kit-crash-copy = Копировать отчёт
 kit-help-code = Код
 kit-complete-count =
@@ -485,10 +498,10 @@ kit-frame-restore = Восстановить
 kit-frame-close = Закрыть
 kit-frame-move = Переместить
 kit-frame-resize = Изменить размер
-kit-numerals-title = Цифры
+kit-numerals-title = Вид цифр
 kit-numerals-help = Как записываются числа, даты и время.
-kit-numerals-auto = Как обычно принято в регионе
+kit-numerals-auto = Обычный для вашего региона
 kit-numerals-latin = Всегда от 0 до 9
-kit-numerals-native = Цифры самого языка
+kit-numerals-native = Собственные цифры языка
 kit-date-week-short = Нед.
 kit-date-week = Неделя { $week }

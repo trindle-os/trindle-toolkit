@@ -177,7 +177,7 @@ A touchpad's pinch comes from the compositor's pointer gestures as `Input::PadPi
 
 ## Following the desktop's look
 
-`desktop::follow(&bus, &lp, changed)` reads the settings portal now and again whenever the person changes it, and tells `changed` a `Look`: `light` (None for no preference), `accent` (`accent_css()` goes straight to `Theme::new`), `more_contrast` and `reduce_motion`. Call `motion::reduce(look.reduce_motion)` and every tween jumps to its end. Reduced motion is read from GNOME's `enable-animations` through the portal; the portal itself has no such key yet. Where there is no settings portal, light or dark is read from COSMIC's own setting (`~/.config/cosmic/com.system76.CosmicTheme.Mode/v1/is_dark`), and that folder, when it is there, is watched so a change is heard too; COSMIC's accent is not read. Tested against a stand-in portal on a private bus, and the COSMIC file by a unit test.
+`desktop::follow(&bus, &lp, changed)` reads the settings portal now and again whenever the person changes it, and tells `changed` a `Look`: `light` (None for no preference), `accent` (`accent_css()` goes straight to `Theme::new`), `more_contrast` and `reduce_motion`. Call `motion::reduce(look.reduce_motion)` and every tween jumps to its end. Reduced motion is read from GNOME's `enable-animations` through the portal; the portal itself has no such key yet. Where there is no settings portal, light or dark is read from the desktop's own setting (a small file in the config folder), and that folder, when it is there, is watched so a change is heard too; the desktop's accent is not read. Tested against a stand-in portal on a private bus, and the desktop's own mode file by a unit test.
 
 ## Notifications and a tray icon
 
@@ -227,7 +227,7 @@ The compositor's fractional scale (wp-fractional-scale-v1 with a viewport) is us
 
 ## Settings kept in a config folder
 
-`config::Config::new(app_id, version)` is the program's settings folder, `$XDG_CONFIG_HOME/<app_id>/v<version>`, laid out as COSMIC's cosmic-config lays it out: one file per key, the value its text. `get(key)` (None for a missing or unreadable key; `read(key)` gives `Ok(None)` for a missing one and an error for one that cannot be read), `set(key, value)` (written whole, for the person alone), `unset(key)` and `keys()`. `watch(&loop, changed)` tells `changed` the keys set or forgotten by anyone, this program included, until the `Live` is dropped; when news was lost it is told every key. `Config::at(folder)` reads another program's folder, such as COSMIC's. A key that is not a plain name (a slash, a leading dot) is refused. Tested on a temporary folder, with the change heard through the kernel.
+`config::Config::new(app_id, version)` is the program's settings folder, `$XDG_CONFIG_HOME/<app_id>/v<version>`, laid out the way desktop settings systems lay them out: one file per key, the value its text. `get(key)` (None for a missing or unreadable key; `read(key)` gives `Ok(None)` for a missing one and an error for one that cannot be read), `set(key, value)` (written whole, for the person alone), `unset(key)` and `keys()`. `watch(&loop, changed)` tells `changed` the keys set or forgotten by anyone, this program included, until the `Live` is dropped; when news was lost it is told every key. `Config::at(folder)` reads another program's folder, such as a desktop's. A key that is not a plain name (a slash, a leading dot) is refused. Tested on a temporary folder, with the change heard through the kernel.
 
 ## Panels, docks, wallpapers and an applet's popup (wlr-layer-shell)
 

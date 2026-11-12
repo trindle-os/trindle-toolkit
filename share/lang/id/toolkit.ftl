@@ -75,7 +75,7 @@ kit-click-again = Klik lagi untuk { $action }
 # SAFETY: needs a human review before it ships
 kit-click-again-bare = Klik lagi
 
-kit-job-wait = Tunggu sampai pekerjaan selesai.
+kit-job-wait = Tunggu sampai tugas selesai.
 
 # The last line of a label on pointing that is cut short, when what is left is the rest of one line.
 kit-more = + lainnya
@@ -87,61 +87,61 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = Tidak ada hasil dari yang dijatuhkan.
+kit-dropped-empty = Trindle tidak dapat memproses item yang Anda lepas.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = Yang dijatuhkan terlalu besar untuk diambil dengan cara ini.
+kit-dropped-too-big = Item yang Anda lepas terlalu besar untuk dimasukkan.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = Yang dijatuhkan terlalu lama datang, jadi dilewati.
+kit-dropped-too-slow = Item yang Anda lepas terlalu lama tiba, jadi Trindle berhenti menunggu.
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = Terlalu banyak yang dijatuhkan sekaligus. Jatuhkan lebih sedikit sekali waktu.
+kit-dropped-too-many = Anda melepas terlalu banyak item sekaligus. Lepaskan lebih sedikit setiap kali.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = Yang dijatuhkan bukan daftar file di komputer ini.
+kit-dropped-not-files = Item yang Anda lepas bukan file di komputer ini.
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = Bukan alamat web
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = Membuka alamat mailto
+kit-link-mailto = Alamat email
 
 # Label of a link button whose address opens a file.
-kit-link-file = Membuka file
+kit-link-file = File di komputer ini
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = Tautan ke { $label }
 
 # Said under whatever asked for a file or folder, when the window for choosing did not answer.
-kit-chooser-no-answer = Jendela pemilihan tidak menjawab. Coba lagi.
+kit-chooser-no-answer = Jendela pemilihan tidak merespons. Coba lagi.
 
 # Starts a fault found in a theme file the person is trying. $line is the line number in the file, $why what is wrong.
 kit-theme-line = Baris { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = File terlalu besar untuk menjadi tema. Tema paling besar 64 KB.
+kit-theme-too-big = File tema ini terlalu besar. Ukuran maksimalnya 64 KB.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = File ini bukan lembar gaya: isinya lebih dari sekadar kata.
+kit-theme-not-sheet = File ini bukan lembar gaya. Isinya lebih dari sekadar teks biasa.
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = tema tidak bisa memuat file lain atau alamat web.
+kit-theme-imports = tema tidak dapat mengimpor file lain atau alamat web.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } terlalu panjang untuk menjadi nilai.
+kit-theme-too-long = Nilai --{ $name } terlalu panjang.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } bukan warna yang bisa dibaca Trindle.
+kit-theme-not-colour = Trindle tidak dapat membaca --{ $name } sebagai warna.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } bukan angka yang bisa dibaca Trindle.
+kit-theme-not-number = Trindle tidak dapat membaca --{ $name } sebagai angka.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } bukan bayangan yang bisa dibaca Trindle.
+kit-theme-not-shadow = Trindle tidak dapat membaca --{ $name } sebagai bayangan.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = Tidak ada isi file yang berupa nilai yang dikenal Trindle, jadi tidak ada yang berubah.
+kit-theme-nothing-known = Trindle tidak mengenali satu pun pengaturan di file ini, jadi tidak ada yang berubah.
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = Kemajuan
@@ -226,6 +226,19 @@ kit-month-10 = Oktober
 kit-month-11 = November
 
 kit-month-12 = Desember
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = Januari
+kit-month-in-date-2 = Februari
+kit-month-in-date-3 = Maret
+kit-month-in-date-4 = April
+kit-month-in-date-5 = Mei
+kit-month-in-date-6 = Juni
+kit-month-in-date-7 = Juli
+kit-month-in-date-8 = Agustus
+kit-month-in-date-9 = September
+kit-month-in-date-10 = Oktober
+kit-month-in-date-11 = November
+kit-month-in-date-12 = Desember
 
 kit-weekday-1 = Sen
 
@@ -262,13 +275,13 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = Logo
+kit-key-logo = Super
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = Di sini hanya tekanan Anda sendiri yang berfungsi.
+kit-only-your-own = Hanya Anda yang dapat menekan tombol ini.
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = Tata letak papan ketik tidak dapat dibaca, jadi mengetik tidak berpengaruh.
+kit-no-layout = Trindle tidak dapat membaca tata letak papan ketik, jadi Anda tidak dapat mengetik.
 
 
 
@@ -279,13 +292,13 @@ kit-divider = Pembatas
 kit-click-again-small = ya
 
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
-kit-drop-target = Target jatuhan
+kit-drop-target = Area lepas
 
 # Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
-kit-theme-not-step = --{ $name } hanya menerima satu dari langkah ini: { $steps }. Yang lain dilewati. Lihat { $guide }.
+kit-theme-not-step = --{ $name } hanya boleh salah satu dari ini: { $steps }. Trindle mengabaikan nilai lain. Lihat { $guide }.
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = Perubahan pada lembar gaya di { $folder } baru tampil setelah dimulai ulang: { $why }
+kit-sheet-not-watched = Mulai ulang untuk melihat perubahan pada lembar gaya di { $folder }. { $why }
 
 # What a screen reader calls the row of menu titles across the top of a window.
 kit-menu-bar = Bilah menu
@@ -329,15 +342,15 @@ kit-tab-count = { $title }, { $count }
 # The ready settings page for a program's own look (settings::look_page).
 kit-look-title = Tampilan
 
-kit-look-lead = Bagaimana program ini tampil, apa pun yang dilakukan bagian desktop lainnya.
+kit-look-lead = Pilih tampilan program ini, terpisah dari bagian desktop lainnya.
 
 kit-look-group = Tampilan
 
 kit-look-shade = Terang atau gelap
 
-kit-look-shade-help = Ikuti desktop, atau selalu satu tampilan.
+kit-look-shade-help = Samakan dengan desktop, atau selalu terang atau gelap.
 
-kit-look-desktop = Seperti desktop
+kit-look-desktop = Sama seperti desktop
 
 kit-look-dark = Gelap
 
@@ -345,10 +358,10 @@ kit-look-light = Terang
 
 kit-look-highlight = Warna sorotan
 
-kit-look-highlight-help = Warna tindakan utama dan apa yang dipilih.
+kit-look-highlight-help = Warna tombol utama dan item yang dipilih.
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = Pakai milik desktop
+kit-look-highlight-desktop = Sama seperti desktop
 
 # Over the column of week numbers in a date picker; keep it as short as the short weekday names.
 kit-date-week-short = Mg
@@ -391,10 +404,10 @@ kit-key-insert = Insert
 kit-shortcuts = Pintasan papan ketik
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = Jendela menyimpan tombol ini untuk berpindah antarbagian dan menutup.
+kit-shortcut-kept-window = Tombol ini dicadangkan untuk berpindah antarkontrol dan menutup jendela.
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = Kotak teks mengambil tombol ini lebih dulu saat Anda mengetik.
+kit-shortcut-kept-typing = Saat Anda mengetik, tombol ini masuk ke kotak teks lebih dulu.
 
 # The heading of the page of emoji to pick from.
 kit-emoji = Emoji
@@ -800,7 +813,7 @@ kit-player-seek = Posisi
 
 kit-player-mute = Bisukan
 
-kit-player-unmute = Suara hidup
+kit-player-unmute = Bunyikan
 
 kit-player-volume = Volume
 
@@ -810,7 +823,7 @@ kit-player-time = { $at } dari { $length }
 ## The page shown after a program crashed or met a fault
 kit-crash-title = Terjadi kesalahan
 
-kit-crash-lead = { $program } berhenti karena sebuah gangguan. Salin laporan di bawah dan kirim bersama laporan bug Anda, agar dapat diperbaiki.
+kit-crash-lead = { $program } berhenti karena ada yang salah. Salin laporan di bawah dan kirim bersama laporan bug Anda agar masalahnya dapat diperbaiki.
 
 kit-crash-copy = Salin laporan
 
@@ -840,13 +853,13 @@ kit-frame-move = Pindahkan
 kit-frame-resize = Ubah ukuran
 
 # Settings: which figures numbers are written in.
-kit-numerals-title = Angka
+kit-numerals-title = Gaya angka
 
 kit-numerals-help = Cara angka, tanggal, dan waktu ditulis.
 
-kit-numerals-auto = Seperti yang biasa ditulis di wilayah itu
+kit-numerals-auto = Sesuai kebiasaan wilayah Anda
 
 kit-numerals-latin = Selalu 0 sampai 9
 
-kit-numerals-native = Angka milik bahasa itu sendiri
+kit-numerals-native = Digit asli bahasa ini
 

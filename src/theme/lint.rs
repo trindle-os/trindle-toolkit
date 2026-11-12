@@ -103,7 +103,7 @@ mod tests {
     fn a_number_past_its_limits_is_named_with_its_line() {
         let said = lint(":root {\n  --trindle-gap: 40;\n  --trindle-card-gap: var(--trindle-gap);\n}\n");
         assert_eq!(said.len(), 2, "{said:?}");
-        assert!(said[0].starts_with("Line 2: --trindle-gap is 40, outside its limits of 6 to 18"), "{said:?}");
+        assert!(said[0].starts_with("Line 2: --trindle-gap is 40. It must be between 6 and 18"), "{said:?}");
         assert!(said[1].starts_with("Line 3: --trindle-card-gap is 40"), "{said:?}");
     }
 
@@ -111,7 +111,7 @@ mod tests {
     fn words_too_faint_to_read_are_named_with_what_they_are_on() {
         let said = lint(":root { --trindle-text: #3a3a3a; }");
         assert!(!said.is_empty() && said.iter().all(|s| s.starts_with("In the dark look, --trindle-text on ")), "{said:?}");
-        assert_eq!(said[0], "In the dark look, --trindle-text on the page stands 1.66 to one, below the 4.5 to one it needs.");
+        assert_eq!(said[0], "In the dark look, --trindle-text on the page has a contrast of 1.66 to 1. It needs at least 4.5 to 1.");
     }
 
     #[test]
@@ -122,21 +122,21 @@ mod tests {
         std::fs::write(&at, ":root { --trindle-gap: 8; }").unwrap();
         let good = logged(&at);
         std::fs::remove_file(&at).unwrap();
-        assert_eq!(bad, vec![format!("{}: Line 1: --trindle-gap is 2, outside its limits of 6 to 18.", at.display())]);
+        assert_eq!(bad, vec![format!("{}: Line 1: --trindle-gap is 2. It must be between 6 and 18.", at.display())]);
         assert_eq!(good, vec![format!("{}: no problems found.", at.display())]);
         assert!(logged(&at).is_empty(), "a sheet taken away is no problem");
         std::fs::create_dir(&at).unwrap();
         let unread = logged(&at);
         std::fs::remove_dir(&at).unwrap();
-        assert_eq!(unread, vec![format!("{} could not be read.", at.display())], "a sheet that is there and cannot be read is said");
+        assert_eq!(unread, vec![format!("{} couldn't be read.", at.display())], "a sheet that is there and cannot be read is said");
     }
 
     #[test]
     fn a_number_where_a_step_is_asked_is_named_once_with_its_steps_and_the_guide() {
         let said = lint(":root {\n  --trindle-gap-small: 5;\n  --trindle-board-lane: 75px;\n  --trindle-gap-large: huge;\n}\n");
         assert_eq!(said, vec![
-            "Line 2: --trindle-gap-small takes only one of these steps: none, tiny, small, medium, roomy, large, huge. Anything else is passed over. See docs/style-sheet-for-ai.md.",
-            "Line 3: --trindle-board-lane takes only one of these steps: smaller, small, normal, large, larger. Anything else is passed over. See docs/style-sheet-for-ai.md.",
+            "Line 2: --trindle-gap-small can only be one of these: none, tiny, small, medium, roomy, large, huge. Trindle ignores any other value. See docs/style-sheet-for-ai.md.",
+            "Line 3: --trindle-board-lane can only be one of these: smaller, small, normal, large, larger. Trindle ignores any other value. See docs/style-sheet-for-ai.md.",
         ]);
         assert!(super::super::check(":root { --trindle-gap-small: 5; }").unwrap_err().why.contains("docs/style-sheet-for-ai.md"));
         assert!(super::super::check(":root { --trindle-gap-small: tiny; --trindle-board-lane: larger; }").is_ok());

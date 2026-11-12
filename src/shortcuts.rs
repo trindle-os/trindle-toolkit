@@ -271,7 +271,7 @@ mod tests {
         let mut ui: Ui<()> = Ui::new(t.page(|a| a.to_string()), Theme::new(false, "#fbc711"));
         ui.lay_at(500, 400);
         let words: Vec<String> = ui.access("Shortcuts").nodes.iter().filter_map(|(_, p)| p.label().or(p.value()).map(str::to_string)).collect();
-        for w in ["Keyboard shortcuts", "Reload", "F5", "Close", "Escape", "The window keeps this key for moving between parts and closing."] {
+        for w in ["Keyboard shortcuts", "Reload", "F5", "Close", "Escape", "This key is reserved for moving between controls and closing the window."] {
             assert!(words.iter().any(|s| s == w), "{w} missing from {words:?}");
         }
         assert!(!words.iter().any(|s| s.contains("text box")));

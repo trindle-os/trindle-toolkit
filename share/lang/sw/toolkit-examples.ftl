@@ -1,7 +1,7 @@
 # machine translated (Swahili), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Hakuna eneo-kazi la Wayland la kufungua dirisha
-kit-run-no-window = Eneo-kazi halikufungua dirisha
+kit-run-no-desktop = Hakuna eneo-kazi la Wayland lililojibu, kwa hiyo dirisha haliwezi kufunguka
+kit-run-no-window = Eneo-kazi halikuweza kufungua dirisha.
 kit-example-hello-title = Habari
 kit-example-hello-button = Nibonyeze
 kit-example-hello-none = Bado haijabonyezwa
@@ -39,7 +39,7 @@ kit-example-gallery-hello = Habari, { $name }
 kit-example-gallery-progress = Maendeleo
 
 kit-example-context-title = Menyu ya muktadha
-kit-example-context-how = Bofya kulia kadi, shikilia kidole juu yake, au bonyeza kitufe cha Menyu
+kit-example-context-how = Bofya kulia kadi, ibonyeze na kuishikilia, au bonyeza kitufe cha Menu
 kit-example-context-note = Orodha ya manunuzi
 kit-example-context-pinned = Imebandikwa
 kit-example-context-unpinned = Haijabandikwa

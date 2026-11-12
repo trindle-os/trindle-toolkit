@@ -2,7 +2,7 @@
 
 kit-chart-part = Partie { $n }
 
-kit-chart-empty = { $name } : graphique sans valeurs.
+kit-chart-empty = { $name } : ce graphique n’a aucune valeur.
 
 kit-chart-line =
     { $n ->

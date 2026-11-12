@@ -6,7 +6,7 @@ use crate::rich::{self, Flow};
 impl<M: Clone> Ui<M> {
     pub(super) fn rich_flow(&self, id: &str) -> Option<Flow> {
         let (Some(s), Some(What::Rich { spans, words, .. })) = (self.spot(id), self.node(id).map(|n| &n.what)) else { return None };
-        Some(rich::flow(&|t, st| self.texts.get(&self.fonts, t, st, None), spans, &words.style(self.scale), Some(s.rect.w.max(1.0))))
+        Some(rich::flow(&|t, st| (*self.texts.get(&self.fonts, t, st, None)).clone(), spans, &words.style(self.scale), Some(s.rect.w.max(1.0))))
     }
 
     pub(super) fn rich_links(&self, id: &str) -> Vec<usize> {

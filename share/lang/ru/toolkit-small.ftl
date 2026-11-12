@@ -22,7 +22,7 @@ kit-more-people =
        *[other] Ещё { $n } человека
     }
 kit-gradient-bar = Градиент, остановок: { $n }
-kit-gradient-place = Положение выбранной остановки
+kit-gradient-place = Положение выбранной точки
 kit-gradient-add = Добавить остановку
 kit-gradient-remove = Удалить остановку
 kit-help-show = Показать подсказку

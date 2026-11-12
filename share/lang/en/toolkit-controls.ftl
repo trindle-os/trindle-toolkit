@@ -4,24 +4,24 @@
 ## Command palette
 
 # What the box at the top of the command palette is called; the screen reader says it and it shows while the box is empty.
-kit-palette-search = Type to find an action
+kit-palette-search = Search actions
 
 # What the palette's list of matching actions is called; the screen reader says it.
 kit-palette-list = Matching actions
 
 # Shown under the palette's box when no action matches what was typed.
-kit-palette-none = No action matches.
+kit-palette-none = No matching actions.
 
 ## Checked boxes
 
 # Red words under a phone number box when what was typed cannot be a phone number.
-kit-check-phone = Write a phone number of 7 to 15 figures.
+kit-check-phone = Enter a phone number with 7 to 15 digits.
 
 # Red words under a date box when what was typed is not a real date.
-kit-check-date = Write a real date as year-month-day, such as 2026-10-30.
+kit-check-date = Enter a date as year-month-day, such as 2026-10-30.
 
 # Red words under a colour box when what was typed is not a colour code.
-kit-check-hex = Write a colour code such as #fbc711.
+kit-check-hex = Enter a colour code, such as #fbc711.
 
 ## Volume
 
@@ -65,10 +65,10 @@ kit-dock-left = Dock on the left
 kit-dock-right = Dock on the right
 
 # Tip of the button on a panel's head that moves it to the foot of the window.
-kit-dock-bottom = Dock at the foot
+kit-dock-bottom = Dock at the bottom
 
 # Tip of the button on a panel's head that lets it float over the main area.
-kit-dock-float = Float over the page
+kit-dock-float = Float above the page
 
 # Name of the handle on a panel's head that is dragged to move the panel to another edge.
 kit-dock-grip = Drag to another edge
@@ -76,14 +76,14 @@ kit-dock-grip = Drag to another edge
 ## Forms
 
 # Red words under a form's box for a number when what was typed is not a number.
-kit-form-number = Write a number, such as 12 or 3.5.
+kit-form-number = Enter a number, such as 12 or 3.5.
 
 ## File chooser page
 
 # The sentence under a file chooser page's title, by what it is for.
-kit-files-open-lead = Choose the file to open.
-kit-files-save-lead = Choose a folder and type the name to save as.
-kit-files-folder-lead = Choose a folder, or keep the one you are in.
+kit-files-open-lead = Choose a file to open.
+kit-files-save-lead = Choose a folder, then type a name for the file.
+kit-files-folder-lead = Choose a folder, or stay in the one you're in.
 # The main answer at the foot of a file chooser page.
 kit-files-open = Open
 kit-files-save = Save
@@ -101,15 +101,15 @@ kit-files-name = File name
 # Shown in place of the list when the folder holds nothing.
 kit-files-empty = This folder is empty.
 # Red words when the folder cannot be read.
-kit-filepage-unreadable = This folder could not be read. Choose another.
+kit-filepage-unreadable = Trindle couldn't open this folder. Choose a different one.
 # Red words after Open with no file chosen.
 kit-files-choose-first = Choose a file first.
 # Red words after Save with no name, or a name that cannot be a file's.
-kit-files-name-needed = Type a name for the file, without a slash.
+kit-files-name-needed = Type a name for the file. It can't contain a slash.
 
 ## Font chooser page
 
-kit-fonts-lead = Choose a font and its size.
+kit-fonts-lead = Choose a font and a size.
 # The box that finds fonts by name.
 kit-fonts-search = Find a font by name
 # What a screen reader calls the list of fonts.

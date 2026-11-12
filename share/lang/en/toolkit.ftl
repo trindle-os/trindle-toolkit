@@ -69,7 +69,7 @@ kit-click-again-bare = Click again
 # Write yes if the button's name has its first letter made small where it follows on in kit-click-again, or no if it keeps it: a language whose words start with a capital after the colon, or one with no capitals. A name that starts with a capital word such as USB is always kept.
 kit-click-again-small = yes
 
-kit-job-wait = Wait for the job to finish.
+kit-job-wait = Wait for the task to finish.
 
 ## Long label on pointing
 
@@ -96,58 +96,58 @@ kit-row-keys = { $words }, { $keys }
 ## Things dropped on a window
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = Nothing came of what was dropped.
+kit-dropped-empty = Trindle couldn't do anything with the items you dropped.
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = What was dropped is too big to take this way.
+kit-dropped-too-big = What you dropped is too big to drag in.
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = What was dropped took too long to come, so it was left.
+kit-dropped-too-slow = What you dropped took too long to arrive, so Trindle stopped waiting.
 # Said when too many things were dropped at once.
-kit-dropped-too-many = Too many things were dropped at once. Drop fewer at a time.
+kit-dropped-too-many = You dropped too many items at once. Drop fewer at a time.
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = What was dropped is not a list of files on this computer.
+kit-dropped-not-files = The items you dropped aren't files on this computer.
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
-kit-drop-target = Drop target
+kit-drop-target = Drop area
 
 ## Links
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = Not a web address
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = Opens a mailto address
+kit-link-mailto = Email address
 # Label of a link button whose address opens a file.
-kit-link-file = Opens a file
+kit-link-file = File on this computer
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = Link to { $label }
 
 ## The window for choosing a file
 
 # Said under whatever asked for a file or folder, when the window for choosing did not answer.
-kit-chooser-no-answer = The window for choosing did not answer. Try again.
+kit-chooser-no-answer = The chooser window didn't respond. Try again.
 
 ## Checking a theme file
 
 # Starts a fault found in a theme file the person is trying. $line is the line number in the file, $why what is wrong.
 kit-theme-line = Line { $line }: { $why }
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = The file is too big to be a theme. A theme is at most 64 KB.
+kit-theme-too-big = This theme file is too big. The maximum size is 64 KB.
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = The file is not a style sheet: it holds more than words.
+kit-theme-not-sheet = This file isn't a style sheet. It contains more than plain text.
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = a theme cannot bring in another file or a web address.
+kit-theme-imports = a theme can't import another file or a web address.
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } is too long to be a value.
+kit-theme-too-long = The value of --{ $name } is too long.
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } is not a colour Trindle can read.
+kit-theme-not-colour = Trindle can't read --{ $name } as a colour.
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } is not a number Trindle can read.
+kit-theme-not-number = Trindle can't read --{ $name } as a number.
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } is not a shadow Trindle can read.
+kit-theme-not-shadow = Trindle can't read --{ $name } as a shadow.
 # Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
-kit-theme-not-step = --{ $name } takes only one of these steps: { $steps }. Anything else is passed over. See { $guide }.
+kit-theme-not-step = --{ $name } can only be one of these: { $steps }. Trindle ignores any other value. See { $guide }.
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = Nothing in the file is a value Trindle knows, so it would change nothing.
+kit-theme-nothing-known = Trindle doesn't recognise any settings in this file, so nothing would change.
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = Changes to the style sheet in { $folder } show only after a restart: { $why }
+kit-sheet-not-watched = Restart to see changes to the style sheet in { $folder }. { $why }
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = Progress
@@ -178,16 +178,16 @@ kit-path-more = More places
 ## A slider with two handles
 
 # Said after a range slider's name for its low handle.
-kit-range-low = low end
+kit-range-low = lower end
 # Said after a range slider's name for its high handle.
-kit-range-high = high end
+kit-range-high = upper end
 
 ## A number box
 
 # The button that takes a step off a number box's number. $what is the box's name.
-kit-spin-less = Less { $what }
+kit-spin-less = Decrease { $what }
 # The button that adds a step to a number box's number. $what is the box's name.
-kit-spin-more = More { $what }
+kit-spin-more = Increase { $what }
 # Red words under a number box whose typing is not a number.
 kit-spin-not-number = Type a number from { $min } to { $max }
 
@@ -218,18 +218,18 @@ kit-colour-hue = Hue
 kit-colour-hex = Hex code
 
 # The ready settings page for a program's own look (settings::look_page).
-kit-look-title = Look
-kit-look-lead = How this program looks, whatever the rest of the desktop does.
-kit-look-group = Look
+kit-look-title = Appearance
+kit-look-lead = Choose how this program looks, separately from the rest of the desktop.
+kit-look-group = Appearance
 kit-look-shade = Light or dark
-kit-look-shade-help = Follow the desktop, or always one look.
-kit-look-desktop = As the desktop
+kit-look-shade-help = Match the desktop, or always use light or dark.
+kit-look-desktop = Same as the desktop
 kit-look-dark = Dark
 kit-look-light = Light
 kit-look-highlight = Highlight colour
-kit-look-highlight-help = The colour of the main action and of what is chosen.
+kit-look-highlight-help = The colour of main buttons and selected items.
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = Use the desktop's
+kit-look-highlight-desktop = Same as the desktop
 
 # Buttons either side of the month in a date picker.
 kit-date-previous = Previous
@@ -260,6 +260,19 @@ kit-month-9 = September
 kit-month-10 = October
 kit-month-11 = November
 kit-month-12 = December
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = January
+kit-month-in-date-2 = February
+kit-month-in-date-3 = March
+kit-month-in-date-4 = April
+kit-month-in-date-5 = May
+kit-month-in-date-6 = June
+kit-month-in-date-7 = July
+kit-month-in-date-8 = August
+kit-month-in-date-9 = September
+kit-month-in-date-10 = October
+kit-month-in-date-11 = November
+kit-month-in-date-12 = December
 kit-weekday-1 = Mon
 kit-weekday-2 = Tue
 kit-weekday-3 = Wed
@@ -281,7 +294,7 @@ kit-weekday-full-7 = Sunday
 kit-key-ctrl = Ctrl
 kit-key-shift = Shift
 kit-key-alt = Alt
-kit-key-logo = Logo
+kit-key-logo = Super
 # The names of keys that are words, in a shortcut such as Ctrl+Page down.
 kit-key-left = Left
 kit-key-right = Right
@@ -301,9 +314,9 @@ kit-key-insert = Insert
 # The heading of the page that lists a program's keyboard shortcuts.
 kit-shortcuts = Keyboard shortcuts
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = The window keeps this key for moving between parts and closing.
+kit-shortcut-kept-window = This key is reserved for moving between controls and closing the window.
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = A text box takes this key first while you type.
+kit-shortcut-kept-typing = While you're typing, this key goes to the text box first.
 
 ## Emoji page
 
@@ -504,10 +517,10 @@ kit-emoji-sleep = Sleep
 ## Refused presses
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = Only your own press works here.
+kit-only-your-own = Only you can press this button.
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = The keyboard layout could not be read, so typing does nothing.
+kit-no-layout = Trindle couldn't read the keyboard layout, so you can't type.
 
 # What a screen reader is told of a scene of items: how many, and the one chosen.
 kit-scene =
@@ -528,14 +541,14 @@ kit-player-back = Back 5 seconds
 kit-player-forward = Forward 5 seconds
 kit-player-seek = Position
 kit-player-mute = Mute
-kit-player-unmute = Sound on
+kit-player-unmute = Unmute
 kit-player-volume = Volume
 # How far in, out of how long, as clock times.
 kit-player-time = { $at } of { $length }
 
 ## The page shown after a program crashed or met a fault
 kit-crash-title = Something went wrong
-kit-crash-lead = { $program } stopped because of a fault. Copy the report below and send it with your bug report, so it can be put right.
+kit-crash-lead = { $program } stopped because something went wrong. Copy the report below and send it with your bug report so the problem can be fixed.
 kit-crash-copy = Copy report
 
 # What a screen reader calls a block of code on a help page.
@@ -560,8 +573,8 @@ kit-frame-move = Move
 kit-frame-resize = Resize
 
 # Settings: which figures numbers are written in.
-kit-numerals-title = Figures
+kit-numerals-title = Number style
 kit-numerals-help = How numbers, dates and times are written.
-kit-numerals-auto = As the region usually writes them
+kit-numerals-auto = Usual for your region
 kit-numerals-latin = Always 0 to 9
-kit-numerals-native = The language's own figures
+kit-numerals-native = The language's own digits

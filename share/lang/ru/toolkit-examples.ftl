@@ -1,7 +1,7 @@
 # machine translated (Russian), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Нет рабочего стола Wayland, на котором можно открыть окно
-kit-run-no-window = Рабочий стол не открыл окно
+kit-run-no-desktop = Рабочий стол Wayland не ответил, поэтому окно не удаётся открыть
+kit-run-no-window = Рабочему столу не удалось открыть окно.
 kit-example-hello-title = Привет
 kit-example-hello-button = Нажмите меня
 kit-example-hello-none = Ещё не нажато
@@ -41,7 +41,7 @@ kit-example-gallery-hello = Здравствуйте, { $name }
 kit-example-gallery-progress = Ход выполнения
 
 kit-example-context-title = Контекстное меню
-kit-example-context-how = Щёлкните карточку правой кнопкой, удерживайте на ней палец или нажмите клавишу меню
+kit-example-context-how = Щёлкните карточку правой кнопкой, нажмите на неё и удерживайте или нажмите клавишу Menu
 kit-example-context-note = Список покупок
 kit-example-context-pinned = Закреплена
 kit-example-context-unpinned = Не закреплена

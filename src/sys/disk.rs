@@ -40,10 +40,28 @@ pub fn random(bytes: &mut [u8]) {
 }
 
 pub fn rename_in(dir: &File, from: &CStr, to: &CStr) -> io::Result<()> {
+    move_name(dir, from, dir, to, 0)
+}
+
+pub fn make_folder_in(dir: &File, name: &CStr) -> io::Result<()> {
+    // SAFETY: the name is a string that ends in a nought and lives until
+    // the call returns, and the folder's descriptor is kept open by `dir`.
+    let done = unsafe { libc::mkdirat(dir.as_raw_fd(), name.as_ptr(), 0o755) };
+    match said(done) {
+        Err(e) if e.kind() == io::ErrorKind::AlreadyExists => Ok(()),
+        other => other,
+    }
+}
+
+pub fn rename_between(from_dir: &File, from: &CStr, to_dir: &File, to: &CStr) -> io::Result<()> {
+    move_name(from_dir, from, to_dir, to, libc::RENAME_NOREPLACE)
+}
+
+fn move_name(from_dir: &File, from: &CStr, to_dir: &File, to: &CStr, flags: libc::c_uint) -> io::Result<()> {
     // SAFETY: both names are strings that end in a nought, kept alive
-    // until the call returns, and the folder's descriptor is kept open
-    // by `dir`.
-    said(unsafe { libc::renameat(dir.as_raw_fd(), from.as_ptr(), dir.as_raw_fd(), to.as_ptr()) })
+    // until the call returns, and both folders' descriptors are kept open
+    // by the `File`s given.
+    said(unsafe { libc::renameat2(from_dir.as_raw_fd(), from.as_ptr(), to_dir.as_raw_fd(), to.as_ptr(), flags) })
 }
 
 pub fn remove_in(dir: &File, name: &CStr, folder: bool) -> io::Result<()> {
@@ -145,5 +163,40 @@ pub fn read_a_page_round_the_store(file: &File) {
         let page = libc::mmap(std::ptr::null_mut(), 4096, libc::PROT_READ | libc::PROT_WRITE, libc::MAP_PRIVATE | libc::MAP_ANONYMOUS, -1, 0);
         let _ = libc::read(file.as_raw_fd(), page, 4096);
         libc::munmap(page, 4096);
+    }
+}
+
+#[cfg(test)]
+mod between_tests {
+    use super::*;
+    use std::ffi::CString;
+    use std::fs;
+
+    #[test]
+    fn one_call_renames_and_one_takes_away() {
+        let source = crate::common::source::code(include_str!("disk.rs")).split("#[cfg(test)]").next().unwrap();
+        assert_eq!(source.matches("libc::renameat").count(), 1);
+        assert_eq!(source.matches("libc::unlinkat").count(), 1);
+    }
+
+    #[test]
+    fn a_name_moves_between_opened_folders_and_is_never_replaced() {
+        let dir = std::env::temp_dir().join(format!("trindle-rename-between-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(dir.join("from")).unwrap();
+        fs::create_dir_all(dir.join("to")).unwrap();
+        fs::write(dir.join("from/item"), b"one").unwrap();
+        fs::write(dir.join("to/item"), b"two").unwrap();
+        let from_dir = File::open(dir.join("from")).unwrap();
+        let to_dir = File::open(dir.join("to")).unwrap();
+        let (item, other) = (CString::new("item").unwrap(), CString::new("moved").unwrap());
+        rename_between(&from_dir, &item, &to_dir, &other).unwrap();
+        assert_eq!(fs::read(dir.join("to/moved")).unwrap(), b"one");
+        assert!(!dir.join("from/item").exists());
+        fs::write(dir.join("from/item"), b"three").unwrap();
+        let taken = rename_between(&from_dir, &item, &to_dir, &CString::new("moved").unwrap()).unwrap_err();
+        assert_eq!(taken.kind(), io::ErrorKind::AlreadyExists);
+        assert_eq!(fs::read(dir.join("to/moved")).unwrap(), b"one", "the name that was there is kept");
+        let _ = fs::remove_dir_all(&dir);
     }
 }

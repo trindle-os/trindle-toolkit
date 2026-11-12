@@ -136,7 +136,7 @@ fn a_folder_that_cannot_go_to_the_trash_is_never_replaced() {
     for kind in [Kind::Copy, Kind::Move] {
         let plan = Plan { kind, items: vec![dir.join("a")], to: dir.join("b"), key: None };
         let (_, over) = asked(plan, Some(bin.clone()), |_| (Answer::Replace, false));
-        assert_eq!(over.failed, ["a (the one already there could not go to the Trash)"]);
+        assert_eq!(over.failed, ["a (the item already there couldn't be moved to the Trash)"]);
         assert!(over.undo.is_empty());
         assert_eq!(fs::read(dir.join("b/a/diary.txt")).unwrap(), b"dear diary", "the old folder is untouched");
         assert!(!dir.join("b/a/one.txt").exists());
@@ -192,7 +192,7 @@ fn nothing_is_replaced_by_what_is_inside_it() {
     let bin = own_bin(&dir);
     let plan = Plan { kind: Kind::Move, items: vec![dir.join("a/a")], to: dir.clone(), key: None };
     let (_, over) = asked(plan, Some(bin.clone()), |_| (Answer::Replace, false));
-    assert_eq!(over.failed, ["a (it is inside the one it would replace)"]);
+    assert_eq!(over.failed, ["a (it's inside the folder it would replace)"]);
     assert_eq!(fs::read(dir.join("a/a/deep.txt")).unwrap(), b"deep");
     assert_eq!(fs::read(dir.join("a/one.txt")).unwrap(), b"one");
     assert_eq!(fs::read_dir(&bin.files).unwrap().count(), 0);
@@ -230,7 +230,7 @@ fn what_took_the_name_while_the_question_was_up_is_not_put_in_the_trash() {
     assert_eq!(clashes.len(), 1);
     assert_eq!(fs::read(&there).unwrap(), b"newer, from another program", "what was never asked about was replaced");
     assert!(!bin.files.join("one.txt").exists(), "what was never asked about went to the Trash");
-    assert_eq!(over.failed, ["one.txt (something else was given that name meanwhile)"]);
+    assert_eq!(over.failed, ["one.txt (another item now has that name)"]);
     assert!(over.undo.is_empty());
     fs::remove_dir_all(&dir).unwrap();
 }

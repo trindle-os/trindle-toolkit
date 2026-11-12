@@ -1,12 +1,12 @@
 # machine translated (Japanese), not yet reviewed by a native speaker.
 
-kit-palette-search = 操作を探すには入力してください
+kit-palette-search = 操作を検索
 
 kit-palette-none = 一致する操作はありません。
 
 kit-check-phone = 7 桁から 15 桁の電話番号を入力してください。
 
-kit-check-date = 2026-10-30 のように、年-月-日の形で実在する日付を入力してください。
+kit-check-date = 2026-10-30 のように、年-月-日の形で日付を入力してください。
 
 kit-check-hex = #fbc711 のような色コードを入力してください。
 
@@ -34,14 +34,14 @@ kit-dock-right = 右に固定
 
 kit-dock-bottom = 下に固定
 
-kit-dock-float = ページの上に浮かべる
+kit-dock-float = ページの上に浮かせる
 
 kit-dock-grip = ドラッグして別の端へ移動
 
-kit-form-number = 12 や 3.5 のように数字を入力してください。
+kit-form-number = 12 や 3.5 のような数を入力してください。
 kit-files-open-lead = 開くファイルを選んでください。
-kit-files-save-lead = フォルダを選び、保存する名前を入力してください。
-kit-files-folder-lead = フォルダを選ぶか、今のフォルダのままにしてください。
+kit-files-save-lead = フォルダを選んでから、ファイル名を入力してください。
+kit-files-folder-lead = フォルダを選ぶか、今開いているフォルダのままにしてください。
 kit-files-open = 開く
 kit-files-save = 保存
 kit-files-folder = このフォルダを選ぶ
@@ -51,10 +51,10 @@ kit-files-hidden = 隠しファイルを表示
 kit-files-list = フォルダとファイル
 kit-files-name = ファイル名
 kit-files-empty = このフォルダは空です。
-kit-filepage-unreadable = このフォルダを読めませんでした。別のフォルダを選んでください。
+kit-filepage-unreadable = Trindle はこのフォルダを開けませんでした。別のフォルダを選んでください。
 kit-files-choose-first = 先にファイルを選んでください。
-kit-files-name-needed = スラッシュを含まないファイル名を入力してください。
-kit-fonts-lead = フォントとそのサイズを選んでください。
+kit-files-name-needed = ファイル名を入力してください。スラッシュは使えません。
+kit-fonts-lead = フォントとサイズを選んでください。
 kit-fonts-search = 名前でフォントを探す
 kit-fonts-list = フォント
 kit-fonts-monospace = 等幅

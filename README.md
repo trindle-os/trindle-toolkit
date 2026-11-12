@@ -89,7 +89,7 @@ Nine examples in `examples/` each open one window. They are built to check they 
 | Example | What it shows |
 |---|---|
 | `hello` | A button that counts its presses |
-| `notes` | A text box that saves as you type; the saved words are shown back |
+| `notes` | A text box of five lines that saves as you type; the saved words are shown back |
 | `names` | A list of twenty made-up names that is only read |
 | `gallery` | Buttons, a switch, a strip of answers, a dropdown, a slider, a text box and a ring in one scrolling page, each changing something you can see (`src/gallery.rs` is the test that draws every control for the pictures in this page) |
 | `widgets` | Every common widget beside the code that makes it, taken from the same lines (`showcase::page`) |
@@ -168,7 +168,7 @@ Each is a function in `widget` or the module named, and returns a `Node<Msg>`. S
 
 | Widget | What it is | Guide |
 |---|---|---|
-| `entry` | A one-line text box, with a password mode | [Guide](docs/widgets/entry.md) |
+| `entry` | A text box of one line or, with `.lines(N)`, many; it has a password mode | [Guide](docs/widgets/entry.md) |
 | `slider`, `dial::scale`, `dial::dial`, `range::Range` | A slider; one with marks; a round dial; two handles (keys, at least 24 points to touch, values told to a screen reader) | [Guide](docs/widgets/sliders.md) |
 | `dial::volume` | A mute button with a slider beside it | [Guide](docs/widgets/volume.md) |
 | `spin::spin`, `spin_with`, `spin::Spin`, `spin::time_spin`, `spin::month_year` | A number between Less and More buttons; a typed-in number box with limits, step, places and a unit (red words under it when the typing is out of range); a time; a year and month | [Guide](docs/widgets/spin-boxes.md) |
@@ -320,7 +320,7 @@ The cost falls on you: pin the exact version, and read the changelog before you 
 
 The screen reader link runs on zbus with its async-io runtime. A program that links the toolkit must not turn on zbus's `tokio` feature anywhere in the same build, because Cargo joins features across a workspace build and the link then panics with "no reactor running" and publishes no tree. Use zbus's default runtime in every crate, or build the program on its own with `cargo build -p <name>`.
 
-On Debian 13 (and Ubuntu), install:
+On Debian 13 (and other Debian-based systems), install:
 
 ```sh
 sudo apt install cargo rustc pkg-config libxkbcommon-dev libwayland-dev
@@ -354,7 +354,7 @@ This builds `common::{files, file_work, plumbing, selection, run, windowless}`, 
 
 ### Who draws a window
 
-A window of widgets is drawn by the graphics chip when it can be, with OpenGL ES 3.0 into buffers handed over by linux-dmabuf, and by the processor otherwise. Nothing needs turning on: libEGL, libGLESv2 and libgbm are opened at run time, so a machine without them still runs the program. The graphics chip is chosen only when the compositor takes Argb8888 dmabufs (waypipe and remote desktops do not), the libraries load, the render node the compositor names opens, a context is made, the driver is not software (llvmpipe, softpipe) and a small test frame matches the processor's within two levels. `TRINDLE_DRAWN_BY_PROCESSOR=1` keeps every window on the processor. A GL error or a lost context later moves that window to the processor and draws it again, with nothing shown to the person. On the graphics chip each spot's recorded drawing is compared with the last frame's, and only the spots that changed, with the room round them for shadows, are drawn again and told to the compositor, counting what each buffer missed while the other showed; a fence, not a wait, tells the compositor when a frame is done. The speed overlay (Ctrl+Shift+F11) says which drew the last frame and how much of it. The chip is not always faster for a small window: on the Framework 13 (Radeon 760M, Mesa 25.0.7) a whole page at 1280 x 800 takes about 1 ms of waiting on it against 1.4 ms of processor work, but at 3840 x 2160 the processor needs about 20 ms for a list the chip draws in about 5 ms with 0.5 ms of the processor's time. Battery use has not been measured yet; the figures and how they were taken are in MEASUREMENTS.md. The tests that draw with the graphics chip need one and are ignored by default: `cargo +1.85 test --release -- --ignored paint:: sys:: window::stock_tests`.
+A window of widgets is drawn by the graphics chip when it can be, with OpenGL ES 3.0 into buffers handed over by linux-dmabuf, and by the processor otherwise. Nothing needs turning on: libEGL, libGLESv2 and libgbm are opened at run time, so a machine without them still runs the program. The graphics chip is chosen only when the compositor takes Argb8888 dmabufs (waypipe and remote desktops do not), the libraries load, the render node the compositor names opens, a context is made, the driver is not software (llvmpipe, softpipe) and a small test frame matches the processor's within two levels. `TRINDLE_DRAWN_BY_PROCESSOR=1` keeps every window on the processor. A GL error or a lost context later moves that window to the processor and draws it again, with nothing shown to the person. On the graphics chip each spot's recorded drawing is compared with the last frame's, and only the spots that changed, with the room round them for shadows, are drawn again and told to the compositor, counting what each buffer missed while the other showed; a fence, not a wait, tells the compositor when a frame is done. The speed overlay (Ctrl+Shift+F11) says which drew the last frame and how much of it. The chip is not always faster for a small window: on a 13-inch laptop (Radeon 760M, Mesa 25.0.7) a whole page at 1280 x 800 takes about 1 ms of waiting on it against 1.4 ms of processor work, but at 3840 x 2160 the processor needs about 20 ms for a list the chip draws in about 5 ms with 0.5 ms of the processor's time. Battery use has not been measured yet; the figures and how they were taken are in MEASUREMENTS.md. The tests that draw with the graphics chip need one and are ignored by default: `cargo +1.85 test --release -- --ignored paint:: sys:: window::stock_tests`.
 
 Every window says on standard error, once, when it opens, which drawer draws it and why, in one line that is safe to search for: `trindle: <program> window drawn by <gpu|service|processor> (<why>)`. The why for the processor is `Asked` (the processor was asked for, or the graphics chip was not), `NoDmabuf`, `NoLibraries`, `NoNode`, `NoContext`, `Software`, `SelfTest` or `Failed`; for the graphics chip it is `Passed`, or `ServiceGone` where it took over from the drawing service. `Shown::drawer()` gives the same as a value (`Drawer::Gpu` or `Drawer::Processor(Why)`, and `Why::words()` for plain words). `TRINDLE_GPU_LOG=1` adds what the drawer does after that: atlases grown or emptied, whole frames, falls back to the processor.
 

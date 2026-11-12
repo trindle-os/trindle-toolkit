@@ -333,7 +333,7 @@ fn data_of_its_own_kind_is_taken_by_name_and_the_screen_reader_hears_drop_target
     assert_eq!(reply.wanted, Some(Some((Way::Copy, Kind::Typed(card.into())))));
     assert_eq!(ui.hover.as_deref(), Some("board"));
     let told = |ui: &mut Ui<Msg>| -> Vec<Option<String>> {
-        ui.access("T").nodes.iter().filter(|(_, p)| p.description() == Some("Drop target")).map(|(_, p)| p.label().map(str::to_string)).collect()
+        ui.access("T").nodes.iter().filter(|(_, p)| p.description() == Some("Drop area")).map(|(_, p)| p.label().map(str::to_string)).collect()
     };
     assert_eq!(told(&mut ui), vec![Some("Board".to_string())]);
     let reply = let_go(&mut ui, at, Given::Typed(card.into(), vec![0, 255, 7]), Way::Copy);

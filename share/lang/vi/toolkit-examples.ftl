@@ -1,7 +1,7 @@
 # machine translated (Vietnamese), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Không có màn hình nền Wayland để mở cửa sổ
-kit-run-no-window = Màn hình nền không mở cửa sổ
+kit-run-no-desktop = Không có màn hình nền Wayland nào phản hồi, nên không mở được cửa sổ
+kit-run-no-window = Màn hình nền không mở được cửa sổ.
 kit-example-hello-title = Xin chào
 kit-example-hello-button = Nhấn tôi
 kit-example-hello-none = Chưa nhấn
@@ -38,7 +38,7 @@ kit-example-gallery-hello = Xin chào, { $name }
 kit-example-gallery-progress = Tiến độ
 
 kit-example-context-title = Menu ngữ cảnh
-kit-example-context-how = Nhấp chuột phải vào thẻ, giữ ngón tay trên thẻ hoặc nhấn phím Menu
+kit-example-context-how = Nhấp chuột phải vào thẻ, nhấn giữ vào nó, hoặc nhấn phím Menu
 kit-example-context-note = Danh sách mua sắm
 kit-example-context-pinned = Đã ghim
 kit-example-context-unpinned = Chưa ghim

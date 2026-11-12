@@ -342,17 +342,17 @@ impl<M: Clone> Ui<M> {
     }
 
     fn words_menu(&mut self, id: &str, text: &str, x: f32, y: f32, lit: bool) {
-        let chosen = self.picked.as_ref().filter(|(p, e)| p == id && !e.selection().is_empty()).map(|(_, e)| e.selected().to_string());
-        let whole = chosen.as_deref().is_some_and(|c| c == text);
-        let copy = match chosen {
-            Some(c) => c,
-            None => {
-                let mut e = Edit::new(text);
-                e.select(0..text.len());
-                self.picked = Some((id.to_string(), e));
-                text.to_string()
-            }
-        };
+        let chosen = self.picked.as_ref().filter(|(p, e)| p == id && !e.selection().is_empty()).map(|(_, e)| e.selected() == text);
+        if chosen.is_none() {
+            let mut e = Edit::new(text);
+            e.select(0..text.len());
+            self.picked = Some((id.to_string(), e));
+        }
+        self.picked_menu(id, chosen == Some(true), x, y, lit);
+    }
+
+    fn picked_menu(&mut self, id: &str, whole: bool, x: f32, y: f32, lit: bool) {
+        let Some(copy) = self.picked.as_ref().filter(|(p, _)| p == id).map(|(_, e)| e.selected().to_string()) else { return };
         let mut rows = vec![(copy_row(), Act::Copy(copy))];
         if !whole {
             rows.push((popup::row("edit-select-all-symbolic", crate::t!("kit-select-all")).keys("Ctrl+A"), Act::SelectAll(id.to_string())));
@@ -437,10 +437,10 @@ impl<M: Clone> Ui<M> {
             return true;
         }
         let Some((id, e)) = self.picked.as_ref().filter(|(_, e)| !e.selection().is_empty()) else { return false };
-        let (id, text) = (id.clone(), e.text.clone());
+        let (id, whole) = (id.clone(), e.selected() == e.text);
         let Some(s) = self.spot(&id) else { return false };
         let (x, y) = (s.rect.x, s.rect.y + s.rect.h);
-        self.words_menu(&id, &text, x, y, true);
+        self.picked_menu(&id, whole, x, y, true);
         true
     }
 

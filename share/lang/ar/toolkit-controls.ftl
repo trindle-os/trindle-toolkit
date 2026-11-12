@@ -1,14 +1,14 @@
 # machine translated (Arabic), not yet reviewed by a native speaker.
 
-kit-palette-search = اكتب للعثور على إجراء
+kit-palette-search = ابحث في الإجراءات
 
-kit-palette-none = لا يوجد إجراء مطابق.
+kit-palette-none = لا توجد إجراءات مطابقة.
 
-kit-check-phone = اكتب رقم هاتف من 7 إلى 15 رقمًا.
+kit-check-phone = أدخل رقم هاتف من 7 إلى 15 خانة.
 
-kit-check-date = اكتب تاريخًا حقيقيًا بصيغة سنة-شهر-يوم، مثل 2026-10-30.
+kit-check-date = أدخل تاريخًا بصيغة سنة-شهر-يوم، مثل 2026-10-30.
 
-kit-check-hex = اكتب رمز لون مثل #fbc711.
+kit-check-hex = أدخل رمز لون، مثل #fbc711.
 
 kit-volume-mute = كتم
 
@@ -38,10 +38,10 @@ kit-dock-float = عائم فوق الصفحة
 
 kit-dock-grip = اسحب إلى حافة أخرى
 
-kit-form-number = اكتب رقمًا، مثل 12 أو 3.5.
-kit-files-open-lead = اختر الملف المراد فتحه.
-kit-files-save-lead = اختر مجلدًا واكتب اسم الحفظ.
-kit-files-folder-lead = اختر مجلدًا، أو أبقِ المجلد الحالي.
+kit-form-number = أدخل رقمًا، مثل 12 أو 3.5.
+kit-files-open-lead = اختر ملفًا لفتحه.
+kit-files-save-lead = اختر مجلدًا، ثم اكتب اسمًا للملف.
+kit-files-folder-lead = اختر مجلدًا، أو ابقَ في المجلد الذي أنت فيه.
 kit-files-open = فتح
 kit-files-save = حفظ
 kit-files-folder = اختيار هذا المجلد
@@ -51,10 +51,10 @@ kit-files-hidden = إظهار الملفات المخفية
 kit-files-list = المجلدات والملفات
 kit-files-name = اسم الملف
 kit-files-empty = هذا المجلد فارغ.
-kit-filepage-unreadable = تعذرت قراءة هذا المجلد. اختر مجلدًا آخر.
+kit-filepage-unreadable = تعذّر على Trindle فتح هذا المجلد. اختر مجلدًا آخر.
 kit-files-choose-first = اختر ملفًا أولًا.
-kit-files-name-needed = اكتب اسمًا للملف بلا شرطة مائلة.
-kit-fonts-lead = اختر خطًا وحجمه.
+kit-files-name-needed = اكتب اسمًا للملف. لا يمكن أن يحتوي على شرطة مائلة.
+kit-fonts-lead = اختر خطًّا وحجمًا.
 kit-fonts-search = ابحث عن خط بالاسم
 kit-fonts-list = الخطوط
 kit-fonts-monospace = عرض ثابت

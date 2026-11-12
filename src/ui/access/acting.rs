@@ -118,10 +118,10 @@ impl<M: Clone> Ui<M> {
 
     fn act_set_value(&mut self, id: &str, req: &ActionRequest, reply: &mut Reply<M>) {
         let Some(ActionData::Value(v)) = &req.data else { return };
-        let line = crate::ui::outside::one_line(v);
+        let line = self.entry_words(id, v);
         let replace = req.action == Action::ReplaceSelectedText;
         let Some(e) = self.edit(id) else { return };
-        let before = e.text.clone();
+        let before = e.stamp();
         if !replace {
             e.select(0..e.text.len());
         }
@@ -130,7 +130,7 @@ impl<M: Clone> Ui<M> {
         } else {
             e.insert(&line);
         }
-        self.changed(id, &before, reply);
+        self.changed(id, before, reply);
     }
 
     fn act_selection(&mut self, id: &str, req: &ActionRequest) {

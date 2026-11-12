@@ -533,13 +533,13 @@ mod tests {
     #[test]
     fn what_stayed_is_said_by_one_function_with_the_real_counts() {
         let c = Counts { unreadable: 2, ..Counts::default() };
-        assert_eq!(c.said().as_deref(), Some("Not moved: 2 unreadable files."));
-        assert_eq!(Counts { system: 1, ..Counts::default() }.said().as_deref(), Some("Not moved: 1 system file."));
-        assert_eq!(Counts { other: 63_210, ..Counts::default() }.said().as_deref(), Some("Not moved: 63,210 items."));
+        assert_eq!(c.said().as_deref(), Some("Trindle couldn't move this: 2 unreadable files."));
+        assert_eq!(Counts { system: 1, ..Counts::default() }.said().as_deref(), Some("Trindle couldn't move this: 1 system file."));
+        assert_eq!(Counts { other: 63_210, ..Counts::default() }.said().as_deref(), Some("Trindle couldn't move this: 63,210 items."));
         assert_eq!(Counts { unreadable: 1, system: 2, other: 3 }.words().as_deref(), Some("1 unreadable file, 2 system files and 3 items"));
         assert_eq!(Counts::default().said(), None);
-        assert_eq!(Counts { other: 1, ..Counts::default() }.reason(), "not moved: 1 item");
-        assert_eq!(Counts::default().reason(), "not moved: some items");
+        assert_eq!(Counts { other: 1, ..Counts::default() }.reason(), "couldn't be moved: 1 item");
+        assert_eq!(Counts::default().reason(), "couldn't be moved: some items");
     }
 
     #[test]

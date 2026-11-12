@@ -155,6 +155,8 @@ mod band_tests;
 mod role_tests;
 #[cfg(test)]
 mod segments_tests;
+#[cfg(test)]
+mod lines_tests;
 
 use copying::CopyMenu;
 #[cfg(test)]
@@ -171,6 +173,7 @@ pub fn tip_stays() -> Duration {
     theme::sheet().label_stays
 }
 const FRAME: Duration = Duration::from_millis(16);
+const EDGE_STEP: Duration = Duration::from_millis(60);
 const PART_ROOM: f32 = 64.0;
 const UNSEEN_STEP: Duration = Duration::from_millis(250);
 const SPIN: Duration = Duration::from_secs(1);
@@ -278,7 +281,7 @@ struct Rows {
     pad: f32,
     icon: f32,
     style: Style,
-    dots: Layout,
+    dots: Rc<Layout>,
 }
 
 struct Tip {
@@ -330,6 +333,7 @@ pub struct Ui<M> {
     touches: u64,
     edits: HashMap<String, Edit>,
     last_click: Option<(Instant, String, u32)>,
+    edge: Option<Instant>,
     last_down: Option<(Instant, String, (f32, f32))>,
     picked: Option<(String, Edit)>,
     right: Option<(String, (f32, f32), bool)>,
@@ -402,7 +406,7 @@ impl<M: Clone> Ui<M> {
         let mut ui = Ui {
             fonts: Fonts::new(), icons: Icons::new(), texts: Texts::default(), theme, tree, spots: Vec::new(),
             laid: None, size: (0, 0), scale: 1.0, focus: None, hover: None, hovered: None, pressed: None, dragging: None,
-            keyboard_seen: false, tip: None, tip_part: None, cuts: RefCell::new(HashMap::new()), said: RefCell::new(HashMap::new()), pointer: None, touch: None, hold: None, touches: 0, edits: HashMap::new(), last_click: None, last_down: None, picked: None, right: None, copy_menu: None, drop: None,
+            keyboard_seen: false, tip: None, tip_part: None, cuts: RefCell::new(HashMap::new()), said: RefCell::new(HashMap::new()), pointer: None, touch: None, hold: None, touches: 0, edits: HashMap::new(), last_click: None, edge: None, last_down: None, picked: None, right: None, copy_menu: None, drop: None,
             keys_here: true, scrolls: HashMap::new(), areas: Vec::new(), held: Kept::default(), puzzles: Vec::new(), stays: w::Stays::default(), chose: None, bar_hover: None, thumb: None, swipe: None, band: None, fling: fling::Fling::default(), swipe_x: None, undo: None, last_row: None, along: None, gap: None, splits: split::Splits::default(), row_drag: None, mods: Mods::default(), anchor: None, ahead: None,
             preedit: None, see_through: false, out_labels: false, sent_out: RefCell::new(None), part: Cell::new(false), pixels_at: Cell::new(None), marking: Cell::new(false), touched: RefCell::new(Vec::new()), under: RefCell::new(Vec::new()), shown: 1.0, blend: None, before: None, first_given: false, grabbed: 0, sought: 0, nudged: 0,
             last_pressed: Cell::new(None), news: String::new(), audited: false, audit_off: false, shadows: Shadows::default(),
@@ -548,7 +552,7 @@ impl<M: Clone> Ui<M> {
         if unsaid {
             self.refused = None;
         }
-        let moving = moving | unsaid | self.coast(now);
+        let moving = moving | unsaid | self.coast(now) | self.drag_scroll(now);
         let stays = self.labels != Labels::Brief || self.tells_whole();
         let Some(t) = &mut self.tip else { return moving };
         moving | match t.state {
@@ -565,11 +569,11 @@ impl<M: Clone> Ui<M> {
     }
 
     pub fn only_turns(&self) -> bool {
-        self.spinning() && !self.glows.values().any(|(_, s)| s.is_some()) && self.bell.is_none() && !self.fling.coasting()
+        self.spinning() && !self.glows.values().any(|(_, s)| s.is_some()) && self.bell.is_none() && !self.fling.coasting() && self.drag_edge().is_none()
     }
 
     pub fn next_wake(&self, now: Instant) -> Option<Duration> {
-        let frame = (self.spinning() || self.fling.coasting() || self.bell.is_some() || self.glows.values().any(|(_, s)| s.is_some())).then_some(if theme::drawn_by_processor() { FRAME * 2 } else { FRAME });
+        let frame = (self.spinning() || self.fling.coasting() || self.drag_edge().is_some() || self.bell.is_some() || self.glows.values().any(|(_, s)| s.is_some())).then_some(if theme::drawn_by_processor() { FRAME * 2 } else { FRAME });
         let tip = match self.tip.as_ref().map(|t| t.state) {
             Some(TipState::Waiting(since)) => Some((since + tip_rest()).saturating_duration_since(now)),
             Some(TipState::Shown(since)) if self.labels == Labels::Brief && !self.tells_whole() => Some((since + tip_stays()).saturating_duration_since(now)),

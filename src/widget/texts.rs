@@ -2,16 +2,17 @@
 
 use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 
 use crate::text::{Fonts, Layout, Style};
 use crate::theme;
 
 use super::Words;
 
-type TextKey = (String, u32, u16, u32, u32, bool, Option<String>);
+type TextKey = ((u64, usize), u32, u16, u32, u32, bool, Option<String>);
 
 struct Laid {
-    layout: Layout,
+    layout: Rc<Layout>,
     turn: u64,
     frame: u64,
 }
@@ -26,22 +27,29 @@ pub(crate) struct Texts {
     laid: std::cell::Cell<u64>,
 }
 
+fn words_key(text: &str) -> (u64, usize) {
+    use std::hash::{Hash, Hasher};
+    let mut h = std::collections::hash_map::DefaultHasher::new();
+    text.hash(&mut h);
+    (h.finish(), text.len())
+}
+
 impl Texts {
-    pub(crate) fn get(&self, fonts: &Fonts, text: &str, style: &Style, width: Option<f32>) -> Layout {
+    pub(crate) fn get(&self, fonts: &Fonts, text: &str, style: &Style, width: Option<f32>) -> Rc<Layout> {
         if self.seen.replace(fonts.generation()) != fonts.generation() {
             self.kept.borrow_mut().clear();
         }
-        let key = (text.to_string(), style.size.to_bits(), style.weight, width.map_or(u32::MAX, |w| w.round() as u32), style.spacing.to_bits(),
+        let key = (words_key(text), style.size.to_bits(), style.weight, width.map_or(u32::MAX, |w| w.round() as u32), style.spacing.to_bits(),
                    style.italic, style.family.clone());
         let (turn, frame) = (self.turns.get(), self.frames.get());
         let mut kept = self.kept.borrow_mut();
-        if let Some(k) = kept.get_mut(&key) {
+        if let Some(k) = kept.get_mut(&key).filter(|k| k.layout.is_of(text)) {
             (k.turn, k.frame) = (turn, frame);
             return k.layout.clone();
         }
         #[cfg(test)]
         self.laid.set(self.laid.get() + 1);
-        let layout = fonts.layout(text, style, width);
+        let layout = Rc::new(fonts.layout(text, style, width));
         kept.insert(key, Laid { layout: layout.clone(), turn, frame });
         layout
     }
@@ -100,11 +108,11 @@ pub(crate) fn action_room(scale: f32) -> f32 {
     (theme::sheet().action_padding * scale / 2.0).round()
 }
 
-pub(crate) fn action_words(fonts: &Fonts, texts: &Texts, words: &str, across: f32, scale: f32) -> Layout {
+pub(crate) fn action_words(fonts: &Fonts, texts: &Texts, words: &str, across: f32, scale: f32) -> Rc<Layout> {
     action_words_in(theme::sheet(), fonts, texts, words, across, scale)
 }
 
-pub(crate) fn action_words_in(s: &theme::Sheet, fonts: &Fonts, texts: &Texts, words: &str, across: f32, scale: f32) -> Layout {
+pub(crate) fn action_words_in(s: &theme::Sheet, fonts: &Fonts, texts: &Texts, words: &str, across: f32, scale: f32) -> Rc<Layout> {
     let style = action_style_in(s, scale);
     let whole = texts.get(fonts, words, &style, None);
     let room = across - action_fixed_in(s, scale);
@@ -115,9 +123,9 @@ pub(crate) fn action_words_in(s: &theme::Sheet, fonts: &Fonts, texts: &Texts, wo
     let dots = texts.get(fonts, "\u{2026}", &style, None);
     let two = texts.get(fonts, words, &style, Some(room)).cut_after(2, room, &dots);
     if two.lines.iter().all(|l| l.width <= room + 0.5) {
-        return two;
+        return Rc::new(two);
     }
-    whole.cut(room, &dots)
+    Rc::new(whole.cut(room, &dots))
 }
 
 pub(crate) fn word_button_style(scale: f32) -> Style {

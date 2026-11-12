@@ -69,7 +69,7 @@ fn the_screen_reader_is_told_the_name_the_kind_and_the_figures() {
     assert!(said(Chart::columns("Sales", &[2.5])).contains(&"Sales: column chart, 1 value: 2.5.".to_string()));
     assert!(said(Chart::spark("Load", &[1.0, 2.0])).iter().any(|s| s.starts_with("Load: sparkline, 2 values")));
     assert!(said(Chart::area("Load", &[1.0, 2.0])).iter().any(|s| s.starts_with("Load: area chart")));
-    assert!(said(Chart::line("None", &[])).contains(&"None: chart with no values.".to_string()));
+    assert!(said(Chart::line("None", &[])).contains(&"None: this chart has no values.".to_string()));
 }
 
 #[test]

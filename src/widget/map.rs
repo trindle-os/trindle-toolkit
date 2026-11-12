@@ -105,9 +105,9 @@ fn map_what<M: 'static, N: 'static>(what: &mut What<M>, f: &Rc<dyn Fn(M) -> N>) 
         What::Slider { value, min, max, step, tip, change } => What::Slider {
             value: *value, min: *min, max: *max, step: *step, tip: std::mem::take(tip), change: via(replace(change, never()), f),
         },
-        What::Entry { text, tip, change, submit, secret, kind, guarded, show, spoken, select, leave, tab, updown, centre, weight, misspelt, back, steps } => What::Entry {
+        What::Entry { text, tip, change, submit, secret, kind, guarded, show, spoken, lines, select, leave, tab, updown, centre, weight, misspelt, back, steps } => What::Entry {
             text: std::mem::take(text), tip: std::mem::take(tip), change: via(replace(change, never()), f),
-            submit: submit.take().map(|m| f(m)), secret: *secret, kind: *kind, guarded: *guarded, show: *show, spoken: spoken.take(),
+            submit: submit.take().map(|m| f(m)), secret: *secret, kind: *kind, guarded: *guarded, show: *show, spoken: spoken.take(), lines: *lines,
             select: select.take(), leave: leave.take().map(|m| f(m)), tab: tab.take().map(|t| via(t, f)),
             updown: updown.take().map(|t| via(t, f)), centre: *centre, weight: *weight, misspelt: std::mem::take(misspelt), back: back.take().map(|m| f(m)), steps: steps.take().map(|s| via(s, f)),
         },

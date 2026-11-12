@@ -64,9 +64,9 @@ fn the_palette_runs_what_is_typed_with_enter_and_lists_the_rest() {
     assert_eq!(pal, Palette::default(), "running an action empties the palette");
     pal.query = "zzz".into();
     let mut ui = ui_of(pal.view(&all, Msg::Palette));
-    assert!(ui.tree.said().iter().any(|w| w == "No action matches."));
+    assert!(ui.tree.said().iter().any(|w| w == "No matching actions."));
     let told = ui.access("Test");
-    assert!(told.nodes.iter().any(|(_, n)| n.role() == accesskit::Role::TextInput && n.label() == Some("Type to find an action")));
+    assert!(told.nodes.iter().any(|(_, n)| n.role() == accesskit::Role::TextInput && n.label() == Some("Search actions")));
 }
 
 #[test]
@@ -142,7 +142,7 @@ fn a_checked_box_shows_red_words_only_once_left_and_nothing_moves() {
     assert!(!ui.tree.said().iter().any(|w| w.starts_with("Write")), "not called wrong while typing");
     b.update(validate::Edit::Left);
     let mut ui = ui_of(tree(&b));
-    assert!(ui.tree.said().iter().any(|w| w == "Write a colour code such as #fbc711."));
+    assert!(ui.tree.said().iter().any(|w| w == "Enter a colour code, such as #fbc711."));
     assert_eq!(ui.spot("under").unwrap().rect.y, below, "the words under it did not move");
     let told = ui.access("Test");
     let entry = role_of(&told, accesskit::Role::TextInput).unwrap();

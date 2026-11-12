@@ -20,7 +20,7 @@ kit-more-people =
        *[other] Watu { $n } zaidi
     }
 kit-gradient-bar = Gradient yenye vituo { $n }
-kit-gradient-place = Mahali pa kituo kilichochaguliwa
+kit-gradient-place = Nafasi ya kituo kilichochaguliwa
 kit-gradient-add = Ongeza kituo
 kit-gradient-remove = Ondoa kituo
 kit-help-show = Onyesha msaada

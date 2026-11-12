@@ -2,7 +2,7 @@
 
 kit-chart-part = الجزء { $n }
 
-kit-chart-empty = { $name }: مخطط بلا قيم.
+kit-chart-empty = { $name }: لا قيم في هذا المخطط.
 
 kit-chart-line =
     { $n ->

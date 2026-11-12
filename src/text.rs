@@ -112,6 +112,10 @@ impl Layout {
         self.lines.iter().map(|l| l.x).fold(f32::INFINITY, f32::min)
     }
 
+    pub(crate) fn is_of(&self, text: &str) -> bool {
+        *self.whole == *text
+    }
+
     #[cfg(any(test, feature = "testing"))]
     pub fn whole(&self) -> &Rc<str> {
         &self.whole
@@ -218,9 +222,12 @@ impl Layout {
         out
     }
 
+    pub fn line_of(&self, at: usize) -> usize {
+        self.lines.iter().position(|l| at < l.range.end || (at == l.range.end && at == l.shown_end)).unwrap_or(self.lines.len().saturating_sub(1))
+    }
+
     pub fn caret(&self, at: usize) -> (f32, f32, f32) {
-        let Some(line) = self.lines.iter().find(|l| at < l.range.end || (at == l.range.end && at == l.shown_end))
-            .or(self.lines.last()) else { return (0.0, 0.0, 0.0) };
+        let Some(line) = self.lines.get(self.line_of(at)) else { return (0.0, 0.0, 0.0) };
         let first = line.glyphs.iter().enumerate().filter(|(_, g)| g.at >= at).min_by_key(|(_, g)| g.at);
         let x = match first {
             Some((i, g)) if g.rtl => line.glyphs.get(i + 1).map_or(line.x + line.width, |n| n.x),

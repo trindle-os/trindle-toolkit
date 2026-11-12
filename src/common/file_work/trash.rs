@@ -216,6 +216,64 @@ pub fn origin(trashed: &Path) -> Option<PathBuf> {
     }
 }
 
+pub fn drive_top(trashed: &Path) -> Option<PathBuf> {
+    let (_, top) = parts(trashed)?;
+    top
+}
+
+pub fn folder_beneath(top: &fs::File, rel: &Path, make: bool) -> io::Result<fs::File> {
+    let mut at = top.try_clone()?;
+    for part in rel.components() {
+        let std::path::Component::Normal(name) = part else { return Err(io::Error::from(io::ErrorKind::InvalidInput)) };
+        let (next, meta) = match crate::common::files::open_in(&at, name, None) {
+            Ok(found) => found,
+            Err(e) if make && e.kind() == io::ErrorKind::NotFound => {
+                let c = std::ffi::CString::new(name.as_bytes()).map_err(|_| io::Error::from(io::ErrorKind::InvalidInput))?;
+                crate::sys::disk::make_folder_in(&at, &c)?;
+                crate::common::files::open_in(&at, name, None)?
+            }
+            Err(e) => return Err(e),
+        };
+        if !meta.is_dir() {
+            return Err(io::Error::from(io::ErrorKind::NotADirectory));
+        }
+        at = next;
+    }
+    Ok(at)
+}
+
+const SPARE_NAMES: usize = 1000;
+
+pub fn move_into_drive(top: &Path, from: &Path, to: &Path) -> io::Result<PathBuf> {
+    let (top_dir, _) = crate::common::files::open_same(top, None)?;
+    let rel = |p: &Path| p.parent().and_then(|d| d.strip_prefix(top).ok()).map(Path::to_path_buf).ok_or(io::ErrorKind::InvalidInput);
+    let from_dir = folder_beneath(&top_dir, &rel(from)?, false)?;
+    let to_dir = folder_beneath(&top_dir, &rel(to)?, true)?;
+    let c = |n: &std::ffi::OsStr| std::ffi::CString::new(n.as_bytes()).map_err(|_| io::Error::from(io::ErrorKind::InvalidInput));
+    let (from_name, to_name) = (from.file_name().ok_or(io::ErrorKind::InvalidInput)?, to.file_name().ok_or(io::ErrorKind::InvalidInput)?);
+    let from_c = c(from_name)?;
+    match crate::sys::disk::rename_between(&from_dir, &from_c, &to_dir, &c(to_name)?) {
+        Err(e) if e.kind() == io::ErrorKind::AlreadyExists => {}
+        done => return done.map(|()| to.to_path_buf()),
+    }
+    let (_, meta) = crate::common::files::open_in(&from_dir, from_name, None)?;
+    let (mut tried, mut result) = (0, Err(io::Error::from(io::ErrorKind::AlreadyExists)));
+    let spare = crate::common::files::free_in(to_name, meta.is_dir(), |n| {
+        tried += 1;
+        if tried > SPARE_NAMES {
+            return false;
+        }
+        match c(n).and_then(|n| crate::sys::disk::rename_between(&from_dir, &from_c, &to_dir, &n)) {
+            Err(e) if e.kind() == io::ErrorKind::AlreadyExists => true,
+            done => {
+                result = done;
+                false
+            }
+        }
+    });
+    result.map(|()| to.with_file_name(spare))
+}
+
 fn contained(top: &Path, rel: &Path) -> Option<PathBuf> {
     let mut at = top.to_path_buf();
     for c in rel.components() {
@@ -362,3 +420,148 @@ mod tests {
         assert_eq!(&t[10..11], "T");
     }
 }
+
+#[cfg(test)]
+mod beneath_tests {
+    use super::*;
+    use std::os::unix::fs::symlink;
+
+    fn drive(name: &str) -> PathBuf {
+        let dir = std::env::temp_dir().join(format!("trindle-beneath-{name}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(dir.join(".Trash-1000/files")).unwrap();
+        fs::write(dir.join(".Trash-1000/files/x"), b"one").unwrap();
+        dir
+    }
+
+    #[test]
+    fn a_pipe_in_place_of_the_drive_top_is_refused_without_waiting() {
+        let dir = drive("pipe");
+        let pipe = dir.join("pipe");
+        let name = std::ffi::CString::new(pipe.as_os_str().as_bytes()).unwrap();
+        assert_eq!(crate::sys::os::mkfifo(&name, 0o600), 0);
+        let (sender, answer) = std::sync::mpsc::channel();
+        let (from, to) = (dir.join(".Trash-1000/files/x"), dir.join("x"));
+        std::thread::spawn(move || {
+            let _ = sender.send(move_into_drive(&pipe, &from, &to).is_err());
+        });
+        assert_eq!(answer.recv_timeout(std::time::Duration::from_secs(5)), Ok(true));
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_drive_item_moves_into_its_folder_through_the_opened_folders() {
+        let dir = drive("moves");
+        move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("a/b/x")).unwrap();
+        assert_eq!(fs::read(dir.join("a/b/x")).unwrap(), b"one");
+        assert!(!dir.join(".Trash-1000/files/x").exists());
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_link_on_the_way_is_refused_and_nothing_leaves_the_drive() {
+        let dir = drive("link");
+        let outside = dir.with_extension("outside");
+        fs::create_dir_all(&outside).unwrap();
+        symlink(&outside, dir.join("link")).unwrap();
+        assert!(move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("link/evil")).is_err());
+        assert!(!outside.join("evil").exists(), "nothing was written through the link");
+        assert_eq!(fs::read(dir.join(".Trash-1000/files/x")).unwrap(), b"one", "the item stays in the Trash");
+        let _ = fs::remove_dir_all(&outside);
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_free_name_is_kept_and_reported() {
+        let dir = drive("free");
+        let landed = move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("a/x")).unwrap();
+        assert_eq!(landed, dir.join("a/x"));
+        assert_eq!(fs::read(dir.join("a/x")).unwrap(), b"one");
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_taken_name_lands_on_the_next_free_number() {
+        let dir = drive("spare");
+        fs::create_dir_all(dir.join("a")).unwrap();
+        fs::write(dir.join("a/x"), b"two").unwrap();
+        let landed = move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("a/x")).unwrap();
+        assert_eq!(landed, dir.join("a/x (2)"));
+        assert_eq!(fs::read(dir.join("a/x (2)")).unwrap(), b"one");
+        assert_eq!(fs::read(dir.join("a/x")).unwrap(), b"two");
+        assert!(!dir.join(".Trash-1000/files/x").exists());
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn several_taken_names_land_on_the_first_free_number_and_keep_the_ending() {
+        let dir = drive("several");
+        fs::write(dir.join(".Trash-1000/files/one.txt"), b"one").unwrap();
+        fs::create_dir_all(dir.join("a")).unwrap();
+        for n in ["one.txt", "one (2).txt", "one (3).txt"] {
+            fs::write(dir.join("a").join(n), b"other").unwrap();
+        }
+        let landed = move_into_drive(&dir, &dir.join(".Trash-1000/files/one.txt"), &dir.join("a/one.txt")).unwrap();
+        assert_eq!(landed, dir.join("a/one (4).txt"));
+        assert_eq!(fs::read(dir.join("a/one (4).txt")).unwrap(), b"one");
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_taken_folder_name_gets_a_number_at_the_end() {
+        let dir = drive("folder");
+        fs::create_dir_all(dir.join(".Trash-1000/files/d.v1")).unwrap();
+        fs::create_dir_all(dir.join("a/d.v1")).unwrap();
+        let landed = move_into_drive(&dir, &dir.join(".Trash-1000/files/d.v1"), &dir.join("a/d.v1")).unwrap();
+        assert_eq!(landed, dir.join("a/d.v1 (2)"));
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn when_every_spare_name_is_taken_it_is_refused_and_the_item_stays() {
+        let dir = drive("cap");
+        fs::create_dir_all(dir.join("a")).unwrap();
+        fs::write(dir.join("a/x"), b"two").unwrap();
+        for n in 2..=SPARE_NAMES + 1 {
+            fs::write(dir.join(format!("a/x ({n})")), b"other").unwrap();
+        }
+        let refused = move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("a/x")).unwrap_err();
+        assert_eq!(refused.kind(), io::ErrorKind::AlreadyExists);
+        assert_eq!(fs::read(dir.join(".Trash-1000/files/x")).unwrap(), b"one");
+        assert!(!dir.join(format!("a/x ({})", SPARE_NAMES + 2)).exists());
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_taken_name_that_is_a_link_is_not_followed_and_a_spare_name_is_used() {
+        let dir = drive("linkname");
+        let outside = dir.with_extension("target");
+        fs::write(&outside, b"outside").unwrap();
+        fs::create_dir_all(dir.join("a")).unwrap();
+        symlink(&outside, dir.join("a/x")).unwrap();
+        let landed = move_into_drive(&dir, &dir.join(".Trash-1000/files/x"), &dir.join("a/x")).unwrap();
+        assert_eq!(landed, dir.join("a/x (2)"));
+        assert_eq!(fs::read(&outside).unwrap(), b"outside", "the link was not written through");
+        let _ = fs::remove_file(&outside);
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_folder_swapped_for_a_link_after_it_was_opened_takes_nothing_outside() {
+        let dir = drive("swap");
+        let outside = dir.with_extension("elsewhere");
+        fs::create_dir_all(&outside).unwrap();
+        fs::create_dir_all(dir.join("a")).unwrap();
+        let top = fs::File::open(&dir).unwrap();
+        let held = folder_beneath(&top, Path::new("a"), false).unwrap();
+        let from = folder_beneath(&top, Path::new(".Trash-1000/files"), false).unwrap();
+        fs::rename(dir.join("a"), dir.join("a_real")).unwrap();
+        symlink(&outside, dir.join("a")).unwrap();
+        crate::sys::disk::rename_between(&from, &std::ffi::CString::new("x").unwrap(), &held, &std::ffi::CString::new("x").unwrap()).unwrap();
+        assert_eq!(fs::read(dir.join("a_real/x")).unwrap(), b"one", "it landed in the folder that was opened");
+        assert!(!outside.join("x").exists());
+        let _ = fs::remove_dir_all(&outside);
+        fs::remove_dir_all(&dir).unwrap();
+    }
+}
+

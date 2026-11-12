@@ -20,7 +20,19 @@ pub(super) fn line_height(line: &[(usize, f32, f32)]) -> f32 {
     line.iter().map(|p| p.2).fold(0.0, f32::max)
 }
 
+pub(crate) fn lines_pad(entry_height: f32, line: f32) -> f32 {
+    ((entry_height - line) / 2.0).round().max(0.0)
+}
+
 impl Lay<'_> {
+    fn measure_lines(&self, text: &str, lines: usize, across: f32) -> f32 {
+        let style = Words::Plain.style(self.scale);
+        let line = self.texts.get(self.fonts, " ", &style, None).height;
+        let pad = self.px(theme::sheet().entry_padding);
+        let filled = self.texts.get(self.fonts, text, &style, Some((across - 2.0 * pad).max(1.0))).lines.len();
+        filled.max(lines) as f32 * line + 2.0 * lines_pad(self.px(theme::sheet().entry_height), line)
+    }
+
     pub(super) fn scroll_room<M>(&self, inner: &Node<M>, rect: Rect) -> (f32, f32) {
         let full = self.measure(inner, rect.w).1;
         if full <= rect.h + 0.5 {
@@ -109,7 +121,7 @@ impl Lay<'_> {
             What::Space | What::Divider { .. } => (0.0, 0.0),
             What::Label { .. } => self.measure_label(n, max_w),
             What::Rich { spans, words, .. } => {
-                let f = crate::rich::flow(&|t, s| self.texts.get(self.fonts, t, s, None), spans, &words.style(self.scale), Some(max_w.max(1.0)));
+                let f = crate::rich::flow(&|t, s| (*self.texts.get(self.fonts, t, s, None)).clone(), spans, &words.style(self.scale), Some(max_w.max(1.0)));
                 (f.width.ceil(), f.height.ceil())
             }
             What::Ring { size, .. } | What::Spinner { size } => (self.px(*size), self.px(*size)),
@@ -118,6 +130,10 @@ impl Lay<'_> {
             What::Switch { .. } => (self.px(theme::sheet().switch.0), self.px(theme::sheet().switch.1)),
             What::Tick { .. } => (self.px(crate::theme::sheet().tick), self.px(crate::theme::sheet().tick)),
             What::Slider { .. } => (self.px(theme::SLIDER_MIN_WIDTH), self.px(theme::sheet().switch.1)),
+            What::Entry { text, lines, .. } if *lines > 1 => {
+                let least = self.px(theme::ENTRY_MIN_WIDTH);
+                (least, self.measure_lines(text, *lines, if self.natural.get() { least.min(max_w) } else { max_w }))
+            }
             What::Entry { .. } => (self.px(theme::ENTRY_MIN_WIDTH), self.px(theme::sheet().entry_height)),
             What::List { rows, row, .. } => (self.px(theme::ENTRY_MIN_WIDTH), self.px(*row) * rows.len() as f32),
             What::Dropdown { options, chosen, .. } => {

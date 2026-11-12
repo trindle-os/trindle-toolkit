@@ -20,7 +20,7 @@ kit-more-people =
        *[other] Mais { $n } pessoas
     }
 kit-gradient-bar = Gradiente com { $n } pontos
-kit-gradient-place = Posição do ponto escolhido
+kit-gradient-place = Posição do ponto selecionado
 kit-gradient-add = Adicionar um ponto
 kit-gradient-remove = Remover o ponto
 kit-help-show = Mostrar a ajuda

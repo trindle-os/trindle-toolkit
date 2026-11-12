@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `Node::lines(n)` makes an `entry` a box of many lines, at least `n` tall: words wrap at its width, Enter starts a line, Ctrl+Enter sends `on_submit`, Up, Down, Home and End go by line, and it grows with its words, then scrolls to keep the caret in view. Undo, the input method, spelling marks and the pointer work as in the one-line box, pasted lines are kept, and a screen reader hears a multi-line text box. A password box stays one line.
 - The size budget for the smallest program counts only the part loaded to run (18 MB), not the symbol names, which crash reports need and which newer compilers make longer: the same program was 20.8 MB on Rust 1.85 and 22.5 MB on 1.98 while its code got smaller.
 - A window is laid out again when fontconfig's answer or the computer's fonts come in, not only drawn again, so words first set in the stand-in font that now wrap or grow push what follows down instead of lying over it.
 - A card is solid to the pointer: a press on a card floating over a button, such as a menu card, no longer reaches the button under it, with a finger too.
@@ -84,8 +85,8 @@ Added for the first version:
 - `dock::Dock` (panels at the sides, the foot or floating, moved by buttons or by dragging the handle on its head, with a line in the highlight at the edge it would land on; `Dock::update` takes a `dock::Change` and returns the `Moved` panel), `toolbox::toolbox`, `toolbox::tab_pages` (tabs inside tabs) and `info::info_panel` in place of banners and toasts.
 - `model::ListModel` (sort, filter, group, change events) and `form::Form` (a form tied to a record).
 - A test of Arabic's six plural forms.
-- The desktop's light or dark setting is read from COSMIC's own file where there is no settings portal, and followed live.
-- `config::Config`: settings as a file per key in a versioned folder, as cosmic-config keeps them, with a watcher that names the keys changed.
+- The desktop's light or dark setting is read from the desktop's own mode file where there is no settings portal, and followed live.
+- `config::Config`: settings as a file per key in a versioned folder, as desktop settings systems keep them, with a watcher that names the keys changed.
 - `Layer::Background` and `Layer::Bottom`, ready-made `Panel::bar`, `dock`, `display` and `wallpaper`, and `Panel::popup` to place an applet's popup beside its panel button.
 - `notify::Heard::Pass`, the pass a notification gives to bring the window forward, and `Note::reply` with `Heard::Replied` for an answer typed in the notification.
 - Tablet pens (`Input::Pen` and `PenOut`, with pointer events as a mouse makes) and `Window::hold_pointer` with `Input::PointerBy`.

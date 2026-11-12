@@ -15,7 +15,7 @@ impl<M: Clone> Ui<M> {
         (!pressed).then(|| s.id.clone())
     }
 
-    pub(super) fn pick_layout(&self, id: &str) -> Option<(Layout, Rect)> {
+    pub(super) fn pick_layout(&self, id: &str) -> Option<(Rc<Layout>, Rect)> {
         let spot = self.spot(id)?;
         let node = self.node(id)?;
         let What::Label { text, words, .. } = &node.what else { return None };
@@ -98,6 +98,9 @@ impl<M: Clone> Ui<M> {
     }
 
     pub(super) fn entry_lead(&self, id: &str, words: f32, room: f32) -> f32 {
+        if self.entry_lines(id) > 1 {
+            return 0.0;
+        }
         match self.node(id).map(|n| &n.what) {
             Some(What::Entry { centre: true, .. }) => ((room - words) / 2.0).floor().max(0.0),
             Some(What::Entry { text, .. }) if !self.entry_dots(id) && edit::right_to_left(text) => (room - words).floor().max(0.0),
@@ -113,12 +116,96 @@ impl<M: Clone> Ui<M> {
         }
     }
 
-    pub(super) fn entry_layout(&self, id: &str, text: &str, dots: bool) -> Layout {
-        let shown = if dots { edit::dots(text) } else { text.to_string() };
-        self.texts.get(&self.fonts, &shown, &self.entry_style(id), None)
+    pub(super) fn entry_lines(&self, id: &str) -> usize {
+        match self.node(id).map(|n| &n.what) {
+            Some(What::Entry { lines, .. }) => *lines,
+            _ => 1,
+        }
     }
 
-    pub(super) fn entry_hit(&self, id: &str, x: f32) -> usize {
+    pub(super) fn entry_down(&self, id: &str, high: f32, words: f32) -> f32 {
+        if self.entry_lines(id) <= 1 {
+            return ((high - words) / 2.0).round();
+        }
+        self.entry_rise(id) - self.edits.get(id).map_or(0.0, |e| e.scroll_y)
+    }
+
+    pub(super) fn entry_rise(&self, id: &str) -> f32 {
+        w::lines_pad(self.px(theme::sheet().entry_height), self.entry_line(id))
+    }
+
+    pub(super) fn entry_line(&self, id: &str) -> f32 {
+        self.texts.get(&self.fonts, " ", &self.entry_style(id), None).height
+    }
+
+    pub(super) fn entry_tall(&self, id: &str) -> f32 {
+        self.spot(id).map_or(0.0, |s| s.rect.h) - 2.0 * self.entry_rise(id)
+    }
+
+    pub(super) fn wheel_entry(&mut self, x: f32, y: f32, lines: f32) -> bool {
+        let Some(id) = self.spots.iter().rev().find(|s| s.shows(x, y)).map(|s| s.id.clone()).filter(|id| self.entry_lines(id) > 1) else { return false };
+        if self.edit(&id).is_none() {
+            return false;
+        }
+        let Some(e) = self.edits.get(&id) else { return false };
+        let reach = (self.entry_layout(&id, &e.text, self.entry_dots(&id)).height - self.entry_tall(&id)).max(0.0);
+        let by = lines * self.entry_line(&id);
+        let Some(e) = self.edit(&id) else { return false };
+        let to = (e.scroll_y + by).clamp(0.0, reach);
+        if to == e.scroll_y {
+            return false;
+        }
+        e.viewed.get_or_insert((e.caret, e.text.len()));
+        e.scroll_y = to;
+        true
+    }
+
+    pub(super) fn drag_edge(&self) -> Option<(String, f32)> {
+        let id = self.dragging.as_deref().filter(|id| self.entry_lines(id) > 1)?;
+        let (r, (_, y)) = (self.spot(id)?.rect, self.pointer?);
+        let way = if y < r.y { -1.0 } else if y > r.y + r.h { 1.0 } else { return None };
+        Some((id.to_string(), way))
+    }
+
+    pub(super) fn drag_scroll(&mut self, now: Instant) -> bool {
+        let Some((id, way)) = self.drag_edge() else {
+            self.edge = None;
+            return false;
+        };
+        if self.edge.is_some_and(|t| now < t + EDGE_STEP) {
+            return false;
+        }
+        self.edge = Some(now);
+        if self.edit(&id).is_none() {
+            return false;
+        }
+        let (Some((x, y)), Some(e)) = (self.pointer, self.edits.get(&id)) else { return false };
+        let reach = (self.entry_layout(&id, &e.text, false).height - self.entry_tall(&id)).max(0.0);
+        let by = way * self.entry_line(&id);
+        let Some(e) = self.edit(&id) else { return false };
+        let to = (e.scroll_y + by).clamp(0.0, reach);
+        let slid = to != e.scroll_y;
+        e.scroll_y = to;
+        let at = self.entry_hit_at(&id, x, self.drag_y(&id, y));
+        let Some(e) = self.edit(&id) else { return false };
+        let grew = e.caret != at;
+        e.move_to(at, true);
+        slid || grew
+    }
+
+    pub(super) fn drag_y(&self, id: &str, y: f32) -> f32 {
+        let Some(r) = self.spot(id).map(|s| s.rect).filter(|_| self.entry_lines(id) > 1) else { return y };
+        let top = r.y + self.entry_rise(id);
+        y.clamp(top, (r.y + r.h - self.entry_rise(id) - 1.0).max(top))
+    }
+
+    pub(super) fn entry_layout(&self, id: &str, text: &str, dots: bool) -> Rc<Layout> {
+        let shown = if dots { std::borrow::Cow::Owned(edit::dots(text)) } else { std::borrow::Cow::Borrowed(text) };
+        let across = self.spot(id).filter(|_| self.entry_lines(id) > 1).map(|s| (s.rect.w - 2.0 * self.entry_pad(id)).max(1.0));
+        self.texts.get(&self.fonts, &shown, &self.entry_style(id), across)
+    }
+
+    pub(super) fn entry_hit_at(&self, id: &str, x: f32, y: f32) -> usize {
         let (Some(spot), Some(What::Entry { text, .. })) = (self.spot(id), self.node(id).map(|n| &n.what)) else { return 0 };
         let dots = self.entry_dots(id);
         let scroll = self.edits.get(id).map_or(0.0, |e| e.scroll);
@@ -126,14 +213,23 @@ impl<M: Clone> Ui<M> {
         let layout = self.entry_layout(id, text, dots);
         let room = spot.rect.w - 2.0 * pad - if self.entry_secret(id) { self.eye_room(spot.rect) } else { 0.0 };
         let lead = self.entry_lead(id, layout.width, room);
-        let at = layout.hit(x - spot.rect.x - pad - lead + scroll, 0.0);
+        let down = if self.entry_lines(id) > 1 { self.entry_down(id, spot.rect.h, layout.height) } else { 0.0 };
+        let at = layout.hit(x - spot.rect.x - pad - lead + scroll, y - spot.rect.y - down);
         if dots { edit::from_dots(text, at) } else { at }
+    }
+
+    pub(super) fn entry_words(&self, id: &str, text: &str) -> String {
+        if self.entry_lines(id) > 1 { outside::many_lines(text) } else { outside::one_line(text) }
     }
 
     pub(super) fn edit_key(&mut self, id: &str, sym: Keysym, text: Option<&str>, mods: Mods, reply: &mut Reply<M>) {
         let secret = self.entry_secret(id);
         if matches!(sym, Keysym::Return | Keysym::KP_Enter) {
-            self.submit_entry(id, reply);
+            if self.entry_lines(id) > 1 && !mods.ctrl {
+                self.insert_in(id, "\n", reply);
+            } else {
+                self.submit_entry(id, reply);
+            }
             return;
         }
         if let (Keysym::Up | Keysym::KP_Up | Keysym::Down | Keysym::KP_Down, Some(What::Entry { updown: Some(f), .. })) = (sym, self.node(id).map(|n| &n.what)) {
@@ -146,13 +242,56 @@ impl<M: Clone> Ui<M> {
                 return;
             }
         }
+        if self.entry_lines(id) > 1 && self.move_by_line(id, sym, mods) {
+            reply.redraw = true;
+            return;
+        }
         let Some(e) = self.edit(id) else { return };
-        let before = e.text.clone();
+        let before = e.stamp();
         if !(edit_moving(e, sym, mods, secret, reply) || edit_clipboard(e, sym, mods, secret, reply) || edit_typing(e, text, mods)) {
             return;
         }
         reply.redraw = true;
-        self.changed(id, &before, reply);
+        self.changed(id, before, reply);
+    }
+
+    fn insert_in(&mut self, id: &str, words: &str, reply: &mut Reply<M>) {
+        let Some(e) = self.edit(id) else { return };
+        let before = e.stamp();
+        e.insert(words);
+        reply.redraw = true;
+        self.changed(id, before, reply);
+    }
+
+    fn move_by_line(&mut self, id: &str, sym: Keysym, mods: Mods) -> bool {
+        let (up, down) = (matches!(sym, Keysym::Up | Keysym::KP_Up), matches!(sym, Keysym::Down | Keysym::KP_Down));
+        let (home, end) = (matches!(sym, Keysym::Home | Keysym::KP_Home), matches!(sym, Keysym::End | Keysym::KP_End));
+        if !(up || down || home || end) || (mods.ctrl && (home || end)) {
+            return false;
+        }
+        let Some((caret, kept)) = self.edit(id).map(|e| (e.caret, e.column)) else { return false };
+        let Some(text) = self.edits.get(id).map(|e| e.text.as_str()) else { return false };
+        let layout = self.entry_layout(id, text, false);
+        let here = layout.line_of(caret);
+        let Some(line) = layout.lines.get(here) else { return false };
+        let column = kept.unwrap_or_else(|| layout.caret(caret).0);
+        let at = if home {
+            line.range.start
+        } else if end {
+            if text[line.range.end..].chars().next().is_none_or(|c| c == '\n') { line.range.end } else { line.shown_end }
+        } else {
+            let wanted = if up { here.checked_sub(1) } else { Some(here + 1).filter(|&n| n < layout.lines.len()) };
+            match wanted.and_then(|n| layout.lines.get(n)) {
+                Some(to) => layout.hit(column, to.top + to.height / 2.0),
+                None if up => 0,
+                None => text.len(),
+            }
+        };
+        if let Some(e) = self.edit(id) {
+            e.move_to(at, mods.shift);
+            e.column = (up || down).then_some(column);
+        }
+        true
     }
 
     fn submit_entry(&mut self, id: &str, reply: &mut Reply<M>) {
@@ -162,9 +301,9 @@ impl<M: Clone> Ui<M> {
         }
     }
 
-    pub(super) fn changed(&self, id: &str, before: &str, reply: &mut Reply<M>) {
+    pub(super) fn changed(&self, id: &str, before: (usize, u64), reply: &mut Reply<M>) {
         let (Some(e), Some(What::Entry { change, .. })) = (self.edits.get(id), self.node(id).map(|n| &n.what)) else { return };
-        if e.text != before {
+        if e.stamp() != before {
             reply.messages.push(change(e.text.clone()));
         }
     }
@@ -173,14 +312,8 @@ impl<M: Clone> Ui<M> {
         self.settle();
         let mut reply = Reply::new();
         let Some(id) = self.focus.clone().filter(|id| self.is_entry(id)) else { return reply };
-        let line = outside::one_line(text);
-        let Some(e) = self.edit(&id) else { return reply };
-        let before = e.text.clone();
-        if !line.is_empty() {
-            e.insert(&line);
-        }
-        reply.redraw = true;
-        self.changed(&id, &before, &mut reply);
+        let words = self.entry_words(&id, text);
+        self.insert_in(&id, &words, &mut reply);
         reply
     }
 

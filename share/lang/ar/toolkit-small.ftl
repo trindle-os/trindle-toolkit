@@ -40,7 +40,7 @@ kit-more-people =
 
 kit-gradient-bar = تدرج بـ { $n } نقاط توقف
 
-kit-gradient-place = موضع نقطة التوقف المختارة
+kit-gradient-place = موضع نقطة التوقف المحددة
 
 kit-gradient-add = إضافة نقطة توقف
 

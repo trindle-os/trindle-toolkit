@@ -80,7 +80,7 @@ fn what_is_put_in_a_folder_while_it_is_moved_is_not_removed() {
     assert_eq!(fs::read(&late).ok().as_deref(), Some(&b"written meanwhile"[..]), "a file that was never copied was removed");
     nothing_lost(&from, &to);
     assert!(!from.join("proj/more/three.txt").exists() && !from.join("proj/inner").exists(), "what was copied was not moved");
-    assert!(over.failed.iter().any(|f| f.starts_with("proj (not moved: 1 item")), "{:?}", over.failed);
+    assert!(over.failed.iter().any(|f| f.starts_with("proj (couldn't be moved: 1 item")), "{:?}", over.failed);
     tidy([&from, &to]);
 }
 
@@ -95,7 +95,7 @@ fn a_file_changed_after_it_was_copied_is_not_removed() {
         }
     });
     assert_eq!(fs::read(&one).ok().as_deref(), Some(&b"one, and more since"[..]), "what was written since the copy was lost");
-    assert!(over.failed.iter().any(|f| f.starts_with("proj (not moved: 1 item")), "{:?}", over.failed);
+    assert!(over.failed.iter().any(|f| f.starts_with("proj (couldn't be moved: 1 item")), "{:?}", over.failed);
     assert!(!from.join("proj/more").exists());
     tidy([&from, &to]);
 }
@@ -108,7 +108,7 @@ fn what_takes_the_name_in_the_moment_before_it_is_taken_away_is_not_removed() {
     let over = moved(&from, &to, &quiet);
     assert_eq!(fs::read(&one).ok().as_deref(), Some(faults::SWAPPED), "a file that was never copied was removed");
     assert_eq!(fs::read(to.join("proj/one.txt")).unwrap(), b"one", "what was copied is what was there before");
-    assert!(over.failed.iter().any(|f| f.starts_with("proj (not moved: 1 item")), "{:?}", over.failed);
+    assert!(over.failed.iter().any(|f| f.starts_with("proj (couldn't be moved: 1 item")), "{:?}", over.failed);
     let left: Vec<_> = fs::read_dir(from.join("proj")).unwrap().flatten().map(|e| e.file_name()).collect();
     assert_eq!(left, ["one.txt"], "{left:?}");
     nothing_lost(&to, &to);

@@ -85,28 +85,28 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = Thứ vừa thả vào không có gì để nhận.
+kit-dropped-empty = Trindle không xử lý được gì từ những mục bạn vừa thả.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = Thứ vừa thả vào quá lớn để nhận bằng cách này.
+kit-dropped-too-big = Những gì bạn thả quá lớn để kéo vào.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = Thứ vừa thả vào đến quá chậm nên đã bị bỏ.
+kit-dropped-too-slow = Những gì bạn thả mất quá lâu mới đến, nên Trindle đã ngừng chờ.
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = Đã thả quá nhiều thứ cùng lúc. Mỗi lần hãy thả ít hơn.
+kit-dropped-too-many = Bạn đã thả quá nhiều mục cùng lúc. Mỗi lần hãy thả ít hơn.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = Thứ vừa thả vào không phải danh sách tệp trên máy này.
+kit-dropped-not-files = Những mục bạn thả không phải là tệp trên máy tính này.
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = Không phải địa chỉ web
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = Mở một địa chỉ mailto
+kit-link-mailto = Địa chỉ email
 
 # Label of a link button whose address opens a file.
-kit-link-file = Mở một tệp
+kit-link-file = Tệp trên máy tính này
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = Liên kết tới { $label }
@@ -118,28 +118,28 @@ kit-chooser-no-answer = Cửa sổ chọn không phản hồi. Hãy thử lại.
 kit-theme-line = Dòng { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = Tệp quá lớn để làm giao diện. Một giao diện tối đa 64 KB.
+kit-theme-too-big = Tệp giao diện này quá lớn. Kích thước tối đa là 64 KB.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = Tệp này không phải bảng kiểu dáng: nó chứa nhiều hơn chữ.
+kit-theme-not-sheet = Tệp này không phải là bảng định kiểu. Nó chứa nhiều thứ hơn văn bản thuần.
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = giao diện không thể nạp thêm tệp khác hay địa chỉ web.
+kit-theme-imports = giao diện không được nhập tệp khác hay địa chỉ web.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } quá dài để làm một giá trị.
+kit-theme-too-long = Giá trị của --{ $name } quá dài.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } không phải màu mà Trindle đọc được.
+kit-theme-not-colour = Trindle không đọc được --{ $name } như một màu.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } không phải số mà Trindle đọc được.
+kit-theme-not-number = Trindle không đọc được --{ $name } như một số.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } không phải bóng đổ mà Trindle đọc được.
+kit-theme-not-shadow = Trindle không đọc được --{ $name } như một bóng đổ.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = Không có gì trong tệp là giá trị mà Trindle biết, nên nó sẽ không thay đổi gì.
+kit-theme-nothing-known = Trindle không nhận ra cài đặt nào trong tệp này, nên sẽ không có gì thay đổi.
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = Tiến độ
@@ -224,6 +224,19 @@ kit-month-10 = Tháng 10
 kit-month-11 = Tháng 11
 
 kit-month-12 = Tháng 12
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = Tháng 1
+kit-month-in-date-2 = Tháng 2
+kit-month-in-date-3 = Tháng 3
+kit-month-in-date-4 = Tháng 4
+kit-month-in-date-5 = Tháng 5
+kit-month-in-date-6 = Tháng 6
+kit-month-in-date-7 = Tháng 7
+kit-month-in-date-8 = Tháng 8
+kit-month-in-date-9 = Tháng 9
+kit-month-in-date-10 = Tháng 10
+kit-month-in-date-11 = Tháng 11
+kit-month-in-date-12 = Tháng 12
 
 kit-weekday-1 = T2
 
@@ -260,13 +273,13 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = Logo
+kit-key-logo = Super
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = Ở đây chỉ thao tác nhấn của chính bạn mới có tác dụng.
+kit-only-your-own = Chỉ bạn mới nhấn được nút này.
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = Không đọc được bố cục bàn phím nên gõ phím sẽ không có tác dụng.
+kit-no-layout = Trindle không đọc được bố cục bàn phím nên bạn không gõ được.
 
 
 
@@ -277,13 +290,13 @@ kit-divider = Đường phân cách
 kit-click-again-small = có
 
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
-kit-drop-target = Nơi thả
+kit-drop-target = Vùng thả
 
 # Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
-kit-theme-not-step = --{ $name } chỉ nhận một trong các bước này: { $steps }. Mọi giá trị khác bị bỏ qua. Xem { $guide }.
+kit-theme-not-step = --{ $name } chỉ có thể là một trong các giá trị này: { $steps }. Trindle bỏ qua mọi giá trị khác. Xem { $guide }.
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = Các thay đổi của bảng định kiểu trong { $folder } chỉ hiện sau khi khởi động lại: { $why }
+kit-sheet-not-watched = Hãy khởi động lại để thấy thay đổi của bảng định kiểu trong { $folder }. { $why }
 
 # What a screen reader calls the row of menu titles across the top of a window.
 kit-menu-bar = Thanh menu
@@ -307,10 +320,10 @@ kit-path = Đường dẫn
 kit-path-more = Thêm vị trí
 
 # Said after a range slider's name for its low handle.
-kit-range-low = đầu thấp
+kit-range-low = đầu dưới
 
 # Said after a range slider's name for its high handle.
-kit-range-high = đầu cao
+kit-range-high = đầu trên
 
 # The button that takes a step off a number box's number. $what is the box's name.
 kit-spin-less = Giảm { $what }
@@ -327,15 +340,15 @@ kit-tab-count = { $title }, { $count }
 # The ready settings page for a program's own look (settings::look_page).
 kit-look-title = Giao diện
 
-kit-look-lead = Chương trình này trông thế nào, bất kể phần còn lại của màn hình nền làm gì.
+kit-look-lead = Chọn giao diện của chương trình này, tách biệt với phần còn lại của màn hình nền.
 
 kit-look-group = Giao diện
 
 kit-look-shade = Sáng hoặc tối
 
-kit-look-shade-help = Theo màn hình nền, hoặc luôn một giao diện.
+kit-look-shade-help = Theo màn hình nền, hoặc luôn dùng giao diện sáng hoặc tối.
 
-kit-look-desktop = Theo màn hình nền
+kit-look-desktop = Giống màn hình nền
 
 kit-look-dark = Tối
 
@@ -343,10 +356,10 @@ kit-look-light = Sáng
 
 kit-look-highlight = Màu nhấn
 
-kit-look-highlight-help = Màu của hành động chính và của mục đang được chọn.
+kit-look-highlight-help = Màu của các nút chính và các mục đang chọn.
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = Dùng màu của màn hình nền
+kit-look-highlight-desktop = Giống màn hình nền
 
 # Over the column of week numbers in a date picker; keep it as short as the short weekday names.
 kit-date-week-short = Tuần
@@ -389,10 +402,10 @@ kit-key-insert = Insert
 kit-shortcuts = Phím tắt
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = Cửa sổ giữ phím này để di chuyển giữa các phần và để đóng.
+kit-shortcut-kept-window = Phím này được dành để di chuyển giữa các điều khiển và đóng cửa sổ.
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = Ô nhập văn bản nhận phím này trước khi bạn gõ.
+kit-shortcut-kept-typing = Khi bạn đang gõ, phím này được chuyển đến ô văn bản trước.
 
 # The heading of the page of emoji to pick from.
 kit-emoji = Emoji
@@ -808,7 +821,7 @@ kit-player-time = { $at } trên { $length }
 ## The page shown after a program crashed or met a fault
 kit-crash-title = Đã xảy ra sự cố
 
-kit-crash-lead = { $program } đã dừng vì một lỗi. Hãy sao chép báo cáo bên dưới và gửi cùng báo cáo lỗi của bạn, để lỗi được sửa.
+kit-crash-lead = { $program } đã dừng vì có lỗi. Hãy sao chép báo cáo bên dưới và gửi cùng báo cáo lỗi của bạn để lỗi được khắc phục.
 
 kit-crash-copy = Sao chép báo cáo
 
@@ -838,11 +851,11 @@ kit-frame-move = Di chuyển
 kit-frame-resize = Đổi cỡ
 
 # Settings: which figures numbers are written in.
-kit-numerals-title = Chữ số
+kit-numerals-title = Kiểu chữ số
 
 kit-numerals-help = Cách viết số, ngày và giờ.
 
-kit-numerals-auto = Như khu vực thường viết
+kit-numerals-auto = Thường dùng ở khu vực của bạn
 
 kit-numerals-latin = Luôn từ 0 đến 9
 

@@ -28,6 +28,7 @@ mod split;
 mod texts;
 pub use landmark::Landmark;
 pub use split::{split, split_down, Start, SPLIT_LEAST, SPLIT_STEP};
+pub(crate) use measure::lines_pad;
 pub(crate) use lay::{id_of, puzzle_names, Anchor, Lay};
 pub(crate) use pills::{has_arrow, pill_at, pill_widths, pills_in};
 pub(crate) use place::Stays;
@@ -135,6 +136,7 @@ pub enum What<M> {
     Slider { value: f32, min: f32, max: f32, step: f32, tip: String, change: Box<dyn Fn(f32) -> M> },
     Entry { text: String, tip: String, change: Box<dyn Fn(String) -> M>, submit: Option<M>, secret: bool, kind: Secret, guarded: bool,
             show: u32, spoken: Option<String>,
+            lines: usize,
             select: Option<Range<usize>>,
             leave: Option<M>,
             tab: Option<Box<dyn Fn(bool) -> M>>,
@@ -976,7 +978,7 @@ pub fn slider<M>(value: f32, min: f32, max: f32, step: f32, tip: impl Into<Strin
 }
 
 pub fn entry<M>(text: impl Into<String>, tip: impl Into<String>, change: impl Fn(String) -> M + 'static) -> Node<M> {
-    node(What::Entry { text: text.into(), tip: tip.into(), change: Box::new(change), submit: None, secret: false, kind: Secret::Password, guarded: false, show: 0, spoken: None,
+    node(What::Entry { text: text.into(), tip: tip.into(), change: Box::new(change), submit: None, secret: false, kind: Secret::Password, guarded: false, show: 0, spoken: None, lines: 1,
                        select: None, leave: None, tab: None, updown: None, centre: false, weight: None, misspelt: Vec::new(), back: None, steps: None }, Length::Fill)
 }
 

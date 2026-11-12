@@ -239,6 +239,10 @@ impl<M: Clone> Ui<M> {
         }
         if y != 0.0 {
             let lines = if steps { y * WHEEL_LINES } else { y / TOUCHPAD_LINE };
+            if self.wheel_entry(x0, y0, lines) {
+                reply.redraw = true;
+                return;
+            }
             if let Some(m) = self.scrolled_drawing(x0, y0, lines) {
                 reply.messages.push(m);
                 reply.redraw = true;
@@ -338,7 +342,7 @@ impl<M: Clone> Ui<M> {
         self.eyes.on = None;
         let had = self.preedit.take().is_some();
         let Some(e) = self.edit(&id) else { return };
-        let before = e.text.clone();
+        let before = e.stamp();
         if delete != (0, 0) {
             let mut start = e.caret.saturating_sub(delete.0 as usize);
             while !e.text.is_char_boundary(start) {
@@ -360,7 +364,7 @@ impl<M: Clone> Ui<M> {
                 .filter(|&(a, b)| preedit.is_char_boundary(a) && preedit.is_char_boundary(b));
             self.preedit = Some((id.clone(), preedit.to_string(), caret));
         }
-        self.changed(&id, &before, reply);
+        self.changed(&id, before, reply);
         reply.redraw |= had || self.preedit.is_some() || !reply.messages.is_empty();
     }
 
@@ -385,7 +389,7 @@ impl<M: Clone> Ui<M> {
         let scroll = scroll - self.entry_lead(&id, if text.is_empty() { 0.0 } else { layout.width }, rect.w - 2.0 * pad);
         let at = if dots { edit::to_dots(&text, caret) } else { caret };
         let (x, top, h) = if text.is_empty() { (0.0, 0.0, layout.height) } else { layout.caret(at) };
-        let ty = ((rect.h - layout.height) / 2.0).round();
+        let ty = self.entry_down(&id, rect.h, layout.height);
         let pt = |v: f32| (v / self.scale).round() as i32;
         let area = (pt(rect.x + pad + x - scroll), pt(rect.y + ty + top), pt(self.px(theme::sheet().caret).max(1.0)).max(1), pt(h));
         let purpose = self.node(&id).and_then(|n| n.says.as_deref()).and_then(|s| s.purpose).unwrap_or_default();

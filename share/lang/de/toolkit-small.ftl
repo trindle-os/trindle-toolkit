@@ -20,7 +20,7 @@ kit-more-people =
        *[other] { $n } weitere Personen
     }
 kit-gradient-bar = Verlauf mit { $n } Stopps
-kit-gradient-place = Position des gewählten Stopps
+kit-gradient-place = Position des ausgewählten Stopps
 kit-gradient-add = Stopp hinzufügen
 kit-gradient-remove = Stopp entfernen
 kit-help-show = Hilfe anzeigen

@@ -1,7 +1,7 @@
 # machine translated (Korean), not yet reviewed by a native speaker.
 
 kit-chart-part = 부분 { $n }
-kit-chart-empty = { $name }: 값이 없는 차트입니다.
+kit-chart-empty = { $name }: 이 차트에는 값이 없습니다.
 kit-chart-line =
     { $n ->
        *[other] { $name }: 선 차트, 값 { $n }개, 처음 { $first }, 마지막 { $last }, 최저 { $low }, 최고 { $high }.

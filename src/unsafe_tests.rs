@@ -1,7 +1,7 @@
 //! Counts every `unsafe` in the source against the audited ledger below, so a new one cannot come in unseen.
 
 const LEDGER: [(&str, usize); 10] = [
-    ("src/sys/disk.rs", 17),
+    ("src/sys/disk.rs", 18),
     ("src/sys/fd.rs", 13),
     ("src/sys/gbm.rs", 11),
     ("src/sys/gl.rs", 31),

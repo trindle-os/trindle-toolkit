@@ -1,7 +1,7 @@
 # machine translated (Indonesian), not yet reviewed by a native speaker.
 
 kit-chart-part = Bagian { $n }
-kit-chart-empty = { $name }: bagan tanpa nilai.
+kit-chart-empty = { $name }: grafik ini tidak memiliki nilai.
 kit-chart-line =
     { $n ->
        *[other] { $name }: bagan garis, { $n } nilai, pertama { $first }, terakhir { $last }, terendah { $low }, tertinggi { $high }.

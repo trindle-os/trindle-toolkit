@@ -1,7 +1,7 @@
 # machine translated (Hindi), not yet reviewed by a native speaker.
 
 kit-chart-part = भाग { $n }
-kit-chart-empty = { $name }: बिना मानों वाला चार्ट।
+kit-chart-empty = { $name }: इस चार्ट में कोई मान नहीं है।
 kit-chart-line =
     { $n ->
         [one] { $name }: रेखा चार्ट, 1 मान: { $first }।

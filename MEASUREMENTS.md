@@ -12,7 +12,7 @@ Machine: 12 cores, Rust 1.85, release build, software drawing (tiny-skia). Test:
 | Hello example, binary size | 14.9 MB (unstripped release) |
 | Hello example, shared libraries | 1 outside the C library (libxkbcommon) |
 
-Not measured: GTK 4 (installed, 4.18), GTK 3, Qt (not installed), iced 0.14 (source in the cargo cache, not built), libcosmic. No claim is made against them until the same page is built in each and timed the same way.
+Not measured: GTK 4 (installed, 4.18), GTK 3, Qt (not installed), iced 0.14 (source in the cargo cache, not built), the System76 toolkit. No claim is made against them until the same page is built in each and timed the same way.
 
 ## What the numbers say
 - Every repaint redraws the whole page (10 ms, so a 60 Hz frame budget of 16.7 ms is 60 per cent used by a still page). A toolkit that repaints only what changed would do far better. This is the first thing to fix before claiming speed.
@@ -60,7 +60,7 @@ The same small window (a line of words and one button, 320 x 160) in each, timed
 | Registry to first buffer | 23, 28 and 35 ms | 575, 595 and 924 ms |
 | Memory resident | 14.8 MB (whole process) | 145 MB more than before the window (190 MB whole process) |
 
-GTK was driven from Python and drew with Mesa GL, so its figures include that stack; a C program would shave some, not 20 times. Not measured: Qt (not installed), Iced 0.14 (does not build here: its softbuffer dependency fails to compile on Rust 1.95), Cosmic (libcosmic not present). No claim is made about them.
+GTK was driven from Python and drew with Mesa GL, so its figures include that stack; a C program would shave some, not 20 times. Not measured: Qt (not installed), Iced 0.14 (does not build here: its softbuffer dependency fails to compile on Rust 1.95), the System76 toolkit (not present). No claim is made about them.
 
 ## Against Qt, Iced and GTK 4 (same small window, 28 Oct, this machine)
 Method as above: `WAYLAND_DEBUG=1`, first `get_registry` to first `wl_surface.attach` of a buffer, five runs for the toolkit; resident memory after 1.5 to 3 s.
@@ -74,7 +74,7 @@ Method as above: `WAYLAND_DEBUG=1`, first `get_registry` to first `wl_surface.at
 | Qt 6.12 Widgets (PySide6, Wayland software) | 13, 13, 14 ms | about 17 MB over a Python base of 41 MB | not compared (Python wheel) | Python |
 | GTK 4.18 (Python, Mesa GL) | 575, 595, 924 ms | 145 MB over a Python base of 45 MB | not compared | Python |
 
-Where Trindle is worse: first window is 2 to 5 ms behind Qt and Iced; resident memory is 2 to 4 MB above Iced; the binary is almost twice Iced's (screen reader link, bus, language tables, rich text shaping). Not measured: libcosmic (no copy here; it is built on Iced, so its figures would sit at or above Iced's), whole-page paint and idle CPU against any rival (each would need the same 1280 x 800 page built in it).
+Where Trindle is worse: first window is 2 to 5 ms behind Qt and Iced; resident memory is 2 to 4 MB above Iced; the binary is almost twice Iced's (screen reader link, bus, language tables, rich text shaping). Not measured: the System76 toolkit (no copy here; it is built on Iced, so its figures would sit at or above Iced's), whole-page paint and idle CPU against any rival (each would need the same 1280 x 800 page built in it).
 
 The fix: the toolkit now asks fontconfig about its usual family at the start of the font search, not at the first drawing. Before, the first drawing waited on the `fc-match` program, about 14 ms. The 8 ms font search and 3 ms first layout are what remain before the first drawing (2 ms).
 
@@ -110,7 +110,7 @@ A tester saw the toolkit's words as thick and soft beside a browser's. A line of
 The ink in total was the same in all three. Letters now sit on whole pixels along the line as well as up and down; firmer edges and thinner strokes were tried and left out. The tester compared real windows beside a browser window on the 1920 by 1080 desktop at 100% and chose whole-pixel placement.
 
 ## Final figures, 30 Oct 2026 (quiet machine)
-Machine: Framework 13, AMD Radeon 760M (radeonsi), Mesa 25.0.7, 12 cores, Rust 1.85, release build, nothing else running (load average under 1 at the start, 2 to 3 after), no `nice`. Each test was run three times; the figure is the median of the three runs' medians. The first run of the three is the least settled (its 1280 x 800 whole paint read 3.7 ms against 2.6 and 2.5), so the spread is about a fifth at the small sizes and a tenth at 4K. Battery use is not measured here: ten minutes of scrolling on battery with each drawer is the tester's test.
+Machine: a 13-inch laptop, AMD Radeon 760M (radeonsi), Mesa 25.0.7, 12 cores, Rust 1.85, release build, nothing else running (load average under 1 at the start, 2 to 3 after), no `nice`. Each test was run three times; the figure is the median of the three runs' medians. The first run of the three is the least settled (its 1280 x 800 whole paint read 3.7 ms against 2.6 and 2.5), so the spread is about a fifth at the small sizes and a tenth at 4K. Battery use is not measured here: ten minutes of scrolling on battery with each drawer is the tester's test.
 
 What the tests play: `measure_big_screens` builds the page of cards (heading, words, three buttons, switch, slider, entry) from real widgets at 200%, which `Ui::paint` records onto a `Painter` and the processor drawer (tiny-skia) plays. `measure_gpu_and_processor` plays a list written out by hand to look like the same page (not the real widgets recorded), once with the processor drawer and once with the GPU drawer (OpenGL ES 3.0, surfaceless EGL), and checks the two pictures are within 2 levels of each other. "GPU, processor time" is the thread's own time handing the frame over; "GPU, until drawn" is wall time to `glFinish`, with the processor idle. The test for the GPU drawing the real widgets does not exist yet, so the two tables below are not one comparison.
 
@@ -167,7 +167,7 @@ These replace the earlier long-list, big-screen and GPU tables, which were taken
 
 ## The drawing service, 2 Nov 2026
 
-Machine: Framework 13, Radeon 760M, Mesa 25.0.7, Rust 1.85, release build, other work on it throughout (load average about 19 on 12 cores), so frame rates and times are not clean. Test: `cargo +1.85 build --release --bin trindle-draw --example bench`, `./target/release/examples/bench 20 --programs`: that many copies of the bench at once, each 1575 x 1225 pixels. Memory in MB. "Shell" is the compositor, which also holds whatever else is on the desktop.
+Machine: a 13-inch laptop, Radeon 760M, Mesa 25.0.7, Rust 1.85, release build, other work on it throughout (load average about 19 on 12 cores), so frame rates and times are not clean. Test: `cargo +1.85 build --release --bin trindle-draw --example bench`, `./target/release/examples/bench 20 --programs`: that many copies of the bench at once, each 1575 x 1225 pixels. Memory in MB. "Shell" is the compositor, which also holds whatever else is on the desktop.
 
 | Drawn by | Programs | Frames a second each | PSS, programs and service | Of it the service | GPU memory, programs and service | Shell PSS | Shell GPU memory | Processor time a frame, ms, programs + service |
 |---|---|---|---|---|---|---|---|---|

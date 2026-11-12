@@ -1,8 +1,8 @@
 # machine translated (Simplified Chinese), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = 没有可打开窗口的 Wayland 桌面
+kit-run-no-desktop = 没有 Wayland 桌面响应，所以无法打开窗口
 
-kit-run-no-window = 桌面不愿打开窗口
+kit-run-no-window = 桌面无法打开窗口。
 
 kit-example-hello-title = 你好
 
@@ -71,7 +71,7 @@ kit-example-gallery-hello = 你好，{ $name }
 kit-example-gallery-progress = 进度
 
 kit-example-context-title = 上下文菜单
-kit-example-context-how = 右键单击卡片，用手指长按，或按菜单键
+kit-example-context-how = 在卡片上右键单击、按住不放，或按菜单键
 kit-example-context-note = 购物清单
 kit-example-context-pinned = 已固定
 kit-example-context-unpinned = 未固定

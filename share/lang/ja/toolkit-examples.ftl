@@ -1,8 +1,8 @@
 # machine translated (Japanese), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = ウィンドウを開ける Wayland デスクトップがありません
+kit-run-no-desktop = 応答した Wayland デスクトップがなく、ウィンドウを開けません
 
-kit-run-no-window = デスクトップがウィンドウを開きませんでした
+kit-run-no-window = デスクトップがウィンドウを開けませんでした。
 
 kit-example-hello-title = こんにちは
 
@@ -70,7 +70,7 @@ kit-example-gallery-hello = こんにちは、{ $name }
 kit-example-gallery-progress = 進行状況
 
 kit-example-context-title = コンテキストメニュー
-kit-example-context-how = カードを右クリックするか、指で長押しするか、メニューキーを押します
+kit-example-context-how = カードを右クリックするか、長押しするか、メニューキーを押します
 kit-example-context-note = 買い物リスト
 kit-example-context-pinned = 固定済み
 kit-example-context-unpinned = 固定していません

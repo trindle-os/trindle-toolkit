@@ -24,6 +24,9 @@ pub fn not_there_why(known: Option<&HashSet<Which>>) -> &'static str {
 pub fn changed_since() -> &'static str {
     t!("kit-work-changed-since")
 }
+pub fn no_safe_restore() -> &'static str {
+    t!("kit-work-drive-no-safe-restore")
+}
 pub fn taken_meanwhile() -> &'static str {
     t!("kit-work-taken")
 }

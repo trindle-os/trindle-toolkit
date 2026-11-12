@@ -83,28 +83,28 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = छोड़ी गई चीज़ से कुछ नहीं हुआ।
+kit-dropped-empty = Trindle आपके छोड़े गए आइटम के साथ कुछ नहीं कर सका।
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = छोड़ी गई चीज़ इस तरीके से लेने के लिए बहुत बड़ी है।
+kit-dropped-too-big = आपने जो छोड़ा वह खींचकर लाने के लिए बहुत बड़ा है।
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = छोड़ी गई चीज़ आने में बहुत देर लगी, इसलिए उसे छोड़ दिया गया।
+kit-dropped-too-slow = आपने जो छोड़ा उसे आने में बहुत देर लगी, इसलिए Trindle ने इंतज़ार बंद कर दिया।
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = एक साथ बहुत सारी चीज़ें छोड़ी गईं। एक बार में कम छोड़ें।
+kit-dropped-too-many = आपने एक साथ बहुत सारे आइटम छोड़ दिए। एक बार में कम आइटम छोड़ें।
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = छोड़ी गई चीज़ इस कंप्यूटर की फ़ाइलों की सूची नहीं है।
+kit-dropped-not-files = आपके छोड़े गए आइटम इस कंप्यूटर की फ़ाइलें नहीं हैं।
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = वेब पता नहीं है
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = mailto पता खोलता है
+kit-link-mailto = ईमेल पता
 
 # Label of a link button whose address opens a file.
-kit-link-file = फ़ाइल खोलता है
+kit-link-file = इस कंप्यूटर की फ़ाइल
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = { $label } का लिंक
@@ -116,28 +116,28 @@ kit-chooser-no-answer = चुनने वाली विंडो ने ज�
 kit-theme-line = पंक्ति { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = फ़ाइल थीम होने के लिए बहुत बड़ी है। थीम अधिकतम 64 KB की हो सकती है।
+kit-theme-too-big = यह थीम फ़ाइल बहुत बड़ी है। अधिकतम आकार 64 KB है।
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = फ़ाइल स्टाइल शीट नहीं है: उसमें शब्दों के अलावा भी कुछ है।
+kit-theme-not-sheet = यह फ़ाइल स्टाइल शीट नहीं है। इसमें सादे टेक्स्ट से ज़्यादा कुछ है।
 
 # Fault in a theme file the person is trying: it brings in another file.
-kit-theme-imports = थीम किसी दूसरी फ़ाइल या वेब पते को अंदर नहीं ला सकती।
+kit-theme-imports = थीम किसी दूसरी फ़ाइल या वेब पते को इम्पोर्ट नहीं कर सकती।
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } मान होने के लिए बहुत लंबा है।
+kit-theme-too-long = --{ $name } का मान बहुत लंबा है।
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } ऐसा रंग नहीं है जिसे Trindle पढ़ सके।
+kit-theme-not-colour = Trindle --{ $name } को रंग के रूप में नहीं पढ़ सकता।
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } ऐसी संख्या नहीं है जिसे Trindle पढ़ सके।
+kit-theme-not-number = Trindle --{ $name } को संख्या के रूप में नहीं पढ़ सकता।
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } ऐसी छाया नहीं है जिसे Trindle पढ़ सके।
+kit-theme-not-shadow = Trindle --{ $name } को छाया के रूप में नहीं पढ़ सकता।
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = फ़ाइल में कुछ भी ऐसा मान नहीं है जिसे Trindle जानता हो, इसलिए इससे कुछ नहीं बदलेगा।
+kit-theme-nothing-known = Trindle इस फ़ाइल की कोई सेटिंग नहीं पहचानता, इसलिए कुछ नहीं बदलेगा।
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = प्रगति
@@ -145,7 +145,7 @@ kit-progress = प्रगति
 # The name a screen reader gives a menu that opens over a window.
 kit-menu = मेनू
 
-kit-job-wait = काम पूरा होने तक प्रतीक्षा करें।
+kit-job-wait = कार्य पूरा होने तक प्रतीक्षा करें।
 
 # Shown at the end of a dropdown's search box: how many rows match out of how many there are.
 kit-search-of = { $total } में से { $n }
@@ -225,6 +225,19 @@ kit-month-10 = अक्टूबर
 kit-month-11 = नवंबर
 
 kit-month-12 = दिसंबर
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = जनवरी
+kit-month-in-date-2 = फ़रवरी
+kit-month-in-date-3 = मार्च
+kit-month-in-date-4 = अप्रैल
+kit-month-in-date-5 = मई
+kit-month-in-date-6 = जून
+kit-month-in-date-7 = जुलाई
+kit-month-in-date-8 = अगस्त
+kit-month-in-date-9 = सितंबर
+kit-month-in-date-10 = अक्टूबर
+kit-month-in-date-11 = नवंबर
+kit-month-in-date-12 = दिसंबर
 
 kit-weekday-1 = सोम
 
@@ -261,13 +274,13 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = Logo
+kit-key-logo = Super
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = यहाँ केवल आपका अपना दबाना काम करता है।
+kit-only-your-own = इस बटन को केवल आप दबा सकते हैं।
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = कीबोर्ड लेआउट पढ़ा नहीं जा सका, इसलिए टाइप करने से कुछ नहीं होता।
+kit-no-layout = Trindle कीबोर्ड लेआउट नहीं पढ़ सका, इसलिए आप टाइप नहीं कर सकते।
 
 
 
@@ -278,13 +291,13 @@ kit-divider = विभाजक
 kit-click-again-small = yes
 
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
-kit-drop-target = छोड़ने की जगह
+kit-drop-target = छोड़ने का क्षेत्र
 
 # Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
-kit-theme-not-step = --{ $name } इन चरणों में से केवल एक लेता है: { $steps }। बाकी सब छोड़ दिया जाता है। देखें { $guide }।
+kit-theme-not-step = --{ $name } केवल इनमें से एक हो सकता है: { $steps }। Trindle बाकी सभी मान अनदेखे कर देता है। देखें { $guide }।
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = { $folder } की स्टाइल शीट में बदलाव रीस्टार्ट के बाद ही दिखते हैं: { $why }
+kit-sheet-not-watched = { $folder } की स्टाइल शीट में बदलाव देखने के लिए रीस्टार्ट करें। { $why }
 
 # What a screen reader calls the row of menu titles across the top of a window.
 kit-menu-bar = मेनू पट्टी
@@ -326,15 +339,15 @@ kit-spin-not-number = { $min } से { $max } तक की संख्या 
 kit-tab-count = { $title }, { $count }
 
 # The ready settings page for a program's own look (settings::look_page).
-kit-look-title = रूप
+kit-look-title = दिखावट
 
-kit-look-lead = यह प्रोग्राम कैसा दिखे, चाहे बाकी डेस्कटॉप कुछ भी करे।
+kit-look-lead = चुनें कि यह प्रोग्राम कैसा दिखे, बाकी डेस्कटॉप से अलग।
 
-kit-look-group = रूप
+kit-look-group = दिखावट
 
 kit-look-shade = हल्का या गहरा
 
-kit-look-shade-help = डेस्कटॉप का अनुसरण करें, या हमेशा एक ही रूप रखें।
+kit-look-shade-help = डेस्कटॉप के अनुसार रखें, या हमेशा हल्का या गहरा रखें।
 
 kit-look-desktop = डेस्कटॉप जैसा
 
@@ -344,10 +357,10 @@ kit-look-light = हल्का
 
 kit-look-highlight = हाइलाइट का रंग
 
-kit-look-highlight-help = मुख्य क्रिया और चुनी हुई चीज़ का रंग।
+kit-look-highlight-help = मुख्य बटनों और चुनी हुई चीज़ों का रंग।
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = डेस्कटॉप वाला उपयोग करें
+kit-look-highlight-desktop = डेस्कटॉप जैसा
 
 # Over the column of week numbers in a date picker; keep it as short as the short weekday names.
 kit-date-week-short = सप्ताह
@@ -390,10 +403,10 @@ kit-key-insert = Insert
 kit-shortcuts = कीबोर्ड शॉर्टकट
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = विंडो यह कुंजी हिस्सों के बीच जाने और बंद करने के लिए रखती है।
+kit-shortcut-kept-window = यह कुंजी नियंत्रणों के बीच जाने और विंडो बंद करने के लिए आरक्षित है।
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = लिखते समय टेक्स्ट बॉक्स यह कुंजी पहले ले लेता है।
+kit-shortcut-kept-typing = जब आप टाइप कर रहे हों, तो यह कुंजी पहले टेक्स्ट बॉक्स को जाती है।
 
 # The heading of the page of emoji to pick from.
 kit-emoji = इमोजी
@@ -801,7 +814,7 @@ kit-player-seek = स्थिति
 
 kit-player-mute = म्यूट करें
 
-kit-player-unmute = आवाज़ चालू
+kit-player-unmute = म्यूट हटाएँ
 
 kit-player-volume = आवाज़
 
@@ -811,7 +824,7 @@ kit-player-time = { $length } में से { $at }
 ## The page shown after a program crashed or met a fault
 kit-crash-title = कुछ गड़बड़ हो गई
 
-kit-crash-lead = { $program } एक खराबी की वजह से रुक गया। नीचे की रिपोर्ट कॉपी करें और अपनी बग रिपोर्ट के साथ भेजें, ताकि इसे ठीक किया जा सके।
+kit-crash-lead = कुछ गड़बड़ होने के कारण { $program } रुक गया। नीचे की रिपोर्ट कॉपी करें और अपनी बग रिपोर्ट के साथ भेजें, ताकि समस्या ठीक की जा सके।
 
 kit-crash-copy = रिपोर्ट कॉपी करें
 
@@ -842,11 +855,11 @@ kit-frame-move = खिसकाएँ
 kit-frame-resize = आकार बदलें
 
 # Settings: which figures numbers are written in.
-kit-numerals-title = अंक
+kit-numerals-title = अंक शैली
 
 kit-numerals-help = संख्याएँ, तारीखें और समय कैसे लिखे जाते हैं।
 
-kit-numerals-auto = जैसे इलाके में आमतौर पर लिखे जाते हैं
+kit-numerals-auto = आपके क्षेत्र में प्रचलित
 
 kit-numerals-latin = हमेशा 0 से 9
 

@@ -4,52 +4,53 @@
 kit-work-trouble = { $name } ({ $why })
 
 # Reason for something left behind: a hidden thing or a link was not there when the folder was looked through.
-kit-work-not-looked = il n’était pas là quand on a regardé, il a donc été laissé
+kit-work-not-looked = il était absent quand Trindle a vérifié, donc il a été ignoré
 
 # Reason for something left behind: a hidden thing or a link was in a folder too big to look through to its end.
-kit-work-too-big = trop gros pour être vérifié en entier, il a donc été laissé
+kit-work-too-big = il était trop gros pour être vérifié en entier, donc il a été ignoré
 
 # Reason nothing was brought: something another program dropped changed after it was dropped.
-kit-work-changed-since = il a changé depuis son dépôt, donc rien n’a été apporté
+kit-work-changed-since = il a changé après son dépôt, donc il n’a été ni copié ni déplacé
 
 # Reason a thing was not given its name: something else took the name after the folder was looked at.
-kit-work-taken = autre chose a reçu ce nom entre-temps
+kit-work-taken = un autre élément porte désormais ce nom
+kit-work-drive-no-safe-restore = ce disque ne peut pas restaurer les fichiers en toute sécurité, copiez plutôt le fichier hors de la corbeille
 
 # SAFETY: needs a human review before it ships
 # Reason nothing was replaced: the one to make way could not be put in the Trash.
-kit-work-no-trash = celui qui est déjà là n’a pas pu aller à la corbeille
+kit-work-no-trash = l’élément déjà présent n’a pas pu être placé dans la corbeille
 
 # Reason a moved item was not taken away from where it was: it changed after it was copied.
-kit-work-stayed = il a changé après avoir été copié, il est donc resté où il était
+kit-work-stayed = il a changé après sa copie, donc Trindle l’a laissé où il était
 
 # Reason given for a folder copied to a drive that would not say everything written had reached it.
-kit-work-not-kept = le disque n’a pas conservé ce qui a été écrit, donc une partie peut manquer
+kit-work-not-kept = le disque n’a pas tout enregistré, il peut donc manquer une partie
 
 # Reason a folder is said to have failed: its list stopped part way.
-kit-work-not-all = tout n’a pas pu être lu
+kit-work-not-all = Trindle n’a pas pu tout lire
 
 # Reason a thing was not moved or copied: it is inside the one it would replace.
-kit-work-inside-replaced = il est à l’intérieur de celui qu’il remplacerait
+kit-work-inside-replaced = il se trouve dans le dossier qu’il remplacerait
 
 # Reason a thing was not brought: a copy made it, so it was already there.
-kit-work-copy-made-it = cette copie l’a créé
+kit-work-copy-made-it = Trindle l’a créé pendant cette copie, donc Trindle ne l’a pas copié de nouveau
 
 # Reason a file copy was refused: what was written is not what was read.
-kit-work-copy-wrong = la copie n’est pas identique à ce qui a été lu
+kit-work-copy-wrong = la copie ne correspond pas à l’original
 
 # Reason, in the words of a notice, why a thing dragged to another program was not moved: it was changed after it was picked up.
-kit-proof-not-as-picked = il a changé après avoir été saisi, il est donc resté où il était
+kit-proof-not-as-picked = il a changé après que vous l’avez pris, donc il est resté où il était
 
 # Reason, in the words of a notice, why a folder dragged to another program was not moved: it could not be looked through to its end.
-kit-proof-not-looked-through = il n’a pas pu être examiné jusqu’au bout, il est donc resté où il était
+kit-proof-not-looked-through = Trindle n’a pas pu tout vérifier, donc l’élément est resté où il était
 
 # SAFETY: needs a human review before it ships
 # Reason, in the words of a notice, why something could not be set aside to be removed.
-kit-proof-not-taken-away = il n’a pas pu être retiré
+kit-proof-not-taken-away = Trindle n’a pas pu le supprimer
 
 # SAFETY: needs a human review before it ships
 # Reason, in the words of a notice, why something could not be put in the Trash.
-kit-proof-not-to-trash = il n’a pas pu aller à la corbeille
+kit-proof-not-to-trash = il n’a pas pu être placé dans la corbeille
 
 # Count in a notice of unreadable files that stayed; n picks the form and count is the number as written, such as 1,200.
 kit-proof-count-unreadable =
@@ -79,10 +80,10 @@ kit-proof-count-other =
 kit-proof-count-some = certains éléments
 
 # The sentence in red for everything a move, copy or delete left where it was; why is the counts.
-kit-proof-not-moved-said = Non déplacé : { $why }.
+kit-proof-not-moved-said = Trindle n’a pas pu le déplacer : { $why }.
 
 # The same in the brackets after a name.
-kit-proof-not-moved-reason = non déplacé : { $why }
+kit-proof-not-moved-reason = n’a pas pu être déplacé : { $why }
 
 # Joins the counts in a notice of what stayed: the earlier ones, then the last.
 kit-proof-count-both = { $first } et { $second }
@@ -104,7 +105,7 @@ kit-proof-unreadable = n’a pas pu être lu
 
 # SAFETY: needs a human review before it ships
 # Reason shown when an item cannot be moved to the Trash because the Trash folder on its drive could be used by other people.
-kit-trash-drive-unsafe = la corbeille de ce disque n’est pas sûre
+kit-trash-drive-unsafe = il est risqué d’utiliser la corbeille sur ce disque
 
 # Reason shown when an item to move to the Trash has no name to move.
 kit-trash-nothing-to-move = rien à déplacer

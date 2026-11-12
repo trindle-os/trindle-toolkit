@@ -1,7 +1,7 @@
 # machine translated (Russian), not yet reviewed by a native speaker.
 
 kit-chart-part = Часть { $n }
-kit-chart-empty = { $name }: график без значений.
+kit-chart-empty = { $name }: в диаграмме нет значений.
 kit-chart-line =
     { $n ->
         [1] { $name }: линейный график, одно значение: { $first }.

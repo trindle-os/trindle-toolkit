@@ -2,7 +2,7 @@
 
 kit-chart-part = 第 { $n } 部分
 
-kit-chart-empty = { $name }：图表没有数据。
+kit-chart-empty = { $name }：此图表没有数值。
 
 kit-chart-line =
     { $n ->

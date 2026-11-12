@@ -35,7 +35,7 @@ kit-more-people =
 
 kit-gradient-bar = { $n } 個の分岐点があるグラデーション
 
-kit-gradient-place = 選択した分岐点の位置
+kit-gradient-place = 選択中の分岐点の位置
 
 kit-gradient-add = 分岐点を追加
 

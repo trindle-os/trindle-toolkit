@@ -33,7 +33,7 @@ kit-more-people =
 
 # The gradient editor. The bar's name has $n, how many stops the gradient has.
 kit-gradient-bar = Gradient with { $n } stops
-kit-gradient-place = Place of the chosen stop
+kit-gradient-place = Selected stop position
 kit-gradient-add = Add a stop
 kit-gradient-remove = Remove the stop
 

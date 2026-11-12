@@ -80,7 +80,10 @@ impl<S: Side> Walk<'_, S> {
             Some(to) => {
                 self.untrashed.push(t.clone());
                 self.again = Again::Trash;
-                self.place(t, &to);
+                match trash::drive_top(t) {
+                    Some(top) => self.restore_beneath(t, &top, &to),
+                    None => self.place(t, &to),
+                }
             }
             None => self.fail(t),
         }

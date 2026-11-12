@@ -1,8 +1,8 @@
 # machine translated (French), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Aucun bureau Wayland pour ouvrir une fenêtre
+kit-run-no-desktop = Aucun bureau Wayland n’a répondu, donc la fenêtre ne peut pas s’ouvrir
 
-kit-run-no-window = Le bureau n'a pas voulu ouvrir de fenêtre
+kit-run-no-window = Le bureau n’a pas pu ouvrir de fenêtre.
 
 kit-example-hello-title = Bonjour
 
@@ -71,7 +71,7 @@ kit-example-gallery-hello = Bonjour, { $name }
 kit-example-gallery-progress = Progression
 
 kit-example-context-title = Menu contextuel
-kit-example-context-how = Faites un clic droit sur la carte, maintenez un doigt dessus ou appuyez sur la touche Menu
+kit-example-context-how = Faites un clic droit sur la carte, appuyez longuement dessus, ou appuyez sur la touche Menu
 kit-example-context-note = Liste de courses
 kit-example-context-pinned = Épinglée
 kit-example-context-unpinned = Non épinglée

@@ -4,51 +4,52 @@
 kit-work-trouble = { $name } ({ $why })
 
 # Reason for something left behind: a hidden thing or a link was not there when the folder was looked through.
-kit-work-not-looked = при просмотре его не было, поэтому оно осталось
+kit-work-not-looked = при проверке его не оказалось на месте, поэтому его пропустили
 
 # Reason for something left behind: a hidden thing or a link was in a folder too big to look through to its end.
-kit-work-too-big = слишком велико для полной проверки, поэтому оно осталось
+kit-work-too-big = слишком велик для полной проверки, поэтому его пропустили
 
 # Reason nothing was brought: something another program dropped changed after it was dropped.
-kit-work-changed-since = оно изменилось после того, как его бросили, поэтому ничего не перенесено
+kit-work-changed-since = он изменился после того, как вы его перетащили, поэтому его не скопировали и не переместили
 
 # Reason a thing was not given its name: something else took the name after the folder was looked at.
-kit-work-taken = тем временем это имя заняло что-то другое
+kit-work-taken = это имя уже занято другим элементом
+kit-work-drive-no-safe-restore = этот диск не позволяет безопасно восстанавливать файлы, поэтому скопируйте файл из Корзины
 
 # Reason nothing was replaced: the one to make way could not be put in the Trash.
 # SAFETY: needs a human review before it ships
-kit-work-no-trash = то, что уже лежит на этом месте, не удалось переместить в Корзину
+kit-work-no-trash = элемент, который уже был там, не удалось переместить в Корзину
 
 # Reason a moved item was not taken away from where it was: it changed after it was copied.
-kit-work-stayed = оно изменилось после копирования, поэтому осталось на прежнем месте
+kit-work-stayed = он изменился после копирования, поэтому его оставили на месте
 
 # Reason given for a folder copied to a drive that would not say everything written had reached it.
-kit-work-not-kept = диск не подтвердил запись, поэтому часть данных может отсутствовать
+kit-work-not-kept = диск сохранил не всё, поэтому часть данных может отсутствовать
 
 # Reason a folder is said to have failed: its list stopped part way.
-kit-work-not-all = не удалось прочитать всё
+kit-work-not-all = не всё удалось прочитать
 
 # Reason a thing was not moved or copied: it is inside the one it would replace.
-kit-work-inside-replaced = оно находится внутри того, что оно заменило бы
+kit-work-inside-replaced = он находится внутри папки, которую должен заменить
 
 # Reason a thing was not brought: a copy made it, so it was already there.
-kit-work-copy-made-it = это сделала данная копия
+kit-work-copy-made-it = он был создан во время этого копирования, поэтому его не копировали повторно
 
 # Reason a file copy was refused: what was written is not what was read.
-kit-work-copy-wrong = копия не совпадает с прочитанным
+kit-work-copy-wrong = копия не совпадает с оригиналом
 
 # Reason, in the words of a notice, why a thing dragged to another program was not moved: it was changed after it was picked up.
-kit-proof-not-as-picked = оно изменилось после того, как его взяли, поэтому осталось на месте
+kit-proof-not-as-picked = он изменился после того, как вы его взяли, поэтому остался на месте
 
 # Reason, in the words of a notice, why a folder dragged to another program was not moved: it could not be looked through to its end.
-kit-proof-not-looked-through = её не удалось просмотреть до конца, поэтому она осталась на месте
+kit-proof-not-looked-through = не удалось проверить его целиком, поэтому он остался на месте
 
 # Reason, in the words of a notice, why something could not be set aside to be removed.
-kit-proof-not-taken-away = это не удалось убрать
+kit-proof-not-taken-away = не удалось его удалить
 
 # Reason, in the words of a notice, why something could not be put in the Trash.
 # SAFETY: needs a human review before it ships
-kit-proof-not-to-trash = это не удалось переместить в Корзину
+kit-proof-not-to-trash = его не удалось переместить в Корзину
 
 # Count in a notice of unreadable files that stayed; n picks the form and count is the number as written, such as 1,200.
 kit-proof-count-unreadable =
@@ -81,10 +82,10 @@ kit-proof-count-other =
 kit-proof-count-some = часть элементов
 
 # The sentence in red for everything a move, copy or delete left where it was; why is the counts.
-kit-proof-not-moved-said = Не перемещено: { $why }.
+kit-proof-not-moved-said = Не удалось переместить этот элемент: { $why }.
 
 # The same in the brackets after a name.
-kit-proof-not-moved-reason = не перемещено: { $why }
+kit-proof-not-moved-reason = не удалось переместить: { $why }
 
 # Joins the counts in a notice of what stayed: the earlier ones, then the last.
 kit-proof-count-both = { $first } и { $second }
@@ -105,7 +106,7 @@ kit-proof-no-permission = нет разрешения
 kit-proof-unreadable = не удалось прочитать
 
 # Reason shown when an item cannot be moved to the Trash because the Trash folder on its drive could be used by other people.
-kit-trash-drive-unsafe = Корзина на этом диске небезопасна
+kit-trash-drive-unsafe = использовать Корзину на этом диске небезопасно
 
 # Reason shown when an item to move to the Trash has no name to move.
 kit-trash-nothing-to-move = нечего перемещать

@@ -20,7 +20,7 @@ kit-more-people =
        *[other] { $n } kişi daha
     }
 kit-gradient-bar = { $n } duraklı renk geçişi
-kit-gradient-place = Seçilen durağın yeri
+kit-gradient-place = Seçili durağın konumu
 kit-gradient-add = Durak ekle
 kit-gradient-remove = Durağı kaldır
 kit-help-show = Yardımı göster

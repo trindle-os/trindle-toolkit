@@ -309,8 +309,8 @@ mod tests {
 
     #[test]
     fn what_is_not_a_web_address_says_what_it_is() {
-        for (address, says) in [("mailto:john.smith@example.com", "Opens a mailto address"), ("MAILTO:john.smith@example.com", "Opens a mailto address"),
-                                ("file:///etc/passwd", "Opens a file"), ("javascript:alert(1)", "Not a web address"),
+        for (address, says) in [("mailto:john.smith@example.com", "Email address"), ("MAILTO:john.smith@example.com", "Email address"),
+                                ("file:///etc/passwd", "File on this computer"), ("javascript:alert(1)", "Not a web address"),
                                 ("data:text/html,<b>hello</b>", "Not a web address"), ("ftp://example.com/", "Not a web address"),
                                 ("example.com/page", "Not a web address"), ("/usr/bin/true", "Not a web address"), ("", "Not a web address"),
                                 ("ht tp://example.com", "Not a web address"), ("https:example.com", "Not a web address")] {

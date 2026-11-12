@@ -19,7 +19,7 @@ kit-more-people =
        *[other] Thêm { $n } người
     }
 kit-gradient-bar = Dải chuyển màu có { $n } điểm dừng
-kit-gradient-place = Vị trí của điểm dừng đã chọn
+kit-gradient-place = Vị trí điểm dừng đang chọn
 kit-gradient-add = Thêm một điểm dừng
 kit-gradient-remove = Xóa điểm dừng
 kit-help-show = Hiện trợ giúp

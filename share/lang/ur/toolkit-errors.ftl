@@ -1,87 +1,87 @@
 # machine translated (Urdu), not yet reviewed by a native speaker.
 
-kit-files-not-text = اسے رکھنے والی فائل متن نہیں ہے اور پڑھی نہیں جا سکتی
+kit-files-not-text = جس فائل میں یہ محفوظ ہے وہ متن نہیں ہے، اس لیے پڑھی نہیں جا سکتی
 
-kit-files-not-allowed = اس اکاؤنٹ کو اسے رکھنے والی فائل پڑھنے کی اجازت نہیں
+kit-files-not-allowed = آپ کے اکاؤنٹ کو اس فائل کو پڑھنے کی اجازت نہیں جس میں یہ محفوظ ہے
 
-kit-files-not-ordinary = اسے رکھنے والی فائل عام فائل نہیں ہے اور پڑھی نہیں جا سکتی
+kit-files-not-ordinary = جس فائل میں یہ محفوظ ہے وہ عام فائل نہیں ہے، اس لیے پڑھی نہیں جا سکتی
 
-kit-files-unreadable = اسے رکھنے والی فائل پڑھی نہیں جا سکتی
+kit-files-unreadable = جس فائل میں یہ محفوظ ہے وہ پڑھی نہیں جا سکتی
 
-kit-files-too-big = اسے رکھنے والی فائل اتنی بڑی ہے کہ پوری نہیں پڑھی جا سکتی
+kit-files-too-big = جس فائل میں یہ محفوظ ہے وہ اتنی بڑی ہے کہ ایک بار میں پوری نہیں پڑھی جا سکتی
 
-kit-files-no-name-kept = اس کا کوئی نام نہیں جس کے تحت اسے رکھا جائے
+kit-files-no-name-kept = اس کا فائل نام نہیں ہے جس سے اسے محفوظ کیا جائے
 
-kit-files-dangling = یہ ایسی جگہ کا لنک ہے جو موجود نہیں
+kit-files-dangling = یہ ایسی چیز کا لنک ہے جو موجود نہیں
 
-kit-files-nought = نام میں صفر نہیں آ سکتا
+kit-files-nought = اس کے نام میں صفر بائٹ ہے، جو جائز نہیں
 
 kit-files-taken = اس نام کی کوئی چیز پہلے سے موجود ہے
 
-kit-files-not-a-name = فولڈر میں کوئی نام نہیں
+kit-files-not-a-name = فولڈر میں کسی آئٹم کے لیے یہ درست نام نہیں ہے
 
 kit-files-old-name-stays = پرانا نام ہٹایا نہیں جا سکا
 
-kit-files-no-name-opened = اس کا کوئی نام نہیں جس سے اسے فولڈر کے اندر کھولا جائے
+kit-files-no-name-opened = اس کا فائل نام نہیں ہے جس سے اسے کھولا جائے
 
-kit-files-not-plain = ایک سادہ نام نہیں
+kit-files-not-plain = یہ ایک ہی فائل نام ہونا چاہیے
 
-kit-files-name-unkeepable = اس کا نام ترتیبات کی فائل میں رکھا نہیں جا سکتا
+kit-files-name-unkeepable = اس کا نام سیٹنگز فائل میں محفوظ نہیں کیا جا سکتا
 
-kit-files-char-unkeepable = اس میں سطر کا وقفہ یا کوئی اور حرف ہے جو رکھا نہیں جا سکتا
+kit-files-char-unkeepable = اس میں لائن بریک یا کوئی اور حرف ہے جو محفوظ نہیں کیا جا سکتا
 
 kit-files-changed = کاپی ہوتے وقت یہ بدل گئی
 
-kit-files-not-a-file = نہ فائل ہے نہ فولڈر
+kit-files-not-a-file = یہ نہ فائل ہے نہ فولڈر
 
-kit-windowless-no-desktop = بات کرنے کے لیے کوئی ڈیسک ٹاپ نہیں
+kit-windowless-no-desktop = Trindle ڈیسک ٹاپ تک نہیں پہنچ سکا
 
 kit-windowless-no-answer = ڈیسک ٹاپ نے جواب نہیں دیا
 
 kit-windowless-no-seat = ڈیسک ٹاپ میں کی بورڈ یا ماؤس نہیں ہے
 
-kit-bus-no-answer-in-time = وقت پر کوئی جواب نہیں آیا۔
+kit-bus-no-answer-in-time = درخواست کا وقت ختم ہو گیا۔
 
-kit-bus-already-offered = یہ انٹرفیس اس راستے پر پہلے ہی پیش کیا جا چکا ہے۔
+kit-bus-already-offered = یہ انٹرفیس اس آبجیکٹ پاتھ پر پہلے سے دستیاب ہے۔
 
-kit-bus-too-many-waiting = بہت سی کالیں منتظر ہیں؛ دوبارہ کوشش کریں۔
+kit-bus-too-many-waiting = بہت سی درخواستیں انتظار میں ہیں۔ دوبارہ کوشش کریں۔
 
-kit-bus-no-machine-id = مشین کی شناخت نہیں ہے۔
+kit-bus-no-machine-id = مشین آئی ڈی موجود نہیں ہے۔
 
-kit-bus-busy = اس انٹرفیس کی دوسری کال میں مصروف ہے؛ دوبارہ کوشش کریں۔
+kit-bus-busy = اس انٹرفیس کی ایک اور درخواست جاری ہے۔ دوبارہ کوشش کریں۔
 
-kit-bus-no-interface = یہاں ایسا کوئی انٹرفیس نہیں۔
+kit-bus-no-interface = یہ انٹرفیس نہیں ملا۔
 
-kit-bus-no-object = یہاں ایسی کوئی چیز نہیں۔
+kit-bus-no-object = یہ آبجیکٹ نہیں ملا۔
 
-kit-bus-give-interface = کوئی انٹرفیس دیں۔
+kit-bus-give-interface = کوئی انٹرفیس بتائیں۔
 
-kit-bus-give-property = کوئی انٹرفیس اور خصوصیت دیں۔
+kit-bus-give-property = ایک انٹرفیس اور ایک پراپرٹی بتائیں۔
 
-kit-bus-give-value = کوئی انٹرفیس، خصوصیت اور قدر دیں۔
+kit-bus-give-value = ایک انٹرفیس، ایک پراپرٹی اور ایک قدر بتائیں۔
 
-kit-bus-no-property = ایسی کوئی خصوصیت نہیں۔
+kit-bus-no-property = یہ پراپرٹی نہیں ملی۔
 
-kit-bus-read-only = یہ خصوصیت مقرر نہیں کی جا سکتی۔
+kit-bus-read-only = یہ پراپرٹی بدلی نہیں جا سکتی۔
 
-kit-bus-unanswered = کوئی جواب نہیں دیا گیا۔
+kit-bus-unanswered = درخواست کا کوئی جواب نہیں ملا۔
 
-kit-bus-closed = بس بند ہو گئی
+kit-bus-closed = کنکشن بند ہو گیا
 
-kit-bus-no-method-here = یہاں ایسا کوئی طریقہ نہیں۔
+kit-bus-no-method-here = یہ میتھڈ نہیں ملا۔
 
-kit-mpris-seek = Seek کو ایک وقت درکار ہے۔
+kit-mpris-seek = Seek کے لیے وقت دینا ضروری ہے۔
 
-kit-mpris-set-position = SetPosition کو ایک ٹریک اور ایک وقت درکار ہے۔
+kit-mpris-set-position = SetPosition کے لیے ٹریک اور وقت دینا ضروری ہے۔
 
-kit-mpris-no-uri = یہ پلیئر کوئی پتہ نہیں کھولتا۔
+kit-mpris-no-uri = یہ پلیئر پتے نہیں کھول سکتا۔
 
-kit-mpris-app-id = ایپ کی شناخت سادہ ریورس ڈومین نام نہیں ہے۔
+kit-mpris-app-id = ایپ آئی ڈی سادہ ریورس ڈومین نام ہونی چاہیے۔
 
-kit-notify-bad-arguments = دلائل اس کال کے مطابق نہیں۔
+kit-notify-bad-arguments = آرگومنٹس اس کال کے لیے درست نہیں۔
 
-kit-once-raise-only = یہاں صرف Raise پیش کیا جاتا ہے
+kit-once-raise-only = یہاں صرف Raise کی سہولت ہے
 
 kit-print-too-long = دستاویز 200 صفحات سے لمبی ہے
 
-kit-print-no-room = صفحات بنانے کی جگہ نہیں
+kit-print-no-room = صفحات بنانے کے لیے کافی میموری نہیں ہے

@@ -711,3 +711,28 @@ fn a_program_with_the_toolkit_fetched_elsewhere_still_finds_its_words() {
     assert_eq!(names, ["toolkit", "trindle"]);
     assert_eq!(domains[0].lang_dir, crate::common::source::toolkit_root().join("share/lang"));
 }
+
+#[test]
+fn every_language_has_the_month_names_used_inside_a_date() {
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("share/lang");
+    let mut seen = 0;
+    for entry in std::fs::read_dir(&root).unwrap() {
+        let dir = entry.unwrap().path();
+        if !dir.is_dir() || dir.file_name().is_some_and(|n| n == "en") {
+            continue;
+        }
+        let keys = parse(&std::fs::read_to_string(dir.join("toolkit.ftl")).unwrap()).order;
+        for month in 1..=12 {
+            let key = format!("kit-month-in-date-{month}");
+            assert!(keys.contains(&key), "{}: no {key}", dir.display());
+        }
+        seen += 1;
+    }
+    assert!(seen >= 16, "found only {seen} languages");
+}
+
+#[test]
+fn the_tests_read_the_built_in_english_whatever_the_machine_has_or_says() {
+    assert_eq!(chosen_tag(), "en");
+    assert_eq!(t_with("kit-spin-less", &[("what", Arg::from("x"))]), "Decrease x");
+}

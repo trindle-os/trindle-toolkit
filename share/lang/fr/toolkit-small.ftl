@@ -36,7 +36,7 @@ kit-more-people =
 
 kit-gradient-bar = Dégradé de { $n } points
 
-kit-gradient-place = Position du point choisi
+kit-gradient-place = Position du point sélectionné
 
 kit-gradient-add = Ajouter un point
 

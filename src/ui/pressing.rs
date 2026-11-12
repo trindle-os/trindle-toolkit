@@ -75,7 +75,7 @@ impl<M: Clone> Ui<M> {
                 }
             }
         } else if self.is_entry(&id) {
-            let at = self.entry_hit(&id, x);
+            let at = self.entry_hit_at(&id, x, self.drag_y(&id, y));
             if let Some(e) = self.edit(&id) {
                 if e.caret != at {
                     e.move_to(at, true);
@@ -254,7 +254,7 @@ impl<M: Clone> Ui<M> {
             _ => 1,
         };
         self.last_click = Some((now, id.clone(), count));
-        let at = self.entry_hit(&id, x);
+        let at = self.entry_hit_at(&id, x, y);
         let secret = self.entry_secret(&id);
         if count == 1 && !secret && self.lift_press(&id, (x, y), at) {
             return;

@@ -1,7 +1,7 @@
 # machine translated (Swahili), not yet reviewed by a native speaker.
 
 kit-chart-part = Sehemu { $n }
-kit-chart-empty = { $name }: chati isiyo na thamani.
+kit-chart-empty = { $name }: chati hii haina thamani.
 kit-chart-line =
     { $n ->
         [one] { $name }: chati ya mstari, thamani 1: { $first }.

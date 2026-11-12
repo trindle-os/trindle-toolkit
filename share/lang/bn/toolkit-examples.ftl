@@ -1,7 +1,7 @@
 # machine translated (Bengali), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = উইন্ডো খোলার মতো কোনো Wayland ডেস্কটপ নেই
-kit-run-no-window = ডেস্কটপ উইন্ডো খুলতে চাইল না
+kit-run-no-desktop = কোনো Wayland ডেস্কটপ সাড়া দেয়নি, তাই উইন্ডো খোলা যাচ্ছে না
+kit-run-no-window = ডেস্কটপ উইন্ডো খুলতে পারেনি।
 kit-example-hello-title = নমস্কার
 kit-example-hello-button = আমাকে চাপুন
 kit-example-hello-none = এখনও চাপা হয়নি
@@ -39,7 +39,7 @@ kit-example-gallery-hello = নমস্কার, { $name }
 kit-example-gallery-progress = অগ্রগতি
 
 kit-example-context-title = প্রসঙ্গ মেনু
-kit-example-context-how = কার্ডে ডান ক্লিক করুন, আঙুল চেপে ধরুন বা মেনু কী চাপুন
+kit-example-context-how = কার্ডে ডান ক্লিক করুন, সেটি চেপে ধরে রাখুন, বা Menu কী চাপুন
 kit-example-context-note = কেনাকাটার তালিকা
 kit-example-context-pinned = পিন করা
 kit-example-context-unpinned = পিন করা নেই

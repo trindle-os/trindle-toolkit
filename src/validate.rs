@@ -105,8 +105,8 @@ mod tests {
     #[test]
     fn a_problem_is_said_only_for_what_is_wrong() {
         assert_eq!(Mask::Phone.problem("07700 900123"), None);
-        assert_eq!(Mask::Phone.problem("123"), Some("Write a phone number of 7 to 15 figures."));
-        assert_eq!(Mask::Date.problem("2026-02-30"), Some("Write a real date as year-month-day, such as 2026-10-30."));
+        assert_eq!(Mask::Phone.problem("123"), Some("Enter a phone number with 7 to 15 digits."));
+        assert_eq!(Mask::Date.problem("2026-02-30"), Some("Enter a date as year-month-day, such as 2026-10-30."));
         assert_eq!(Mask::Date.problem("2024-02-29"), None);
         assert_eq!((Mask::Hex.problem("#fff"), Mask::Hex.problem("fbc711cc")), (None, None));
         assert!(Mask::Hex.problem("#fbc7").is_some());

@@ -1,7 +1,7 @@
 # machine translated (Bengali), not yet reviewed by a native speaker.
 
 kit-chart-part = অংশ { $n }
-kit-chart-empty = { $name }: কোনো মান নেই এমন চার্ট।
+kit-chart-empty = { $name }: এই চার্টে কোনো মান নেই।
 kit-chart-line =
     { $n ->
         [one] { $name }: লাইন চার্ট, ১টি মান: { $first }।

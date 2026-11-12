@@ -1,7 +1,7 @@
 # machine translated (German), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Kein Wayland-Desktop, auf dem ein Fenster geöffnet werden kann
-kit-run-no-window = Der Desktop wollte kein Fenster öffnen
+kit-run-no-desktop = Keine Wayland-Arbeitsoberfläche hat geantwortet, daher lässt sich das Fenster nicht öffnen
+kit-run-no-window = Die Arbeitsoberfläche konnte kein Fenster öffnen.
 kit-example-hello-title = Hallo
 kit-example-hello-button = Drück mich
 kit-example-hello-none = Noch nicht gedrückt
@@ -25,7 +25,7 @@ kit-example-gallery-main = Speichern
 kit-example-gallery-remove = Entfernen
 kit-example-gallery-count = { $n } Mal gedrückt
 kit-example-gallery-choices = Auswahl
-kit-example-gallery-switch-name = Hinweise
+kit-example-gallery-switch-name = Benachrichtigungen
 kit-example-gallery-size-name = Größe
 kit-example-gallery-size-small = Klein
 kit-example-gallery-size-medium = Mittel
@@ -39,7 +39,7 @@ kit-example-gallery-hello = Hallo, { $name }
 kit-example-gallery-progress = Fortschritt
 
 kit-example-context-title = Kontextmenü
-kit-example-context-how = Rechtsklick auf die Karte, Finger gedrückt halten oder Menütaste drücken
+kit-example-context-how = Klicke mit der rechten Maustaste auf die Karte, halte sie gedrückt oder drücke die Menütaste
 kit-example-context-note = Einkaufsliste
 kit-example-context-pinned = Angeheftet
 kit-example-context-unpinned = Nicht angeheftet

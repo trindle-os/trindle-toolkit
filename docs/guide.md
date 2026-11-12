@@ -4,7 +4,7 @@ A short guide for someone writing a first program. The [reference](reference.md)
 
 ## Building
 
-On Debian 13 or Ubuntu:
+On Debian 13 or another Debian-based system:
 
 ```sh
 sudo apt install cargo rustc pkg-config libxkbcommon-dev libwayland-dev

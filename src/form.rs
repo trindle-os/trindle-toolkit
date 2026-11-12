@@ -117,7 +117,7 @@ mod tests {
         f.update(Typed { field: 1, text: "forty".into() }, &mut person);
         assert_eq!(person.age, 41.0);
         let said = f.view(|t| t).said();
-        assert!(said.contains(&"Write a name.".to_string()) && said.contains(&"Write a number, such as 12 or 3.5.".to_string()), "{said:?}");
+        assert!(said.contains(&"Write a name.".to_string()) && said.contains(&"Enter a number, such as 12 or 3.5.".to_string()), "{said:?}");
         f.load(&person);
         assert!(f.is_right());
         f.update(Typed { field: 9, text: "x".into() }, &mut person);

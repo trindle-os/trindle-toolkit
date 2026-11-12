@@ -1,7 +1,7 @@
 # machine translated (Spanish), not yet reviewed by a native speaker.
 
 kit-chart-part = Parte { $n }
-kit-chart-empty = { $name }: gráfico sin valores.
+kit-chart-empty = { $name }: este gráfico no tiene valores.
 kit-chart-line =
     { $n ->
         [one] { $name }: gráfico de líneas, 1 valor: { $first }.

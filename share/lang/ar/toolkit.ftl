@@ -88,28 +88,28 @@ kit-more-lines =
     }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = لم ينتج عن المُسقَط شيء.
+kit-dropped-empty = تعذّر على Trindle فعل أي شيء بالعناصر التي أسقطتها.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = المُسقَط أكبر من أن يُؤخذ بهذه الطريقة.
+kit-dropped-too-big = ما أسقطته أكبر من أن يُسحب إلى هنا.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = استغرق وصول المُسقَط وقتًا طويلًا، فتُرك.
+kit-dropped-too-slow = استغرق وصول ما أسقطته وقتًا طويلًا، فتوقف Trindle عن الانتظار.
 
 # Said when too many things were dropped at once.
-kit-dropped-too-many = أُسقط عدد كبير من العناصر دفعة واحدة. أسقط عددًا أقل في كل مرة.
+kit-dropped-too-many = أسقطت عددًا كبيرًا من العناصر دفعة واحدة. أسقط عددًا أقل في كل مرة.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = المُسقَط ليس قائمة ملفات على هذا الحاسوب.
+kit-dropped-not-files = العناصر التي أسقطتها ليست ملفات على هذا الحاسوب.
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = ليس عنوان ويب
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = يفتح عنوان بريد (mailto)
+kit-link-mailto = عنوان بريد إلكتروني
 
 # Label of a link button whose address opens a file.
-kit-link-file = يفتح ملفًا
+kit-link-file = ملف على هذا الحاسوب
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = رابط إلى { $label }
@@ -121,28 +121,28 @@ kit-chooser-no-answer = لم تستجب نافذة الاختيار. حاول م
 kit-theme-line = السطر { $line }: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = الملف أكبر من أن يكون سمة. أقصى حجم للسمة 64 كيلوبايت.
+kit-theme-too-big = ملف السمة هذا كبير جدًا. أقصى حجم هو 64 كيلوبايت.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = الملف ليس ورقة أنماط: فهو يحتوي على أكثر من الكلمات.
+kit-theme-not-sheet = هذا الملف ليس ورقة أنماط. فهو يحتوي على أكثر من نص عادي.
 
 # Fault in a theme file the person is trying: it brings in another file.
 kit-theme-imports = لا يمكن للسمة أن تستورد ملفًا آخر أو عنوان ويب.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name } أطول من أن يكون قيمة.
+kit-theme-too-long = قيمة --{ $name } طويلة جدًا.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name } ليس لونًا يستطيع Trindle قراءته.
+kit-theme-not-colour = لا يستطيع Trindle قراءة --{ $name } على أنه لون.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name } ليس رقمًا يستطيع Trindle قراءته.
+kit-theme-not-number = لا يستطيع Trindle قراءة --{ $name } على أنه رقم.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name } ليس ظلًا يستطيع Trindle قراءته.
+kit-theme-not-shadow = لا يستطيع Trindle قراءة --{ $name } على أنه ظل.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = لا شيء في الملف قيمة يعرفها Trindle، لذا لن يغيّر شيئًا.
+kit-theme-nothing-known = لا يتعرف Trindle على أي إعدادات في هذا الملف، لذا لن يتغير شيء.
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = التقدم
@@ -169,11 +169,11 @@ kit-row-sub =
 
 kit-row-keys = { $words }، { $keys }
 
-kit-drop-target = هدف الإفلات
+kit-drop-target = منطقة الإسقاط
 
-kit-theme-not-step = --{ $name } يقبل خطوة واحدة فقط من هذه الخطوات: { $steps }. أي شيء آخر يُتجاوز. انظر { $guide }.
+kit-theme-not-step = --{ $name } يمكن أن يكون واحدًا فقط مما يلي: { $steps }. يتجاهل Trindle أي قيمة أخرى. راجع { $guide }.
 
-kit-sheet-not-watched = تغييرات ورقة الأنماط في { $folder } لا تظهر إلا بعد إعادة التشغيل: { $why }
+kit-sheet-not-watched = أعد التشغيل لترى التغييرات في ورقة الأنماط في { $folder }. { $why }
 
 kit-menu-bar = شريط القوائم
 
@@ -189,13 +189,13 @@ kit-path = المسار
 
 kit-path-more = أماكن أخرى
 
-kit-range-low = الطرف الأدنى
+kit-range-low = الحد الأدنى
 
-kit-range-high = الطرف الأعلى
+kit-range-high = الحد الأعلى
 
-kit-spin-less = أقل { $what }
+kit-spin-less = تقليل { $what }
 
-kit-spin-more = أكثر { $what }
+kit-spin-more = زيادة { $what }
 
 kit-spin-not-number = اكتب رقمًا من { $min } إلى { $max }
 
@@ -221,13 +221,13 @@ kit-colour-hex = الرمز السداسي عشري
 
 kit-look-title = المظهر
 
-kit-look-lead = كيف يبدو هذا البرنامج، مهما فعل بقية سطح المكتب.
+kit-look-lead = اختر كيف يبدو هذا البرنامج، بشكل منفصل عن بقية سطح المكتب.
 
 kit-look-group = المظهر
 
 kit-look-shade = فاتح أو داكن
 
-kit-look-shade-help = اتبع سطح المكتب، أو مظهرًا واحدًا دائمًا.
+kit-look-shade-help = اتبع سطح المكتب، أو استخدم دائمًا الفاتح أو الداكن.
 
 kit-look-desktop = مثل سطح المكتب
 
@@ -237,9 +237,9 @@ kit-look-light = فاتح
 
 kit-look-highlight = لون التمييز
 
-kit-look-highlight-help = لون الإجراء الرئيسي وما هو مختار.
+kit-look-highlight-help = لون الأزرار الرئيسية والعناصر المحددة.
 
-kit-look-highlight-desktop = استخدم لون سطح المكتب
+kit-look-highlight-desktop = مثل سطح المكتب
 
 kit-date-previous = السابق
 
@@ -276,6 +276,19 @@ kit-month-10 = أكتوبر
 kit-month-11 = نوفمبر
 
 kit-month-12 = ديسمبر
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = يناير
+kit-month-in-date-2 = فبراير
+kit-month-in-date-3 = مارس
+kit-month-in-date-4 = أبريل
+kit-month-in-date-5 = مايو
+kit-month-in-date-6 = يونيو
+kit-month-in-date-7 = يوليو
+kit-month-in-date-8 = أغسطس
+kit-month-in-date-9 = سبتمبر
+kit-month-in-date-10 = أكتوبر
+kit-month-in-date-11 = نوفمبر
+kit-month-in-date-12 = ديسمبر
 
 kit-weekday-1 = اثنين
 
@@ -311,7 +324,7 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = شعار
+kit-key-logo = Super
 
 kit-key-left = يسار
 
@@ -345,9 +358,9 @@ kit-key-insert = Insert
 
 kit-shortcuts = اختصارات لوحة المفاتيح
 
-kit-shortcut-kept-window = تحتفظ النافذة بهذا المفتاح للتنقل بين الأجزاء وللإغلاق.
+kit-shortcut-kept-window = هذا المفتاح محجوز للتنقل بين عناصر التحكم وإغلاق النافذة.
 
-kit-shortcut-kept-typing = مربع النص يأخذ هذا المفتاح أولًا أثناء الكتابة.
+kit-shortcut-kept-typing = أثناء الكتابة، يذهب هذا المفتاح إلى مربع النص أولًا.
 
 kit-emoji = الرموز التعبيرية
 
@@ -723,9 +736,9 @@ kit-emoji-recycling = إعادة تدوير
 
 kit-emoji-sleep = نوم
 
-kit-only-your-own = ضغطتك أنت وحدها تعمل هنا.
+kit-only-your-own = أنت وحدك تستطيع الضغط على هذا الزر.
 
-kit-no-layout = تعذّرت قراءة تخطيط لوحة المفاتيح، لذا لا تفعل الكتابة شيئًا.
+kit-no-layout = تعذّر على Trindle قراءة تخطيط لوحة المفاتيح، لذا لا يمكنك الكتابة.
 
 kit-scene =
     { $count ->
@@ -759,7 +772,7 @@ kit-player-seek = الموضع
 
 kit-player-mute = كتم
 
-kit-player-unmute = تشغيل الصوت
+kit-player-unmute = إلغاء الكتم
 
 kit-player-volume = مستوى الصوت
 
@@ -767,7 +780,7 @@ kit-player-time = { $at } من { $length }
 
 kit-crash-title = حدث خطأ ما
 
-kit-crash-lead = توقف { $program } بسبب عطل. انسخ التقرير أدناه وأرسله مع بلاغ الخطأ ليُصلَح.
+kit-crash-lead = توقف { $program } لأن خطأً ما حدث. انسخ التقرير أدناه وأرسله مع بلاغك عن الخلل ليتسنى إصلاح المشكلة.
 
 kit-crash-copy = نسخ التقرير
 
@@ -795,11 +808,11 @@ kit-frame-move = نقل
 
 kit-frame-resize = تغيير الحجم
 
-kit-numerals-title = الأرقام
+kit-numerals-title = نمط الأرقام
 
 kit-numerals-help = كيف تُكتب الأعداد والتواريخ والأوقات.
 
-kit-numerals-auto = كما تُكتب عادة في المنطقة
+kit-numerals-auto = المعتاد في منطقتك
 
 kit-numerals-latin = دائمًا من 0 إلى 9
 

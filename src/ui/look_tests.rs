@@ -19,13 +19,13 @@ fn the_look_page_offers_the_shade_and_the_highlight_and_a_reader_hears_them() {
     let mut ui = page(&LookChoice::default());
     let told = ui.access("Test");
     let labels: Vec<&str> = told.nodes.iter().filter_map(|(_, n)| n.label()).collect();
-    for want in ["Light or dark", "As the desktop", "Hue", "Hex code"] {
+    for want in ["Light or dark", "Same as the desktop", "Hue", "Hex code"] {
         assert!(labels.iter().any(|l| l.contains(want)), "{want} in {labels:?}");
     }
-    assert!(!labels.iter().any(|l| l.contains("Use the desktop's")), "the desktop's highlight is already in use");
+    assert_eq!(labels.iter().filter(|l| **l == "Same as the desktop").count(), 1, "the desktop's highlight is already in use: only the shade offers it");
     let own = LookChoice { shade: Shade::Light, highlight: Colour::parse("#2295f1") };
     let told = page(&own).access("Test");
-    assert!(told.nodes.iter().any(|(_, n)| n.label() == Some("Use the desktop's")));
+    assert_eq!(told.nodes.iter().filter(|(_, n)| n.label() == Some("Same as the desktop")).count(), 2, "the shade and the highlight both offer the desktop");
 }
 
 #[test]

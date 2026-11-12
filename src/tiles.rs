@@ -263,13 +263,25 @@ pub fn worry(share: f64) -> Option<Colour> {
 }
 
 pub fn fill_bar<M>(share: Option<f64>, tip: impl Into<String>) -> Node<M> {
+    fill_bar_as(share, tip, true)
+}
+
+pub fn fill_bar_good<M>(share: Option<f64>, tip: impl Into<String>) -> Node<M> {
+    fill_bar_as(share, tip, false)
+}
+
+pub fn fill_colour(share: f64, worried: bool) -> Option<Colour> {
+    if worried { worry(share) } else { None }
+}
+
+fn fill_bar_as<M>(share: Option<f64>, tip: impl Into<String>, worried: bool) -> Node<M> {
     let tall = theme::sheet().fill_bar;
     drawing((120.0, tall), tip, move |canvas, pen| {
         let mut s = Sketch::strip(canvas, pen, tall);
         let (wide, track) = (s.wide(), s.track());
         s.rect((0.0, 0.0, wide, tall), tall / 2.0, track);
         if let Some(share) = share {
-            let colour = worry(share).unwrap_or_else(|| s.highlight());
+            let colour = fill_colour(share, worried).unwrap_or_else(|| s.highlight());
             let across = (wide * share.clamp(0.0, 1.0) as f32).max(tall).min(wide);
             s.rect((0.0, 0.0, across, tall), tall / 2.0, colour);
         }
@@ -421,5 +433,12 @@ mod tests {
         assert!(worry(WORRY.0).is_some() && worry(WORRY.1 - 0.01).is_some());
         assert_ne!(worry(WORRY.0).map(|c| c.css()), worry(WORRY.1).map(|c| c.css()));
         assert!(worry(1.5).is_some());
+    }
+
+    #[test]
+    fn a_full_bar_where_more_is_better_is_not_the_worry_colour() {
+        assert!(fill_colour(1.0, false).is_none());
+        assert!(fill_colour(1.0, true).is_some());
+        assert!(fill_colour(0.5, true).is_none());
     }
 }

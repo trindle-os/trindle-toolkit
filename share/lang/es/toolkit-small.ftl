@@ -20,7 +20,7 @@ kit-more-people =
        *[other] { $n } personas más
     }
 kit-gradient-bar = Degradado con { $n } paradas
-kit-gradient-place = Posición de la parada elegida
+kit-gradient-place = Posición del punto seleccionado
 kit-gradient-add = Añadir una parada
 kit-gradient-remove = Quitar la parada
 kit-help-show = Mostrar la ayuda

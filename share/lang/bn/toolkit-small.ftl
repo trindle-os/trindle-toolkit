@@ -20,7 +20,7 @@ kit-more-people =
        *[other] আরও { $n } জন
     }
 kit-gradient-bar = { $n }টি স্টপ সহ গ্রেডিয়েন্ট
-kit-gradient-place = বাছাই করা স্টপের অবস্থান
+kit-gradient-place = বাছা বিন্দুর অবস্থান
 kit-gradient-add = একটি স্টপ যোগ করুন
 kit-gradient-remove = স্টপটি সরান
 kit-help-show = সাহায্য দেখান

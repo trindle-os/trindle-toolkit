@@ -1,7 +1,7 @@
 # machine translated (Hindi), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = विंडो खोलने के लिए कोई Wayland डेस्कटॉप नहीं है
-kit-run-no-window = डेस्कटॉप ने विंडो नहीं खोली
+kit-run-no-desktop = किसी Wayland डेस्कटॉप ने जवाब नहीं दिया, इसलिए विंडो नहीं खुल सकती
+kit-run-no-window = डेस्कटॉप विंडो नहीं खोल सका।
 kit-example-hello-title = नमस्ते
 kit-example-hello-button = मुझे दबाएँ
 kit-example-hello-none = अभी तक नहीं दबाया
@@ -39,7 +39,7 @@ kit-example-gallery-hello = नमस्ते, { $name }
 kit-example-gallery-progress = प्रगति
 
 kit-example-context-title = संदर्भ मेनू
-kit-example-context-how = कार्ड पर राइट क्लिक करें, उंगली टिकाए रखें या मेनू कुंजी दबाएं
+kit-example-context-how = कार्ड पर राइट-क्लिक करें, उसे देर तक दबाए रखें, या Menu कुंजी दबाएँ
 kit-example-context-note = खरीदारी की सूची
 kit-example-context-pinned = पिन किया हुआ
 kit-example-context-unpinned = पिन नहीं किया

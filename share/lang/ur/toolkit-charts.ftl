@@ -2,7 +2,7 @@
 
 kit-chart-part = حصہ { $n }
 
-kit-chart-empty = { $name }: بغیر قدروں کا چارٹ۔
+kit-chart-empty = { $name }: اس چارٹ میں کوئی قدر نہیں۔
 
 kit-chart-line =
     { $n ->

@@ -94,6 +94,23 @@ pub(crate) fn month_name(month: u32) -> &'static str {
     }
 }
 
+pub(crate) fn month_in_date(month: u32) -> &'static str {
+    match month {
+        1 => t!("kit-month-in-date-1"),
+        2 => t!("kit-month-in-date-2"),
+        3 => t!("kit-month-in-date-3"),
+        4 => t!("kit-month-in-date-4"),
+        5 => t!("kit-month-in-date-5"),
+        6 => t!("kit-month-in-date-6"),
+        7 => t!("kit-month-in-date-7"),
+        8 => t!("kit-month-in-date-8"),
+        9 => t!("kit-month-in-date-9"),
+        10 => t!("kit-month-in-date-10"),
+        11 => t!("kit-month-in-date-11"),
+        _ => t!("kit-month-in-date-12"),
+    }
+}
+
 fn weekday_name(day: u32) -> &'static str {
     match day {
         0 => t!("kit-weekday-1"),
@@ -182,7 +199,7 @@ fn month_grid<M: 'static>(shown: (i32, u32), weeks: bool, on: impl Fn(Date) -> b
         cells.extend(week.iter().map(|day| match day.map(|day| Date { year, month, day }) {
             Some(date) => cell(word_button(format::digits(&date.day.to_string()))
                 .on(on(date))
-                .spoken(t!("kit-date-full", weekday = weekday_full(date.weekday()), day = date.day as i64, month = month_name(month), year = year as i64))
+                .spoken(t!("kit-date-full", weekday = weekday_full(date.weekday()), day = date.day as i64, month = month_in_date(month), year = year as i64))
                 .on_press(wrap(Pick::Day(date)))),
             None => cell(label("")),
         }));
@@ -306,6 +323,19 @@ mod tests {
         assert_eq!(b.shown, (9999, 12));
         b.update(Pick::Month(i32::MIN));
         assert_eq!(b.shown, (1, 1));
+    }
+
+    #[test]
+    fn a_whole_date_takes_the_month_as_it_reads_in_a_date() {
+        use crate::lang::{with_catalogue, Bundle, Catalogue, KIT_ENGLISH};
+        let russian = Catalogue::new(Bundle::from_text("xx", "kit-month-11 = ноябрь\nkit-month-in-date-11 = ноября"), Bundle::from_files("en", KIT_ENGLISH));
+        with_catalogue(russian, || {
+            assert_eq!(month_name(11), "ноябрь");
+            assert_eq!(month_in_date(11), "ноября");
+        });
+        with_catalogue(Catalogue::new(Bundle::default(), Bundle::from_files("en", KIT_ENGLISH)), || {
+            assert_eq!(month_in_date(11), month_name(11));
+        });
     }
 
     #[test]

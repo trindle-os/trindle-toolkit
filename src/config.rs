@@ -1,4 +1,4 @@
-//! Settings kept as one file per key in a config folder, as cosmic-config does, written whole and watched for changes made by other programs.
+//! Settings kept as one file per key in a config folder, as desktop settings systems do, written whole and watched for changes made by other programs.
 
 use std::io;
 use std::os::unix::fs::DirBuilderExt;

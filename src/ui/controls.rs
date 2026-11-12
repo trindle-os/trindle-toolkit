@@ -92,7 +92,7 @@ impl<M: Clone> Ui<M> {
             let edge = self.px(theme::sheet().entry_padding);
             let room = (b.w - 2.0 * edge - mark).max(0.0);
             let words = self.texts.get(&self.fonts, option, &style, None);
-            let words = if words.width > room { words.cut(room, &self.texts.get(&self.fonts, "\u{2026}", &style, None)) } else { words };
+            let words = if words.width > room { Rc::new(words.cut(room, &self.texts.get(&self.fonts, "\u{2026}", &style, None))) } else { words };
             self.note_cut(&spot.id, Some(i), option, &words);
             let ink = if i == chosen { t.fg } else { t.muted };
             self.fonts.draw(canvas, &words, (b.x + (b.w - mark - words.widest()) / 2.0).round(),
@@ -117,7 +117,7 @@ impl<M: Clone> Ui<M> {
         w::pill_at(&w::pills_in(w::pill_widths(&self.fonts, &self.texts, options, subs, self.scale), spot.rect.w - 2.0 * pad), x - spot.rect.x - pad)
     }
 
-    pub(super) fn paint_action(&self, canvas: &mut PixmapMut, r: Rect, icon: &str, words: &str, used: bool, lit: bool, for_good: bool) -> Layout {
+    pub(super) fn paint_action(&self, canvas: &mut PixmapMut, r: Rect, icon: &str, words: &str, used: bool, lit: bool, for_good: bool) -> Rc<Layout> {
         let t = &self.theme;
         let (b, l, at) = self.action_place(r, words, icon.is_empty());
         let back = if !used {
@@ -140,7 +140,7 @@ impl<M: Clone> Ui<M> {
         l
     }
 
-    pub(super) fn paint_quiet_action(&self, canvas: &mut PixmapMut, r: Rect, icon: &str, words: &str, used: bool, lit: bool, path: &[usize]) -> Layout {
+    pub(super) fn paint_quiet_action(&self, canvas: &mut PixmapMut, r: Rect, icon: &str, words: &str, used: bool, lit: bool, path: &[usize]) -> Rc<Layout> {
         let t = &self.theme;
         let style = Words::Plain.style(self.scale);
         let padx = self.px(w::QUIET_PADDING);
@@ -158,12 +158,12 @@ impl<M: Clone> Ui<M> {
             x += i + self.px(theme::sheet().action_gap);
         }
         let room = (b.x + b.w - padx - x).max(1.0);
-        let l = if l.width > room { l.cut(room, &self.texts.get(&self.fonts, "\u{2026}", &style, None)) } else { l.clone() };
+        let l = if l.width > room { Rc::new(l.cut(room, &self.texts.get(&self.fonts, "\u{2026}", &style, None))) } else { l.clone() };
         self.fonts.draw(canvas, &l, x.round(), b.y + ((b.h - l.height) / 2.0).round(), ink);
         l
     }
 
-    pub(super) fn action_place(&self, r: Rect, words: &str, bare: bool) -> (Rect, Layout, Rect) {
+    pub(super) fn action_place(&self, r: Rect, words: &str, bare: bool) -> (Rect, Rc<Layout>, Rect) {
         let spared = if bare { w::action_icon_room(self.scale) } else { 0.0 };
         let l = w::action_words(&self.fonts, &self.texts, words, r.w + spared, self.scale);
         let tall = if l.lines.len() > 1 { l.height.ceil() + 2.0 * w::action_room(self.scale) } else { 0.0 };

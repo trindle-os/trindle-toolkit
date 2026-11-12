@@ -58,7 +58,7 @@ impl<M: Clone> Ui<M> {
         if focused && self.keys_here && !hidden {
             let (x, top, h) = if text.is_empty() { layout.caret(0) } else { caret_at(&layout, at) };
             let w = self.px(theme::sheet().caret).max(1.0);
-            let ty = ((r.h - layout.height) / 2.0).round();
+            let ty = self.entry_down(&spot.id, r.h, layout.height);
             let bar = Rect { x: (x - scroll - w / 2.0).round().clamp(0.0, (inner.w - w).max(0.0)), y: ty + top, w, h };
             p.round(bar, [0.0; 4], t.fg);
         }
@@ -67,18 +67,18 @@ impl<M: Clone> Ui<M> {
     }
 
     fn paint_entry_words<'s>(&'s self, p: &mut Painter<'s>, size: (u32, u32), spot: &Spot, (text, tip): (&str, &str), secret: bool,
-                             pre: &Option<(Range<usize>, Option<(usize, usize)>)>, state: Option<&Edit>, scroll: f32, room: f32) -> Layout {
+                             pre: &Option<(Range<usize>, Option<(usize, usize)>)>, state: Option<&Edit>, scroll: f32, room: f32) -> Rc<Layout> {
         let t = &self.theme;
         let style = self.entry_style(&spot.id);
         let caret_at = |layout: &Layout, at: usize| layout.caret(if secret { edit::to_dots(text, at) } else { at });
         if text.is_empty() {
-            let place = self.texts.get(&self.fonts, tip, &style, None);
-            let (x, y, muted) = (self.entry_lead(&spot.id, place.width, room), ((spot.rect.h - place.height) / 2.0).round(), t.muted);
+            let place = self.entry_layout(&spot.id, tip, false);
+            let (x, y, muted) = (self.entry_lead(&spot.id, place.width, room), self.entry_down(&spot.id, spot.rect.h, place.height), t.muted);
             self.on_pixels(p, size, move |c| self.fonts.draw(c, &place, x, y, muted));
             self.texts.get(&self.fonts, " ", &style, None)
         } else {
             let layout = self.entry_layout(&spot.id, text, secret);
-            let ty = ((spot.rect.h - layout.height) / 2.0).round();
+            let ty = self.entry_down(&spot.id, spot.rect.h, layout.height);
             let sel = match pre {
                 Some((_, c)) => c.map(|(a, b)| a.min(b)..a.max(b)),
                 None => state.map(Edit::selection),
@@ -95,9 +95,15 @@ impl<M: Clone> Ui<M> {
             if let (false, None, Some(What::Entry { text: given, misspelt, .. })) = (secret, pre, self.node(&spot.id).map(|n| &n.what)) {
                 let thick = self.px(theme::sheet().caret).max(1.0);
                 for r in misspelt.iter().filter(|_| given == text) {
+                    let ink = t.spelling;
+                    if self.entry_lines(&spot.id) > 1 {
+                        for (x, top, w, h) in layout.mark_bands(std::slice::from_ref(r)) {
+                            self.on_pixels(p, size, move |c| crate::spelling::squiggle(c, x, x + w, ty + top + h - thick, thick, ink));
+                        }
+                        continue;
+                    }
                     let (a, top, h) = caret_at(&layout, r.start);
                     let b = caret_at(&layout, r.end).0;
-                    let ink = t.spelling;
                     self.on_pixels(p, size, move |c| crate::spelling::squiggle(c, a.min(b) - scroll, a.max(b) - scroll, ty + top + h - thick, thick, ink));
                 }
             }
@@ -350,8 +356,8 @@ impl<M: Clone> Ui<M> {
             }
             let layout = match node.cut {
                 0 => full,
-                1 => full.cut(r.w, &self.texts.get(&self.fonts, "\u{2026}", &style, None)),
-                lines => full.cut_after(lines as usize, r.w, &self.texts.get(&self.fonts, "\u{2026}", &style, None)),
+                1 => Rc::new(full.cut(r.w, &self.texts.get(&self.fonts, "\u{2026}", &style, None))),
+                lines => Rc::new(full.cut_after(lines as usize, r.w, &self.texts.get(&self.fonts, "\u{2026}", &style, None))),
             };
             self.note_cut(&spot.id, None, text, &layout);
             self.on_pixels(p, size, move |c| {

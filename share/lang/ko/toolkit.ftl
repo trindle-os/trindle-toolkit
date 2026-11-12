@@ -101,67 +101,67 @@ kit-row-sub =
 kit-row-keys = { $words }, { $keys }
 
 # Said under whatever was dropped on, when nothing came of it.
-kit-dropped-empty = 놓은 항목에서 아무것도 가져오지 못했습니다.
+kit-dropped-empty = Trindle이 놓은 항목으로 아무것도 할 수 없었습니다.
 
 # Said when what was dropped is too big to take by dropping.
-kit-dropped-too-big = 놓은 항목이 너무 커서 이 방법으로는 받을 수 없습니다.
+kit-dropped-too-big = 놓은 항목이 너무 커서 가져올 수 없습니다.
 
 # Said when what was dropped took too long to arrive.
-kit-dropped-too-slow = 놓은 항목이 너무 늦게 도착해서 받지 않았습니다.
+kit-dropped-too-slow = 놓은 항목이 너무 늦게 도착해서 Trindle이 기다리기를 멈췄습니다.
 
 # Said when too many things were dropped at once.
 kit-dropped-too-many = 한꺼번에 너무 많은 항목을 놓았습니다. 한 번에 적게 놓아 주세요.
 
 # Said when what was dropped was a list of files that are not on this computer.
-kit-dropped-not-files = 놓은 항목은 이 컴퓨터에 있는 파일 목록이 아닙니다.
+kit-dropped-not-files = 놓은 항목은 이 컴퓨터에 있는 파일이 아닙니다.
 
 # Read out by the screen reader for the control under something dragged, when letting go there would drop it in.
-kit-drop-target = 놓을 위치
+kit-drop-target = 놓는 영역
 
 # Label of a link button whose address is not a web address.
 kit-link-not-web = 웹 주소가 아닙니다
 
 # Label of a link button whose address opens a mail program.
-kit-link-mailto = 메일 주소를 엽니다
+kit-link-mailto = 메일 주소
 
 # Label of a link button whose address opens a file.
-kit-link-file = 파일을 엽니다
+kit-link-file = 이 컴퓨터의 파일
 
 # Read out by the screen reader for a link button. $label is the shown address.
 kit-link-to = { $label }(으)로 연결되는 링크
 
 # Said under whatever asked for a file or folder, when the window for choosing did not answer.
-kit-chooser-no-answer = 선택 창이 응답하지 않았습니다. 다시 시도해 주세요.
+kit-chooser-no-answer = 선택 창이 응답하지 않았습니다. 다시 시도하세요.
 
 # Starts a fault found in a theme file the person is trying. $line is the line number in the file, $why what is wrong.
 kit-theme-line = { $line }번째 줄: { $why }
 
 # Fault in a theme file the person is trying: it is bigger than 64 KB.
-kit-theme-too-big = 파일이 너무 커서 테마로 쓸 수 없습니다. 테마는 최대 64 KB입니다.
+kit-theme-too-big = 이 테마 파일은 너무 큽니다. 최대 크기는 64 KB입니다.
 
 # Fault in a theme file the person is trying: it holds unreadable characters.
-kit-theme-not-sheet = 이 파일은 스타일 시트가 아닙니다. 글자 외의 내용이 들어 있습니다.
+kit-theme-not-sheet = 이 파일은 스타일 시트가 아닙니다. 일반 텍스트 외의 내용이 들어 있습니다.
 
 # Fault in a theme file the person is trying: it brings in another file.
 kit-theme-imports = 테마에서 다른 파일이나 웹 주소를 불러올 수 없습니다.
 
 # Fault in a theme file the person is trying: a value is too long. $name is the setting's name.
-kit-theme-too-long = --{ $name }이(가) 너무 길어서 값으로 쓸 수 없습니다.
+kit-theme-too-long = --{ $name }의 값이 너무 깁니다.
 
 # Fault in a theme file the person is trying: a setting that should be a colour is not one Trindle can read. $name is the setting's name.
-kit-theme-not-colour = --{ $name }은(는) Trindle이 읽을 수 있는 색이 아닙니다.
+kit-theme-not-colour = Trindle이 --{ $name }을(를) 색으로 읽을 수 없습니다.
 
 # Fault in a theme file the person is trying: a setting that should be a number is not one Trindle can read.
-kit-theme-not-number = --{ $name }은(는) Trindle이 읽을 수 있는 숫자가 아닙니다.
+kit-theme-not-number = Trindle이 --{ $name }을(를) 숫자로 읽을 수 없습니다.
 
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
-kit-theme-not-shadow = --{ $name }은(는) Trindle이 읽을 수 있는 그림자가 아닙니다.
+kit-theme-not-shadow = Trindle이 --{ $name }을(를) 그림자로 읽을 수 없습니다.
 
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
-kit-theme-nothing-known = 파일에 Trindle이 아는 값이 없어서 아무것도 바뀌지 않습니다.
+kit-theme-nothing-known = 이 파일에는 Trindle이 알아보는 설정이 없어서 아무것도 바뀌지 않습니다.
 
 # Standard error, when the folder of the person's style sheet cannot be watched. $folder is the folder, $why the system's reason.
-kit-sheet-not-watched = { $folder }에 있는 스타일 시트의 변경 사항은 다시 시작한 뒤에 적용됩니다: { $why }
+kit-sheet-not-watched = { $folder }에 있는 스타일 시트의 변경 사항을 보려면 다시 시작하세요. { $why }
 
 # The name a screen reader gives a ring that shows how far a job has got.
 kit-progress = 진행률
@@ -191,10 +191,10 @@ kit-path = 경로
 kit-path-more = 다른 위치
 
 # Said after a range slider's name for its low handle.
-kit-range-low = 최솟값
+kit-range-low = 하한
 
 # Said after a range slider's name for its high handle.
-kit-range-high = 최댓값
+kit-range-high = 상한
 
 # The button that takes a step off a number box's number. $what is the box's name.
 kit-spin-less = { $what } 줄이기
@@ -233,15 +233,15 @@ kit-colour-hex = 16진수 코드
 # The ready settings page for a program's own look (settings::look_page).
 kit-look-title = 모양
 
-kit-look-lead = 데스크톱 설정과 관계없이 이 프로그램의 모양을 정합니다.
+kit-look-lead = 데스크톱의 나머지 부분과 따로, 이 프로그램의 모양을 고릅니다.
 
 kit-look-group = 모양
 
 kit-look-shade = 밝게 또는 어둡게
 
-kit-look-shade-help = 데스크톱에 맞추거나, 항상 한쪽으로 고정합니다.
+kit-look-shade-help = 데스크톱에 맞추거나, 항상 밝게 또는 어둡게 씁니다.
 
-kit-look-desktop = 데스크톱에 맞춤
+kit-look-desktop = 데스크톱과 같게
 
 kit-look-dark = 어둡게
 
@@ -249,10 +249,10 @@ kit-look-light = 밝게
 
 kit-look-highlight = 강조 색
 
-kit-look-highlight-help = 주요 동작과 선택한 항목의 색입니다.
+kit-look-highlight-help = 주요 버튼과 선택한 항목의 색입니다.
 
 # A button that gives the highlight back to the desktop's choice.
-kit-look-highlight-desktop = 데스크톱 색 사용
+kit-look-highlight-desktop = 데스크톱과 같게
 
 # Buttons either side of the month in a date picker.
 kit-date-previous = 이전
@@ -294,6 +294,19 @@ kit-month-10 = 10월
 kit-month-11 = 11월
 
 kit-month-12 = 12월
+# A month as it reads inside a whole date, such as "12 November 2026". Some languages change the ending there, so it has its own key.
+kit-month-in-date-1 = 1월
+kit-month-in-date-2 = 2월
+kit-month-in-date-3 = 3월
+kit-month-in-date-4 = 4월
+kit-month-in-date-5 = 5월
+kit-month-in-date-6 = 6월
+kit-month-in-date-7 = 7월
+kit-month-in-date-8 = 8월
+kit-month-in-date-9 = 9월
+kit-month-in-date-10 = 10월
+kit-month-in-date-11 = 11월
+kit-month-in-date-12 = 12월
 
 kit-weekday-1 = 월
 
@@ -330,7 +343,7 @@ kit-key-shift = Shift
 
 kit-key-alt = Alt
 
-kit-key-logo = 로고
+kit-key-logo = Super
 
 # The names of keys that are words, in a shortcut such as Ctrl+Page down.
 kit-key-left = 왼쪽
@@ -367,10 +380,10 @@ kit-key-insert = Insert
 kit-shortcuts = 키보드 단축키
 
 # Under a shortcut on that page whose keys the window always takes first.
-kit-shortcut-kept-window = 이 키는 부분 간 이동과 창 닫기를 위해 창이 먼저 사용합니다.
+kit-shortcut-kept-window = 이 키는 컨트롤 사이를 이동하고 창을 닫는 데 쓰도록 예약되어 있습니다.
 
 # Under a shortcut on that page whose keys a text box takes first while you type.
-kit-shortcut-kept-typing = 입력하는 동안에는 이 키를 텍스트 상자가 먼저 사용합니다.
+kit-shortcut-kept-typing = 입력하는 동안에는 이 키가 텍스트 상자로 먼저 전달됩니다.
 
 # The heading of the page of emoji to pick from.
 kit-emoji = 이모지
@@ -753,10 +766,10 @@ kit-emoji-recycling = 재활용
 kit-emoji-sleep = 수면
 
 # Said in a window of Trindle's own when something tried to press a button that only the person may press.
-kit-only-your-own = 여기서는 직접 누른 것만 작동합니다.
+kit-only-your-own = 이 버튼은 본인만 누를 수 있습니다.
 
 # Said in a window when keys are pressed but the keyboard layout could not be read.
-kit-no-layout = 키보드 배열을 읽지 못해서 입력할 수 없습니다.
+kit-no-layout = Trindle이 키보드 배열을 읽을 수 없어서 입력할 수 없습니다.
 
 # What a screen reader is told of a scene of items: how many, and the one chosen.
 kit-scene =
@@ -781,7 +794,7 @@ kit-player-seek = 재생 위치
 
 kit-player-mute = 음소거
 
-kit-player-unmute = 소리 켜기
+kit-player-unmute = 음소거 해제
 
 kit-player-volume = 음량
 
@@ -790,7 +803,7 @@ kit-player-time = { $length } 중 { $at }
 
 kit-crash-title = 문제가 발생했습니다
 
-kit-crash-lead = { $program }이(가) 문제로 인해 멈췄습니다. 아래 보고서를 복사해서 버그 신고와 함께 보내 주세요. 문제를 고치는 데 도움이 됩니다.
+kit-crash-lead = 문제가 생겨서 { $program }이(가) 멈췄습니다. 아래 보고서를 복사해서 버그 신고와 함께 보내 주세요. 문제를 고치는 데 도움이 됩니다.
 
 kit-crash-copy = 보고서 복사
 
@@ -815,9 +828,9 @@ kit-frame-move = 이동
 
 kit-frame-resize = 크기 조절
 
-kit-theme-not-step = --{ $name }은(는) 다음 단계 중 하나만 받습니다: { $steps }. 그 밖의 값은 건너뜁니다. { $guide }을(를) 참고하세요.
+kit-theme-not-step = --{ $name }에는 다음 중 하나만 쓸 수 있습니다: { $steps }. 그 밖의 값은 Trindle이 무시합니다. { $guide }을(를) 참고하세요.
 
-kit-numerals-title = 숫자
+kit-numerals-title = 숫자 표시 방식
 
 kit-numerals-help = 숫자, 날짜, 시간을 쓰는 방식입니다.
 

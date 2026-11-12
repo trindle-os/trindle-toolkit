@@ -1,7 +1,7 @@
 # machine translated (Turkish), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = Pencere açılacak bir Wayland masaüstü yok
-kit-run-no-window = Masaüstü bir pencere açmadı
+kit-run-no-desktop = Hiçbir Wayland masaüstü yanıt vermedi, bu yüzden pencere açılamıyor
+kit-run-no-window = Masaüstü pencere açamadı.
 kit-example-hello-title = Merhaba
 kit-example-hello-button = Bana basın
 kit-example-hello-none = Henüz basılmadı
@@ -39,7 +39,7 @@ kit-example-gallery-hello = Merhaba, { $name }
 kit-example-gallery-progress = İlerleme
 
 kit-example-context-title = Bağlam menüsü
-kit-example-context-how = Karta sağ tıklayın, parmağınızı üzerinde tutun veya Menü tuşuna basın
+kit-example-context-how = Karta sağ tıklayın, kartı basılı tutun ya da Menü tuşuna basın
 kit-example-context-note = Alışveriş listesi
 kit-example-context-pinned = Sabitlendi
 kit-example-context-unpinned = Sabitlenmedi

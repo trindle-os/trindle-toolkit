@@ -28,12 +28,25 @@ pub fn right_to_left(text: &str) -> bool {
     unicode_bidi::get_base_direction(text) == unicode_bidi::Direction::Rtl
 }
 
+pub(crate) const MOST_TEXT: usize = 1 << 20;
+
+pub(crate) fn cut_short(text: &str, most: usize) -> &str {
+    let mut end = most.min(text.len());
+    while !text.is_char_boundary(end) {
+        end -= 1;
+    }
+    &text[..end]
+}
+
 #[derive(Clone)]
 pub(crate) struct Edit {
     pub text: String,
     pub caret: usize,
     pub anchor: usize,
     pub scroll: f32,
+    pub scroll_y: f32,
+    pub viewed: Option<(usize, usize)>,
+    pub column: Option<f32>,
     undo: Vec<(String, usize)>,
     redo: Vec<(String, usize)>,
     run: Run,
@@ -48,10 +61,19 @@ impl std::fmt::Debug for Edit {
 
 impl Edit {
     pub fn new(text: &str) -> Edit {
-        Edit { text: text.into(), caret: text.len(), anchor: text.len(), scroll: 0.0, undo: Vec::new(), redo: Vec::new(), run: Run::None, keep_history: true }
+        let text = cut_short(text, MOST_TEXT);
+        Edit { text: text.into(), caret: text.len(), anchor: text.len(), scroll: 0.0, scroll_y: 0.0, viewed: None, column: None, undo: Vec::new(), redo: Vec::new(), run: Run::None, keep_history: true }
+    }
+
+    pub fn stamp(&self) -> (usize, u64) {
+        use std::hash::{Hash, Hasher};
+        let mut h = std::collections::hash_map::DefaultHasher::new();
+        self.text.hash(&mut h);
+        (self.text.len(), h.finish())
     }
 
     pub fn sync(&mut self, text: &str) {
+        let text = cut_short(text, MOST_TEXT);
         if self.text == text {
             return;
         }
@@ -60,6 +82,7 @@ impl Edit {
         self.caret = self.edge_at(self.caret);
         self.anchor = self.edge_at(self.anchor);
         self.run = Run::None;
+        self.column = None;
     }
 
     fn edge_at(&self, at: usize) -> usize {
@@ -105,12 +128,14 @@ impl Edit {
             self.anchor = self.caret;
         }
         self.run = Run::None;
+        self.column = None;
     }
 
     pub fn select(&mut self, r: Range<usize>) {
         self.anchor = self.edge_at(r.start);
         self.caret = self.edge_at(r.end);
         self.run = Run::None;
+        self.column = None;
     }
 
     fn remember(&mut self, run: Run) {
@@ -123,9 +148,11 @@ impl Edit {
         }
         wipe(&mut self.redo);
         self.run = run;
+        self.column = None;
     }
 
     pub fn insert(&mut self, s: &str) -> bool {
+        let s = cut_short(s, (MOST_TEXT + self.selection().len()).saturating_sub(self.text.len()));
         if s.is_empty() {
             return false;
         }
@@ -172,6 +199,7 @@ impl Edit {
         self.caret = caret.min(self.text.len());
         self.anchor = self.caret;
         self.run = Run::None;
+        self.column = None;
         true
     }
 
@@ -181,6 +209,7 @@ impl Edit {
         self.caret = caret.min(self.text.len());
         self.anchor = self.caret;
         self.run = Run::None;
+        self.column = None;
         true
     }
 

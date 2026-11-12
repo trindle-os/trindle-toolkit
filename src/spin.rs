@@ -244,7 +244,7 @@ mod tests {
     fn the_buttons_step_and_grey_out_at_the_ends() {
         let s = spin(0.0, 0.0, 10.0, 2.0, "Copies", |v| v);
         let presses: Vec<(String, bool, f32)> = s.presses().into_iter().map(|(t, off, m)| (t, off, *m)).collect();
-        assert_eq!(presses, vec![("Less Copies".into(), true, 0.0), ("More Copies".into(), false, 2.0)]);
+        assert_eq!(presses, vec![("Decrease Copies".into(), true, 0.0), ("Increase Copies".into(), false, 2.0)]);
         let t = time_spin(Time { hour: 23, minute: 5 }, |t| t);
         let sent: Vec<Time> = t.presses().into_iter().map(|(_, _, m)| *m).collect();
         assert_eq!(sent, vec![Time { hour: 22, minute: 5 }, Time { hour: 23, minute: 5 }, Time { hour: 23, minute: 4 }, Time { hour: 23, minute: 6 }]);

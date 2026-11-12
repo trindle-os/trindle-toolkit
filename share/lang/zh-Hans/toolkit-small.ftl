@@ -35,7 +35,7 @@ kit-more-people =
 
 kit-gradient-bar = 带 { $n } 个色标的渐变
 
-kit-gradient-place = 所选色标的位置
+kit-gradient-place = 所选节点的位置
 
 kit-gradient-add = 添加色标
 

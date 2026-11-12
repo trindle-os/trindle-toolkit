@@ -12,7 +12,7 @@ use super::copy::Queued;
 use super::leave::Moved;
 use super::looks::{ask, came_since, free_name, goes_into, listed, open_folder_from, spare_name, within};
 use super::plan::{Answer, Clash, Ctl, Kind, News, Over, Plan, Same, Step, NAP};
-use super::said::{changed_since, changed_why, not_all, not_looked, not_there_why, taken_meanwhile, too_big_to_check, trouble};
+use super::said::{changed_since, changed_why, not_all, not_looked, not_there_why, no_safe_restore, taken_meanwhile, too_big_to_check, trouble};
 use super::side::Side;
 use super::undo::step_made;
 use super::Which;
@@ -95,6 +95,16 @@ impl<'a, S: Side> Walk<'a, S> {
         }
     }
 
+    pub(super) fn restore_beneath(&mut self, item: &Path, top: &Path, to: &Path) {
+        match trash::move_into_drive(top, item, to) {
+            Ok(landed) => self.record(item, &landed),
+            Err(e) => match beneath_reason(&e) {
+                Some(why) => self.fail_why(item, why),
+                None => self.fail(item),
+            },
+        }
+    }
+
     fn restore(&mut self, items: &[PathBuf]) {
         for item in items {
             if self.stopped() {
@@ -102,11 +112,16 @@ impl<'a, S: Side> Walk<'a, S> {
             }
             match trash::origin(item) {
                 Some(to) => {
-                    if let Some(up) = to.parent() {
-                        let _ = fs::create_dir_all(up);
-                    }
                     self.untrashed.push(item.clone());
-                    self.place(item, &to);
+                    match trash::drive_top(item) {
+                        Some(top) => self.restore_beneath(item, &top, &to),
+                        None => {
+                            if let Some(up) = to.parent() {
+                                let _ = fs::create_dir_all(up);
+                            }
+                            self.place(item, &to);
+                        }
+                    }
                 }
                 None => self.fail(item),
             }
@@ -374,5 +389,26 @@ impl<'a, S: Side> Walk<'a, S> {
             }
         }
         Some(Moved::Folder { name, which, all, inside })
+    }
+}
+
+fn beneath_reason(e: &io::Error) -> Option<&'static str> {
+    match e.raw_os_error() {
+        _ if e.kind() == io::ErrorKind::AlreadyExists => Some(taken_meanwhile()),
+        Some(libc::EINVAL) => Some(no_safe_restore()),
+        _ => None,
+    }
+}
+
+#[cfg(test)]
+mod beneath_reason_tests {
+    use super::*;
+
+    #[test]
+    fn a_drive_that_cannot_keep_a_name_says_so_and_a_taken_name_says_that() {
+        assert_eq!(beneath_reason(&io::Error::from_raw_os_error(libc::EINVAL)), Some(no_safe_restore()));
+        assert!(no_safe_restore().contains("copy the file out of the Trash"));
+        assert_eq!(beneath_reason(&io::Error::from(io::ErrorKind::AlreadyExists)), Some(taken_meanwhile()));
+        assert_eq!(beneath_reason(&io::Error::from(io::ErrorKind::PermissionDenied)), None);
     }
 }

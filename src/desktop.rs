@@ -3,14 +3,11 @@
 use std::collections::HashMap;
 use std::rc::Rc;
 use std::cell::{Cell, RefCell};
-use std::path::{Path, PathBuf};
 
 use zbus::zvariant::OwnedValue;
 
 use super::bus::{Bus, Failed, Listen};
 use super::colour::Colour;
-use super::config::Config;
-use super::watch;
 use super::event::Loop;
 
 const PORTAL: &str = "org.freedesktop.portal.Desktop";
@@ -53,17 +50,8 @@ pub fn look_from(all: &All) -> Look {
     }
 }
 
-fn cosmic_folder() -> Option<PathBuf> {
-    trindle_common::files::config_home().map(|c| c.join("cosmic/com.system76.CosmicTheme.Mode/v1"))
-}
-
-pub fn look_from_cosmic(folder: &Path) -> Look {
-    let light = Config::at(folder).get("is_dark").and_then(|v| match v.trim() {
-        "true" => Some(false),
-        "false" => Some(true),
-        _ => None,
-    });
-    Look { light, ..Look::default() }
+fn no_portal_look() -> Look {
+    Look { light: Some(true), ..Look::default() }
 }
 
 pub fn read(bus: &Bus, lp: &Loop, done: impl FnOnce(Look) + 'static) {
@@ -72,7 +60,7 @@ pub fn read(bus: &Bus, lp: &Loop, done: impl FnOnce(Look) + 'static) {
         let all = r.ok().and_then(|m| m.body().deserialize::<All>().ok());
         let look = match all {
             Some(all) => look_from(&all),
-            None => cosmic_folder().map(|f| look_from_cosmic(&f)).unwrap_or_default(),
+            None => no_portal_look(),
         };
         super::motion::reduce(look.reduce_motion);
         done(look);
@@ -97,12 +85,7 @@ pub fn follow(bus: &Bus, lp: &Loop, changed: impl FnMut(Look) + 'static) -> Resu
         }
     });
     let again = ask.clone();
-    let cosmic = cosmic_folder().filter(|f| f.is_dir()).and_then(|f| {
-        let again = ask.clone();
-        watch::live(lp, &f, move |_, _| again()).ok()
-    });
     let listening = bus.listen(None, SETTINGS, Some("SettingChanged"), Some(PATH), move |m| {
-        let _ = &cosmic;
         let ours = m.body().deserialize::<(String, String, OwnedValue)>().is_ok_and(|(ns, _, _)| ns == APPEARANCE || ns == INTERFACE);
         if ours {
             again();
@@ -147,15 +130,8 @@ mod tests {
     }
 
     #[test]
-    fn cosmic_says_light_or_dark_when_there_is_no_portal() {
-        let dir = std::env::temp_dir().join(format!("trindle-cosmic-mode-{}", std::process::id()));
-        assert_eq!(look_from_cosmic(&dir), Look::default());
-        let c = Config::at(&dir);
-        c.set("is_dark", "true\n").unwrap();
-        assert_eq!(look_from_cosmic(&dir).light, Some(false));
-        c.set("is_dark", "false").unwrap();
-        assert_eq!(look_from_cosmic(&dir).light, Some(true));
-        std::fs::remove_dir_all(dir).unwrap();
+    fn with_no_portal_the_look_is_light() {
+        assert_eq!(no_portal_look(), Look { light: Some(true), ..Look::default() });
     }
 
     #[test]

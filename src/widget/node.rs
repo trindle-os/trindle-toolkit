@@ -10,6 +10,8 @@ use crate::colour::Colour;
 use crate::dnd::{Given, Way};
 use crate::input::{Cursor, Input, Mods};
 
+const MOST_LINES: usize = 100;
+
 use super::{Area, Arrows, Held, Length, Many, MenuRow, Node, Outside, Pen, Pointer, Reading, Rect, SaidRow, SaidTable, SaidTabs, Says, Secret, Span, Sub, Tone, Urgency, What, card};
 
 impl<M> Node<M> {
@@ -524,6 +526,13 @@ impl<M> Node<M> {
         self
     }
 
+    pub fn lines(mut self, n: usize) -> Self {
+        if let What::Entry { lines, secret: false, .. } = &mut self.what {
+            *lines = n.clamp(1, MOST_LINES);
+        }
+        self
+    }
+
     pub fn on_submit(mut self, m: M) -> Self {
         if let What::Entry { submit, .. } = &mut self.what {
             *submit = Some(m);
@@ -578,9 +587,10 @@ impl<M> Node<M> {
     }
 
     pub fn secret_of(mut self, what: Secret) -> Self {
-        if let What::Entry { secret, kind, misspelt, .. } = &mut self.what {
+        if let What::Entry { secret, kind, misspelt, lines, .. } = &mut self.what {
             *secret = true;
             *kind = what;
+            *lines = 1;
             misspelt.clear();
         }
         self

@@ -3,7 +3,7 @@
 # The name of a part of a pie or ring chart that was not given a label. $n is its place, from 1.
 kit-chart-part = Part { $n }
 # A chart with no values. $name is what the chart shows.
-kit-chart-empty = { $name }: chart with no values.
+kit-chart-empty = { $name }: this chart has no values.
 # A line chart. $name is what it shows, $n how many values; the rest are figures.
 kit-chart-line =
     { $n ->

@@ -36,7 +36,7 @@ kit-more-people =
 
 kit-gradient-bar = { $n } پڑاؤ والا گریڈینٹ
 
-kit-gradient-place = منتخب پڑاؤ کا مقام
+kit-gradient-place = منتخب پڑاؤ کی جگہ
 
 kit-gradient-add = پڑاؤ شامل کریں
 

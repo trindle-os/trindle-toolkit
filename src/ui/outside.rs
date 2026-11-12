@@ -24,9 +24,13 @@ struct Target {
 }
 
 pub(crate) fn one_line(text: &str) -> String {
-    text.trim_end_matches(['\n', '\r']).chars().map(|c| if c == '\n' || c == '\t' { ' ' } else { c })
+    edit::cut_short(text, edit::MOST_TEXT).trim_end_matches(['\n', '\r']).chars().map(|c| if c == '\n' || c == '\t' { ' ' } else { c })
         .filter(|c| !c.is_control() && !matches!(c, '\u{61c}' | '\u{200b}' | '\u{200e}' | '\u{200f}' | '\u{202a}'..='\u{202e}' | '\u{2060}' | '\u{2066}'..='\u{2069}' | '\u{feff}'))
         .collect()
+}
+
+pub(crate) fn many_lines(text: &str) -> String {
+    edit::cut_short(text, edit::MOST_TEXT).replace("\r\n", "\n").replace('\r', "\n").split('\n').map(one_line).collect::<Vec<_>>().join("\n")
 }
 
 fn kind_taken<M>(o: &Outside<M>, offered: Offered, kinds: &[String]) -> Option<Kind> {
@@ -114,13 +118,13 @@ impl<M: Clone> Ui<M> {
         reply.redraw |= self.hover.take().is_some();
     }
 
-    fn drop_text(&mut self, id: &str, x: f32, text: &str, copy: bool, reply: &mut Reply<M>) {
-        let line = one_line(text);
-        let mut at = self.entry_hit(id, x);
+    fn drop_text(&mut self, id: &str, (x, y): (f32, f32), text: &str, copy: bool, reply: &mut Reply<M>) {
+        let line = self.entry_words(id, text);
+        let mut at = self.entry_hit_at(id, x, y);
         let own = !copy && self.lift.as_ref().is_some_and(|l| l.out && l.id == id);
         self.focus = Some(id.to_string());
         let Some(e) = self.edit(id) else { return };
-        let before = e.text.clone();
+        let before = e.stamp();
         if own {
             let picked = e.selection();
             if (picked.start..=picked.end).contains(&at) {
@@ -135,7 +139,7 @@ impl<M: Clone> Ui<M> {
         if !line.is_empty() {
             e.insert(&line);
         }
-        self.changed(id, &before, reply);
+        self.changed(id, before, reply);
     }
 
     pub(super) fn outside_input(&mut self, input: &Input, reply: &mut Reply<M>) -> bool {
@@ -167,7 +171,7 @@ impl<M: Clone> Ui<M> {
                 match target {
                     Some(t) if t.entry => {
                         if let Given::Text(text) = given {
-                            self.drop_text(&t.id, x, text, *way == Way::Copy && offered.ways.has(Way::Move), reply);
+                            self.drop_text(&t.id, (x, y), text, *way == Way::Copy && offered.ways.has(Way::Move), reply);
                             taken = true;
                         }
                     }

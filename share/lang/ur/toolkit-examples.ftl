@@ -1,8 +1,8 @@
 # machine translated (Urdu), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = ونڈو کھولنے کے لیے کوئی Wayland ڈیسک ٹاپ نہیں
+kit-run-no-desktop = کسی Wayland ڈیسک ٹاپ نے جواب نہیں دیا، اس لیے ونڈو نہیں کھل سکتی
 
-kit-run-no-window = ڈیسک ٹاپ نے ونڈو نہیں کھولی
+kit-run-no-window = ڈیسک ٹاپ ونڈو نہیں کھول سکا۔
 
 kit-example-hello-title = ہیلو
 
@@ -71,7 +71,7 @@ kit-example-gallery-hello = ہیلو، { $name }
 kit-example-gallery-progress = پیش رفت
 
 kit-example-context-title = سیاق کا مینو
-kit-example-context-how = کارڈ پر دایاں کلک کریں، انگلی دبائے رکھیں یا مینو کی دبائیں
+kit-example-context-how = کارڈ پر رائٹ کلک کریں، اسے دبا کر رکھیں، یا Menu کلید دبائیں
 kit-example-context-note = خریداری کی فہرست
 kit-example-context-pinned = پن کیا گیا
 kit-example-context-unpinned = پن نہیں کیا گیا

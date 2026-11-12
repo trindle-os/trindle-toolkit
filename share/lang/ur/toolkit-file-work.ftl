@@ -4,49 +4,50 @@
 kit-work-trouble = { $name } ({ $why })
 
 # Reason for something left behind: a hidden thing or a link was not there when the folder was looked through.
-kit-work-not-looked = فولڈر دیکھتے وقت یہ موجود نہیں تھی، اس لیے اسے چھوڑ دیا گیا
+kit-work-not-looked = Trindle کے جانچنے کے وقت اس کا وجود نہیں تھا، اس لیے اسے چھوڑ دیا گیا
 
 # Reason for something left behind: a hidden thing or a link was in a folder too big to look through to its end.
-kit-work-too-big = مکمل جانچ کے لیے بہت بڑا ہے، اس لیے اسے چھوڑ دیا گیا
+kit-work-too-big = اس کا سائز پوری طرح جانچنے کے لیے بہت زیادہ تھا، اس لیے اسے چھوڑ دیا گیا
 
 # Reason nothing was brought: something another program dropped changed after it was dropped.
-kit-work-changed-since = چھوڑے جانے کے بعد یہ بدل گئی، اس لیے کچھ نہیں لایا گیا
+kit-work-changed-since = آپ کے چھوڑنے کے بعد اس میں تبدیلی آ گئی، اس لیے اسے کاپی یا منتقل نہیں کیا گیا
 
 # Reason a thing was not given its name: something else took the name after the folder was looked at.
-kit-work-taken = اس دوران کسی اور چیز کو یہ نام دے دیا گیا
+kit-work-taken = اب کسی اور آئٹم کا یہی نام ہے
+kit-work-drive-no-safe-restore = یہ ڈرائیو فائلیں محفوظ طریقے سے بحال نہیں کر سکتی، اس لیے فائل کو ٹریش سے باہر کاپی کریں
 
 # Reason nothing was replaced: the one to make way could not be put in the Trash.
-kit-work-no-trash = پہلے سے موجود چیز کو ردی دان میں نہیں ڈالا جا سکا
+kit-work-no-trash = وہاں پہلے سے موجود آئٹم کو ٹریش میں منتقل نہیں کیا جا سکا
 
 # Reason a moved item was not taken away from where it was: it changed after it was copied.
-kit-work-stayed = نقل کے بعد یہ بدل گئی، اس لیے یہ اب بھی اپنی جگہ پر ہے
+kit-work-stayed = کاپی ہونے کے بعد اس میں تبدیلی آ گئی، اس لیے Trindle نے اسے اپنی جگہ پر رہنے دیا
 
 # Reason given for a folder copied to a drive that would not say everything written had reached it.
-kit-work-not-kept = ڈرائیو نے لکھا ہوا محفوظ کرنے کی تصدیق نہیں کی، اس لیے ہو سکتا ہے کچھ حصہ وہاں نہ ہو
+kit-work-not-kept = ڈرائیو نے سب کچھ محفوظ نہیں کیا، اس لیے کچھ حصہ غائب ہو سکتا ہے
 
 # Reason a folder is said to have failed: its list stopped part way.
-kit-work-not-all = اس کا سارا حصہ پڑھا نہیں جا سکا
+kit-work-not-all = Trindle اسے پوری طرح نہیں پڑھ سکا
 
 # Reason a thing was not moved or copied: it is inside the one it would replace.
-kit-work-inside-replaced = یہ اس چیز کے اندر ہے جسے یہ بدلتی
+kit-work-inside-replaced = یہ اسی فولڈر کے اندر ہے جسے اس سے بدلا جانا تھا
 
 # Reason a thing was not brought: a copy made it, so it was already there.
-kit-work-copy-made-it = یہ اس نقل نے بنائی تھی
+kit-work-copy-made-it = Trindle نے اسے اسی کاپی کے دوران بنایا تھا، اس لیے اسے دوبارہ کاپی نہیں کیا
 
 # Reason a file copy was refused: what was written is not what was read.
-kit-work-copy-wrong = نقل اس سے مختلف ہے جو پڑھا گیا تھا
+kit-work-copy-wrong = کاپی اصل سے مطابقت نہیں رکھتی
 
 # Reason, in the words of a notice, why a thing dragged to another program was not moved: it was changed after it was picked up.
-kit-proof-not-as-picked = اٹھانے کے بعد یہ بدل گئی، اس لیے یہ اب بھی اپنی جگہ پر ہے
+kit-proof-not-as-picked = آپ کے اٹھانے کے بعد اس میں تبدیلی آ گئی، اس لیے یہ اب بھی اپنی جگہ پر ہے
 
 # Reason, in the words of a notice, why a folder dragged to another program was not moved: it could not be looked through to its end.
-kit-proof-not-looked-through = اسے آخر تک دیکھا نہیں جا سکا، اس لیے یہ اب بھی اپنی جگہ پر ہے
+kit-proof-not-looked-through = Trindle اسے پوری طرح جانچ نہیں سکا، اس لیے یہ اب بھی اپنی جگہ پر ہے
 
 # Reason, in the words of a notice, why something could not be set aside to be removed.
-kit-proof-not-taken-away = اسے ہٹایا نہیں جا سکا
+kit-proof-not-taken-away = Trindle اسے ہٹا نہیں سکا
 
 # Reason, in the words of a notice, why something could not be put in the Trash.
-kit-proof-not-to-trash = اسے ردی دان میں نہیں ڈالا جا سکا
+kit-proof-not-to-trash = اسے ٹریش میں منتقل نہیں کیا جا سکا
 
 # Count in a notice of unreadable files that stayed; n picks the form and count is the number as written, such as 1,200.
 kit-proof-count-unreadable =
@@ -73,10 +74,10 @@ kit-proof-count-other =
 kit-proof-count-some = کچھ چیزیں
 
 # The sentence in red for everything a move, copy or delete left where it was; why is the counts.
-kit-proof-not-moved-said = منتقل نہیں ہوئیں: { $why }۔
+kit-proof-not-moved-said = Trindle اسے منتقل نہیں کر سکا: { $why }۔
 
 # The same in the brackets after a name.
-kit-proof-not-moved-reason = منتقل نہیں ہوئیں: { $why }
+kit-proof-not-moved-reason = منتقل نہیں کیا جا سکا: { $why }
 
 # Joins the counts in a notice of what stayed: the earlier ones, then the last.
 kit-proof-count-both = { $first } اور { $second }
@@ -94,10 +95,10 @@ kit-proof-device = ایک ڈیوائس
 kit-proof-no-permission = اجازت نہیں
 
 # Why a thing in a dragged folder stayed: it could not be read for another reason.
-kit-proof-unreadable = پڑھی نہیں جا سکی
+kit-proof-unreadable = اسے پڑھا نہیں جا سکا
 
 # Reason shown when an item cannot be moved to the Trash because the Trash folder on its drive could be used by other people.
-kit-trash-drive-unsafe = اس ڈرائیو کا ردی دان محفوظ نہیں ہے
+kit-trash-drive-unsafe = اس ڈرائیو پر ٹریش استعمال کرنا محفوظ نہیں
 
 # Reason shown when an item to move to the Trash has no name to move.
 kit-trash-nothing-to-move = منتقل کرنے کے لیے کچھ نہیں

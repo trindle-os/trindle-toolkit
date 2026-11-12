@@ -1,8 +1,8 @@
 # machine translated (Arabic), not yet reviewed by a native speaker.
 
-kit-run-no-desktop = لا يوجد سطح مكتب Wayland لفتح نافذة عليه
+kit-run-no-desktop = لم يستجب أي سطح مكتب Wayland، لذا تعذّر فتح النافذة
 
-kit-run-no-window = رفض سطح المكتب فتح نافذة
+kit-run-no-window = تعذّر على سطح المكتب فتح نافذة.
 
 kit-example-hello-title = مرحبًا
 
@@ -50,7 +50,7 @@ kit-example-gallery-count = ضُغط { $n } مرة
 
 kit-example-gallery-choices = الخيارات
 
-kit-example-gallery-switch-name = الإشعارات
+kit-example-gallery-switch-name = إشعارات
 
 kit-example-gallery-size-name = الحجم
 
@@ -75,7 +75,7 @@ kit-example-gallery-hello = مرحبًا يا { $name }
 kit-example-gallery-progress = التقدم
 
 kit-example-context-title = قائمة السياق
-kit-example-context-how = انقر بزر الفأرة الأيمن على البطاقة أو اضغط عليها بإصبعك مطولًا أو اضغط مفتاح القائمة
+kit-example-context-how = انقر بزر الفأرة الأيمن على البطاقة، أو اضغط عليها مطولًا، أو اضغط مفتاح القائمة
 kit-example-context-note = قائمة التسوق
 kit-example-context-pinned = مثبتة
 kit-example-context-unpinned = غير مثبتة
