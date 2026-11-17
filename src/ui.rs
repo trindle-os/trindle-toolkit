@@ -381,6 +381,8 @@ pub struct Ui<M> {
     pub(crate) news: String,
     #[cfg_attr(not(feature = "testing"), allow(dead_code))]
     audited: bool,
+    told_shares: RefCell<Vec<(crate::tiles::RingShare, Option<f32>)>>,
+    told_at: Cell<Option<Instant>>,
     #[cfg_attr(not(feature = "testing"), allow(dead_code))]
     audit_off: bool,
     shadows: Shadows,
@@ -409,7 +411,7 @@ impl<M: Clone> Ui<M> {
             keyboard_seen: false, tip: None, tip_part: None, cuts: RefCell::new(HashMap::new()), said: RefCell::new(HashMap::new()), pointer: None, touch: None, hold: None, touches: 0, edits: HashMap::new(), last_click: None, edge: None, last_down: None, picked: None, right: None, copy_menu: None, drop: None,
             keys_here: true, scrolls: HashMap::new(), areas: Vec::new(), held: Kept::default(), puzzles: Vec::new(), stays: w::Stays::default(), chose: None, bar_hover: None, thumb: None, swipe: None, band: None, fling: fling::Fling::default(), swipe_x: None, undo: None, last_row: None, along: None, gap: None, splits: split::Splits::default(), row_drag: None, mods: Mods::default(), anchor: None, ahead: None,
             preedit: None, see_through: false, out_labels: false, sent_out: RefCell::new(None), part: Cell::new(false), pixels_at: Cell::new(None), marking: Cell::new(false), touched: RefCell::new(Vec::new()), under: RefCell::new(Vec::new()), shown: 1.0, blend: None, before: None, first_given: false, grabbed: 0, sought: 0, nudged: 0,
-            last_pressed: Cell::new(None), news: String::new(), audited: false, audit_off: false, shadows: Shadows::default(),
+            last_pressed: Cell::new(None), news: String::new(), audited: false, told_shares: RefCell::new(Vec::new()), told_at: Cell::new(None), audit_off: false, shadows: Shadows::default(),
             glows: HashMap::new(), born: Instant::now(), moving: crate::host::host().moving(),
             labels: Labels::Brief, refused: None, refused_words: "", armed: None, eyes: eye::Eyes::default(), outside: None, held_kinds: Vec::new(), lift: None, bell: None, belled: None, frame: Cell::new(Instant::now()),
             dev: inspect::Dev::default(),

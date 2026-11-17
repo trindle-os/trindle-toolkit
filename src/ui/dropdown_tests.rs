@@ -120,7 +120,7 @@ fn a_list_at_the_right_edge_is_kept_inside_the_window() {
     open(&mut ui);
     let p = ui.drop_laid().unwrap().panel;
     assert!(p.x + p.w <= W as f32 - 4.0 + 0.5, "{p:?}");
-    assert!(p.w > ui.spot("zone").unwrap().rect.w);
+    assert!(p.w >= ui.spot("zone").unwrap().rect.w, "the box holds its widest answer, so the list is no narrower");
 }
 
 #[test]
@@ -408,4 +408,81 @@ fn a_composed_word_and_a_backspace_work_by_whole_letters_and_the_search_has_an_e
     open(&mut ui);
     ui.input(&Input::Composed { delete: (0, 0), preedit: String::new(), commit: "To".into(), caret: None }, now);
     assert_eq!(lit(&ui), Some(1));
+}
+
+fn text_width(ui: &Ui<Msg>, words: &str) -> f32 {
+    ui.texts.get(&ui.fonts, words, &ww::Words::Plain.style(ui.scale), None).width
+}
+
+fn strip_page(words: &[String], chosen: usize) -> Node<Msg> {
+    ww::column(vec![ww::row(vec![ww::choice(words.to_vec(), chosen, "Kind", Msg::Pick).key("kind")]).gap(12.0)]).padding(10.0)
+}
+
+fn is_menu(ui: &Ui<Msg>) -> Option<bool> {
+    let s = ui.spot("kind")?;
+    Some(matches!(ui.tree.at(&s.path)?.what, What::Dropdown { .. }))
+}
+
+#[test]
+fn a_strip_without_the_room_for_its_answers_is_a_dropdown_in_every_language() {
+    crate::lang::each::each_language(|tag, long| {
+        let words: Vec<String> = long[..3].to_vec();
+        let mut ui = Ui::new(strip_page(&words, 1), Theme::new(false, "#fbc711"));
+        ui.size = (4000, 200);
+        ui.settle();
+        let need = ui.spot("kind").unwrap().rect.w;
+        assert_eq!(is_menu(&ui), Some(false), "{tag}: with room it is a strip");
+        ui.size = (need as u32 - 40, 200);
+        ui.laid = None;
+        ui.settle();
+        assert_eq!(is_menu(&ui), Some(true), "{tag}: squeezed, it is a dropdown");
+        let wide = ui.spot("kind").unwrap().rect.w;
+        let longest = words.iter().map(|w| text_width(&ui, w)).fold(0.0, f32::max);
+        assert!(wide >= longest, "{tag}: the box ({wide}) holds its widest answer ({longest})");
+        ui.size = (4000, 200);
+        ui.laid = None;
+        ui.settle();
+        assert_eq!(is_menu(&ui), Some(false), "{tag}: with room again it is a strip");
+        assert!((ui.spot("kind").unwrap().rect.w - need).abs() < 1.0, "{tag}: the same strip as before");
+    });
+}
+
+#[test]
+fn a_dropdown_is_as_wide_as_its_widest_answer_whichever_is_chosen_in_every_language() {
+    crate::lang::each::each_language(|tag, long| {
+        let mut words: Vec<String> = long[..3].to_vec();
+        words.push("OK".into());
+        let width = |chosen: usize| {
+            let mut ui = Ui::new(ww::row(vec![ww::dropdown(words.clone(), Some(chosen), "Kind", Msg::Pick).key("kind")]), Theme::new(false, "#fbc711"));
+            ui.size = (1600, 200);
+            ui.settle();
+            ui.spot("kind").unwrap().rect.w
+        };
+        assert_eq!(width(3), width(0), "{tag}: the short answer chosen does not make the box shorter");
+        let ui = Ui::new(ww::row(Vec::new()), Theme::new(false, "#fbc711"));
+        let widest = words.iter().map(|w| text_width(&ui, w)).fold(0.0, f32::max);
+        assert!(width(3) >= widest, "{tag}: the box holds the widest answer");
+    });
+}
+
+#[test]
+fn kept_names_stay_inside_their_buttons_room_in_every_language() {
+    let b = crate::theme::bento();
+    crate::lang::each::each_language(|tag, long| {
+        let card = |name: &str, key: &'static str| {
+            let line = ww::row(vec![ww::column(vec![ww::label("Add"), ww::note("About")]).gap(4.0).width(Length::Fill),
+                                    ww::row(vec![ww::button("list-add-symbolic", name).on_press(Msg::Go).key(key), ww::dropdown(names(4), None, "Keys", Msg::Pick).key(format!("dd{key}"))]).gap(8.0)]).gap(12.0).stacks();
+            ww::card(ww::column(vec![ww::heading("Card"), line]).gap(16.0)).height(Length::Fill).beside().span(b.card.0, b.card.1, b.words)
+        };
+        for w in [760u32, 1000, 1278, 1920] {
+            let mut ui = Ui::new(ww::bento(b.words, b.gap, vec![card(&long[0], "a"), card(&long[1], "b"), card(&long[2], "c")]), Theme::new(true, "#fbc711"));
+            ui.set_labels(crate::ui::Labels::Always);
+            ui.lay_at(w, 692);
+            assert_eq!(ui.squeezed_or_touching(), Vec::<String>::new(), "{tag} at {w}");
+            for (name, rect) in ui.round_and_worded() {
+                let drawn = ui.texts.get(&ui.fonts, &name, &crate::widget::name_style(ui.scale), Some(ui.px(crate::widget::NAME_WIDTH).min(rect.w))).widest();
+                assert!(drawn <= rect.w + 0.5, "{tag} at {w}: the name {name:?} is drawn {drawn} wide in {}", rect.w);
+            }
+        }
+    });
 }

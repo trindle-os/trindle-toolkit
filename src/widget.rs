@@ -151,7 +151,8 @@ pub enum What<M> {
              drop_on: Option<Box<dyn Fn(usize) -> bool>>,
              middle: Option<Box<dyn Fn(usize) -> M>>,
              arrows: Option<Arrows<M>> },
-    Dropdown { options: Vec<String>, chosen: Option<usize>, tip: String, choose: Box<dyn Fn(usize) -> M> },
+    Dropdown { options: Vec<String>, chosen: Option<usize>, tip: String, choose: Box<dyn Fn(usize) -> M>,
+               strip: Option<Box<What<M>>> },
     Scroll(Box<Node<M>>),
     ScrollX(Box<Node<M>>),
     List { rows: Vec<Item>, chosen: Option<usize>, choose: Box<dyn Fn(usize) -> M>, open: Option<Box<dyn Fn(usize) -> M>>, row: f32, many: Option<Many<M>>,
@@ -522,6 +523,7 @@ pub struct Says {
     pub alert: bool,
     pub busy: bool,
     pub progress: Option<Option<f32>>,
+    pub following: Option<crate::tiles::RingShare>,
     pub reading: Option<Reading>,
     pub menu: Option<Vec<SaidRow>>,
     pub table: Option<SaidTable>,
@@ -996,7 +998,7 @@ pub(crate) const CHEVRON_GAP: f32 = 8.0;
 
 pub fn dropdown<M>(options: Vec<String>, chosen: Option<usize>, tip: impl Into<String>, choose: impl Fn(usize) -> M + 'static) -> Node<M> {
     let chosen = chosen.filter(|&i| i < options.len());
-    node(What::Dropdown { options, chosen, tip: tip.into(), choose: Box::new(choose) }, Length::Shrink)
+    node(What::Dropdown { options, chosen, tip: tip.into(), choose: Box::new(choose), strip: None }, Length::Shrink)
 }
 
 pub fn is_short(options: &[String]) -> bool {

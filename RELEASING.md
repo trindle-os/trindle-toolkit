@@ -4,7 +4,7 @@ Nothing is published until the project says Trindle is complete. This is the ord
 
 ## Versions
 
-- `trindle-common` and `trindle-toolkit` carry the same version (now `0.9.0-beta.1`), and the toolkit's dependency on `trindle-common` names that version beside its path.
+- `trindle-common` and `trindle-toolkit` carry the same version (now `0.9.1-beta.4`), and the toolkit's dependency on `trindle-common` names that version beside its path.
 - Change all three places together: `Cargo.toml` (`version`, and `trindle-common`'s `version` in `[dependencies]` and `[build-dependencies]`), `trindle-common/Cargo.toml`, then run `cargo +1.85 build --release` so `Cargo.lock` follows.
 - Add a heading with the version and date in `CHANGELOG.md` and move what is under Unreleased beneath it. Keep `debian/changelog` in step.
 

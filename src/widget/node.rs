@@ -642,6 +642,14 @@ impl<M> Node<M> {
         self
     }
 
+    pub fn working_following(mut self, share: &crate::tiles::RingShare, tone: Tone) -> Self {
+        if matches!(self.what, What::Button { .. }) {
+            self = self.working(share.get().unwrap_or(0.0), tone);
+            self.says_mut().following = Some(share.clone());
+        }
+        self
+    }
+
     pub fn face(mut self, f: impl Fn(&mut PixmapMut, Rect, Colour, &Pen) + 'static) -> Self {
         if let What::Button { face, .. } = &mut self.what {
             *face = Some(Box::new(f));
@@ -721,6 +729,11 @@ impl<M> Node<M> {
 
     pub fn misspelt(mut self, any: bool) -> Self {
         self.says_mut().misspelt = any;
+        self
+    }
+
+    pub fn following(mut self, share: &crate::tiles::RingShare) -> Self {
+        self.says_mut().following = Some(share.clone());
         self
     }
 
@@ -956,6 +969,44 @@ impl<M> Node<M> {
             What::Card(inner, _) | What::Scroll(inner) | What::ScrollX(inner) | What::Placed { inner, .. } | What::Slide { inner, .. } | What::Aspect { inner, .. } => std::slice::from_ref(inner),
             _ => &[],
         }
+    }
+
+    fn items_mut(&mut self) -> &mut [Node<M>] {
+        match &mut self.what {
+            What::Column { items, .. } | What::Row { items, .. } | What::Grid { items, .. } | What::Layers(items) | What::Split { items, .. } => items,
+            What::Card(inner, _) | What::Scroll(inner) | What::ScrollX(inner) | What::Placed { inner, .. } | What::Slide { inner, .. } | What::Aspect { inner, .. } => std::slice::from_mut(inner),
+            _ => &mut [],
+        }
+    }
+
+    pub(crate) fn at_mut(&mut self, path: &[usize]) -> Option<&mut Node<M>> {
+        match path.split_first() {
+            None => Some(self),
+            Some((&i, rest)) => self.items_mut().get_mut(i)?.at_mut(rest),
+        }
+    }
+
+    pub(crate) fn out_of_menus(&mut self) -> usize {
+        let mut put_back = 0;
+        if let What::Dropdown { strip, choose, .. } = &mut self.what {
+            if let Some(mut row) = strip.take() {
+                if let What::Choice { choose: kept, .. } = &mut *row {
+                    std::mem::swap(kept, choose);
+                }
+                self.what = *row;
+                put_back += 1;
+            }
+        }
+        put_back + self.items_mut().iter_mut().map(Node::out_of_menus).sum::<usize>()
+    }
+
+    pub(crate) fn become_menu(&mut self) -> bool {
+        let What::Choice { options, chosen, tip, choose, landed, drop_on, middle, arrows: None } = &mut self.what else { return false };
+        let pick = std::mem::replace(choose, Box::new(|_| unreachable!("a row of choices put away")));
+        let (options, chosen, tip) = (std::mem::take(options), *chosen, std::mem::take(tip));
+        let row = What::Choice { options: options.clone(), chosen, tip: tip.clone(), choose: Box::new(|_| unreachable!("a row of choices put away")), landed: landed.take(), drop_on: drop_on.take(), middle: middle.take(), arrows: None };
+        self.what = What::Dropdown { options, chosen: Some(chosen), tip, choose: pick, strip: Some(Box::new(row)) };
+        true
     }
 
     pub(crate) fn at(&self, path: &[usize]) -> Option<&Node<M>> {

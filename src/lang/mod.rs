@@ -2,7 +2,9 @@
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, OnceLock};
+#[cfg(not(test))]
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::{Mutex, RwLock};
 
 pub mod check;
 pub mod format;
@@ -185,7 +187,32 @@ pub fn unknown_keys() -> Vec<String> {
     UNKNOWN.lock().unwrap_or_else(|e| e.into_inner()).clone()
 }
 
-static CATALOGUE: OnceLock<Catalogue> = OnceLock::new();
+struct Current(RwLock<Option<&'static Catalogue>>);
+
+impl Current {
+    const fn new() -> Self {
+        Current(RwLock::new(None))
+    }
+
+    fn get(&self, make: impl FnOnce() -> Catalogue) -> &'static Catalogue {
+        if let Some(c) = *self.0.read().unwrap_or_else(|e| e.into_inner()) {
+            return c;
+        }
+        let mut slot = self.0.write().unwrap_or_else(|e| e.into_inner());
+        slot.get_or_insert_with(|| Box::leak(Box::new(make())))
+    }
+
+    fn set(&self, catalogue: Catalogue) {
+        *self.0.write().unwrap_or_else(|e| e.into_inner()) = Some(Box::leak(Box::new(catalogue)));
+    }
+
+    #[cfg(any(test, feature = "testing"))]
+    fn clear(&self) {
+        *self.0.write().unwrap_or_else(|e| e.into_inner()) = None;
+    }
+}
+
+static CATALOGUE: Current = Current::new();
 
 #[cfg(any(test, feature = "testing"))]
 thread_local! {
@@ -214,13 +241,82 @@ pub fn english() -> Bundle {
     bundle
 }
 
+const fn built_in_only() -> bool {
+    cfg!(any(test, feature = "testing"))
+}
+
 fn catalogue() -> &'static Catalogue {
-    CATALOGUE.get_or_init(|| {
-        #[cfg(test)]
-        return Catalogue::new(load(&[], &[]), english());
-        #[cfg(not(test))]
-        Catalogue::new(load(&choice(), &folders()), english())
+    CATALOGUE.get(|| {
+        if built_in_only() {
+            Catalogue::new(load(&[], &[]), english())
+        } else {
+            Catalogue::new(load(&choice(), &folders()), english())
+        }
     })
+}
+
+pub fn switch_to(tags: &[String]) {
+    CATALOGUE.set(Catalogue::new(load(tags, &folders()), english()));
+    note_switch(tags);
+}
+
+pub fn generation() -> u64 {
+    Switched::generation()
+}
+
+pub fn in_use() -> Vec<String> {
+    Switched::tags().unwrap_or_else(choice)
+}
+
+pub(crate) fn note_switch(tags: &[String]) {
+    Switched::note(Some(tags.to_vec()));
+}
+
+struct Switched;
+
+#[cfg(not(test))]
+static SWITCHED: RwLock<Option<Vec<String>>> = RwLock::new(None);
+#[cfg(not(test))]
+static GENERATION: AtomicU64 = AtomicU64::new(0);
+
+#[cfg(not(test))]
+impl Switched {
+    fn generation() -> u64 {
+        GENERATION.load(Ordering::SeqCst)
+    }
+    fn tags() -> Option<Vec<String>> {
+        SWITCHED.read().unwrap_or_else(|e| e.into_inner()).clone()
+    }
+    fn note(tags: Option<Vec<String>>) {
+        *SWITCHED.write().unwrap_or_else(|e| e.into_inner()) = tags;
+        GENERATION.fetch_add(1, Ordering::SeqCst);
+    }
+}
+
+#[cfg(test)]
+thread_local! {
+    static SWITCHED: std::cell::RefCell<Option<Vec<String>>> = const { std::cell::RefCell::new(None) };
+    static GENERATION: std::cell::Cell<u64> = const { std::cell::Cell::new(0) };
+}
+
+#[cfg(test)]
+impl Switched {
+    fn generation() -> u64 {
+        GENERATION.with(|g| g.get())
+    }
+    fn tags() -> Option<Vec<String>> {
+        SWITCHED.with(|s| s.borrow().clone())
+    }
+    fn note(tags: Option<Vec<String>>) {
+        SWITCHED.with(|s| *s.borrow_mut() = tags);
+        GENERATION.with(|g| g.set(g.get() + 1));
+    }
+}
+
+#[cfg(any(test, feature = "testing"))]
+pub fn reset() {
+    CATALOGUE.clear();
+    Switched::note(None);
 }
 
 #[inline]
@@ -360,3 +456,5 @@ pub fn read_file(path: &Path) -> Option<String> {
 
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+pub(crate) mod each;

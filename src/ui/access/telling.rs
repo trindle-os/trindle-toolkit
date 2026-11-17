@@ -37,6 +37,9 @@ impl<M: Clone> Ui<M> {
         self.tell_what(t, s, n, &mut o);
         if let Some(says) = n.says.as_deref() {
             tell_says(&s.id, &mut o.part, says, s.rect, self.scale, &mut o.own, &mut t.extra);
+            if let Some(share) = &says.following {
+                self.told_shares.borrow_mut().push((share.clone(), share.get()));
+            }
             if says.role.as_ref().is_some_and(crate::role::Role::steps) && self.keys_of(&s.id).is_some() {
                 o.part.add_action(Action::Increment);
                 o.part.add_action(Action::Decrement);

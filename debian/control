@@ -102,12 +102,12 @@ Provides:
  librust-trindle-toolkit-0.9+ui-dev (= ${binary:Version}),
  librust-trindle-toolkit-0.9+gpu-dev (= ${binary:Version}),
  librust-trindle-toolkit-0.9+testing-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1+default-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1+core-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1+ui-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1+gpu-dev (= ${binary:Version}),
- librust-trindle-toolkit-0.9.0-beta.1+testing-dev (= ${binary:Version})
+ librust-trindle-toolkit-0.9.1-beta.4-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.1-beta.4+default-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.1-beta.4+core-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.1-beta.4+ui-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.1-beta.4+gpu-dev (= ${binary:Version}),
+ librust-trindle-toolkit-0.9.1-beta.4+testing-dev (= ${binary:Version})
 Description: Trindle Toolkit - Rust source code
  Windows on Wayland, drawing, text, icons, a style sheet, the screen reader
  link and the input method, in plain Rust. Trindle and its programs

@@ -468,3 +468,83 @@ fn square_things_are_soft_squares_not_discs() {
         assert_ne!(p, back, "{id}: its corner point is empty, so it is a disc");
     }
 }
+
+#[test]
+fn an_alive_drawing_drives_the_frame_clock_and_only_it_turns() {
+    use std::time::Instant;
+    let red = |c: &mut PixmapMut, _: &w::Pen| c.fill(tiny_skia::Color::from_rgba8(200, 40, 40, 255));
+    let clock = |view: Node<Msg>| {
+        let mut ui = Ui::new(view, Theme::new(false, "#fbc711"));
+        crate::text::paint_until_settled(|| ui.paint(&mut tiny_skia::Pixmap::new(200, 100).unwrap().as_mut(), 1.0));
+        ui.moving = true;
+        (ui.next_wake(Instant::now()).is_some(), ui.only_turns(), ui.tick(Instant::now()))
+    };
+    assert_eq!(clock(row(vec![label("Still"), drawing((16.0, 16.0), "", red)])), (false, false, false), "a drawing not marked alive stands still");
+    let (wakes, only_turns, changed) = clock(row(vec![label("Listening"), drawing((16.0, 16.0), "", red).alive()]));
+    assert!(wakes, "the clock wakes for an alive drawing");
+    assert!(only_turns, "it is shown the next step alone, with no rebuild of the view");
+    assert!(changed, "a tick says something changed");
+}
+
+#[test]
+fn the_turning_ring_is_alive_and_a_ring_with_a_figure_is_not() {
+    use std::time::Instant;
+    let clock = |view: Node<Msg>| {
+        let mut ui = Ui::new(view, Theme::new(false, "#fbc711"));
+        crate::text::paint_until_settled(|| ui.paint(&mut tiny_skia::Pixmap::new(200, 100).unwrap().as_mut(), 1.0));
+        ui.moving = true;
+        (ui.next_wake(Instant::now()).is_some(), ui.only_turns())
+    };
+    if crate::motion::reduced() {
+        return;
+    }
+    assert_eq!(clock(crate::tiles::standard_ring(None, 40.0)), (true, true));
+    assert_eq!(clock(crate::tiles::standard_ring(Some(0.4), 40.0)), (false, false));
+}
+
+#[test]
+fn a_shared_ring_shows_a_new_figure_with_no_rebuild() {
+    use crate::tiles::{standard_ring_shared, RingShare};
+    let share = RingShare::new(Some(0.1));
+    let mut ui = Ui::new(row(vec![label("Left"), standard_ring_shared::<Msg>(&share, 40.0)]), Theme::new(false, "#fbc711"));
+    let mut pm = tiny_skia::Pixmap::new(200, 100).unwrap();
+    crate::text::paint_until_settled(|| ui.paint(&mut pm.as_mut(), 1.0));
+    ui.moving = true;
+    assert!(ui.only_turns(), "a shared ring is shown alone, not rebuilt");
+    let before = pm.data().to_vec();
+    share.set(Some(0.9));
+    let done = ui.paint_live(&mut pm.as_mut(), 1.0).expect("painted by itself");
+    assert!(!done.is_empty());
+    assert_ne!(pm.data(), &before[..], "the ring shows the new figure");
+    let after = pm.data().to_vec();
+    ui.paint_live(&mut pm.as_mut(), 1.0).unwrap();
+    assert_eq!(pm.data(), &after[..], "the same figure paints the same ring");
+}
+
+#[test]
+fn a_working_button_following_a_shared_figure_repaints_alone() {
+    use crate::tiles::RingShare;
+    let share = RingShare::new(Some(0.1));
+    let mut ui: Ui<Msg> = Ui::new(column(vec![button("view-refresh-symbolic", "Look again").working_following(&share, Tone::Calm).key("look")]), Theme::new(true, "#fbc711"));
+    ui.size = (100, 100);
+    ui.settle();
+    let r = ui.spot("look").unwrap().rect;
+    let mut pm = tiny_skia::Pixmap::new(100, 100).unwrap();
+    ui.paint(&mut pm.as_mut(), 1.0);
+    ui.moving = true;
+    assert!(ui.only_turns() && ui.next_wake(std::time::Instant::now()).is_some(), "a following button runs the frame clock and is shown alone");
+    let calm = |pm: &tiny_skia::Pixmap, x: f32, y: f32| {
+        let px = pm.pixel(x as u32, y as u32).unwrap();
+        px.blue() as i32 - px.red() as i32 > 100
+    };
+    let cy = r.y + r.h / 2.0;
+    assert!(!calm(&pm, r.x + r.w - 1.5, cy), "a tenth of the way round is not yet at the right edge");
+    share.set(Some(0.6));
+    ui.paint_live(&mut pm.as_mut(), 1.0).expect("painted by itself");
+    let swapped = |x: f32, y: f32| {
+        let px = pm.pixel(x as u32, y as u32).unwrap();
+        px.red() as i32 - px.blue() as i32 > 100
+    };
+    assert!(swapped(r.x + r.w - 1.5, cy), "past half way has passed the right edge");
+    assert!(!swapped(r.x + 1.5, cy), "and not yet the left");
+}

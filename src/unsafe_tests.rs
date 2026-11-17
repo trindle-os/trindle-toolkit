@@ -1,6 +1,6 @@
 //! Counts every `unsafe` in the source against the audited ledger below, so a new one cannot come in unseen.
 
-const LEDGER: [(&str, usize); 10] = [
+const LEDGER: [(&str, usize); 11] = [
     ("src/sys/disk.rs", 18),
     ("src/sys/fd.rs", 13),
     ("src/sys/gbm.rs", 11),
@@ -9,6 +9,7 @@ const LEDGER: [(&str, usize); 10] = [
     ("src/sys/mem.rs", 10),
     ("src/sys/os.rs", 14),
     ("src/sys/signal.rs", 7),
+    ("src/sys/probe.rs", 4),
     ("src/sys/sock.rs", 32),
     ("trindle-common/src/sys.rs", 1),
 ];

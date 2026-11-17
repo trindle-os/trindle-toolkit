@@ -11,6 +11,8 @@ pub(crate) mod lean;
 #[cfg(feature = "ui")]
 pub mod mem;
 pub mod os;
+#[cfg(feature = "ui")]
+pub mod probe;
 pub mod signal;
 #[cfg(feature = "ui")]
 pub(crate) mod sock;

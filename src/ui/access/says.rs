@@ -22,7 +22,12 @@ pub(super) fn tell_says(id: &str, part: &mut Part, says: &Says, b: Rect, scale: 
         part.set_role(landmark_role(kind));
     }
     if let Some(share) = says.progress {
-        tell_progress(part, share);
+        tell_progress(part, says.following.as_ref().map_or(share, crate::tiles::RingShare::get));
+    }
+    if let (None, Some(share)) = (says.progress, &says.following) {
+        if let Some(v) = share.get() {
+            part.set_description(crate::numbers::percent(f64::from(v), 0));
+        }
     }
     if let Some(words) = &says.words {
         part.set_value(words.as_str());
