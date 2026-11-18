@@ -628,18 +628,48 @@ pub fn dismissing<M: Clone + 'static>(page: Node<M>, panel: Node<M>, close: M, _
     layers(vec![page, catcher(true, move || close.clone()), panel])
 }
 
+/// Where a box of `panel` size goes under the i at `at`, in a window of `room`: centred on the i, a gap below it, kept a gap inside each edge, and above the i when there is no room below.
+pub fn under_the_i_at(at: Rect, panel: (f32, f32), room: (f32, f32)) -> (f32, f32) {
+    let gap = crate::theme::gaps().medium;
+    let (w, h) = panel;
+    let x = (at.x + at.w / 2.0 - w / 2.0).min(room.0 - w - gap).max(gap);
+    let below = at.y + at.h + gap;
+    let y = if below + h > room.1 - gap { (at.y - h - gap).max(gap) } else { below };
+    (x, y)
+}
+
 pub fn under_the_i<M>(panel: Node<M>, at: Rect) -> Node<M> {
-    placed(panel, move |(w, h), (aw, ah)| {
-        let x = at.x.min(aw - w - 8.0).max(8.0);
-        let below = at.y + at.h + 8.0;
-        let y = if below + h > ah - 8.0 { (at.y - h - 8.0).max(8.0) } else { below };
-        (x, y)
-    })
+    placed(panel, move |size, room| under_the_i_at(at, size, room))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn the_i_box_is_centred_under_the_i_a_gap_below_it() {
+        let gap = crate::theme::gaps().medium;
+        let at = Rect { x: 300.0, y: 100.0, w: 34.0, h: 34.0 };
+        let (x, y) = under_the_i_at(at, (200.0, 80.0), (1000.0, 700.0));
+        assert_eq!((x + 100.0, y), (317.0, 134.0 + gap));
+    }
+
+    #[test]
+    fn the_i_box_keeps_a_gap_inside_both_edges() {
+        let gap = crate::theme::gaps().medium;
+        let left = under_the_i_at(Rect { x: 0.0, y: 0.0, w: 34.0, h: 34.0 }, (200.0, 80.0), (1000.0, 700.0));
+        assert_eq!(left.0, gap);
+        let right = under_the_i_at(Rect { x: 990.0, y: 0.0, w: 34.0, h: 34.0 }, (200.0, 80.0), (1000.0, 700.0));
+        assert_eq!(right.0, 1000.0 - 200.0 - gap);
+    }
+
+    #[test]
+    fn the_i_box_goes_above_when_there_is_no_room_below() {
+        let gap = crate::theme::gaps().medium;
+        let at = Rect { x: 300.0, y: 650.0, w: 34.0, h: 34.0 };
+        assert_eq!(under_the_i_at(at, (200.0, 80.0), (1000.0, 700.0)).1, 650.0 - 80.0 - gap);
+        assert_eq!(under_the_i_at(Rect { x: 0.0, y: 5.0, w: 34.0, h: 34.0 }, (200.0, 900.0), (1000.0, 700.0)).1, gap);
+    }
 
     fn three() -> Popup {
         Popup::new(vec![row("a", "Open"), row("b", "Copy").keys("Ctrl+C"), row("c", "Delete").rule()], Place::At(10.0, 10.0))

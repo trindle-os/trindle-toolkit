@@ -35,6 +35,7 @@ impl<M: Clone> Ui<M> {
                 fill(canvas, b, corner, square);
             }
             if let Some((share, tone)) = working {
+                let share = &node.says.as_deref().and_then(|s| s.following.as_ref()).map_or(*share, |f| f.get().unwrap_or(0.0));
                 let line = self.px(theme::sheet().working_line);
                 let (cx, cy) = (b.x + size / 2.0, b.y + size / 2.0);
                 let radius = size / 2.0 - line / 2.0;

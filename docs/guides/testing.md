@@ -4,7 +4,7 @@ A program on the Trindle Toolkit can test its window with no desktop running: `t
 
 ```toml
 [dev-dependencies]
-trindle-toolkit = { version = "0.9.0-beta.1", features = ["testing"] }
+trindle-toolkit = { version = "0.9.1-beta.4", features = ["testing"] }
 ```
 
 `trindle-new my-program` writes a program that already has such a test.

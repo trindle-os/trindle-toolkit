@@ -495,6 +495,8 @@ pub struct Fonts {
     late_mono: OnceCell<String>,
     wanted: RefCell<Vec<String>>,
     pending: RefCell<Option<Vec<String>>>,
+    follows: bool,
+    lang_seen: std::cell::Cell<u64>,
     loaded: RefCell<HashMap<ID, Rc<Loaded>>>,
     stand_ins: RefCell<HashMap<(char, u16, bool), Option<ID>>>,
     covers: RefCell<HashMap<ID, Rc<std::collections::HashSet<u32>>>>,
@@ -513,7 +515,9 @@ impl Default for Fonts {
 
 impl Fonts {
     pub fn new() -> Fonts {
-        Fonts::for_language(&crate::lang::choice())
+        let mut fonts = Fonts::for_language(&crate::lang::in_use());
+        fonts.follows = true;
+        fonts
     }
 
     pub fn for_language(tags: &[String]) -> Fonts {
@@ -547,7 +551,31 @@ impl Fonts {
         self.stand_order.borrow_mut().clear();
     }
 
+    fn follow(&self) {
+        let now = crate::lang::generation();
+        if !self.follows || self.lang_seen.get() == now {
+            return;
+        }
+        let Ok(db) = self.db.try_borrow() else { return };
+        self.lang_seen.set(now);
+        let tags = crate::lang::in_use();
+        if self.pending.borrow().is_some() {
+            self.pending.replace(Some(tags));
+            return;
+        }
+        *self.wanted.borrow_mut() = wanted_of(&db, &tags);
+        self.stand_ins.borrow_mut().clear();
+        self.stand_order.borrow_mut().clear();
+    }
+
+    #[cfg(test)]
+    pub(crate) fn preferred(&self) -> Vec<String> {
+        self.follow();
+        self.wanted.borrow().clone()
+    }
+
     fn db(&self) -> std::cell::Ref<'_, Database> {
+        self.follow();
         self.catch_up();
         self.db.borrow()
     }
@@ -571,6 +599,8 @@ impl Fonts {
             late_mono: OnceCell::new(),
             wanted: RefCell::new(wanted),
             pending: RefCell::new(None),
+            follows: false,
+            lang_seen: std::cell::Cell::new(crate::lang::generation()),
             loaded: RefCell::default(),
             stand_ins: RefCell::default(),
             covers: RefCell::default(),
@@ -604,7 +634,7 @@ impl Fonts {
     }
 
     pub(crate) fn generation(&self) -> u32 {
-        sharp::arrivals()
+        sharp::arrivals().wrapping_add(crate::lang::generation() as u32)
     }
 
     fn chosen(&self, style: &Style) -> Option<ID> {
@@ -639,6 +669,7 @@ impl Fonts {
     }
 
     fn stand_in(&self, c: char, style: &Style) -> Option<ID> {
+        self.follow();
         if let Some(found) = self.stand_ins.borrow().get(&(c, style.weight, style.italic)) {
             return *found;
         }

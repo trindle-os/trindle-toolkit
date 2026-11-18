@@ -9,12 +9,17 @@ impl<M: Clone> Ui<M> {
             return;
         }
         self.texts.turn();
-        let lay = Lay { fonts: &self.fonts, texts: &self.texts, scale: self.scale, scrolled: &self.scrolls, splits: Some(&self.splits.places), natural: Default::default(), bento: Default::default(),
-                        named: self.labels == Labels::Always, whole: Default::default(), puzzles: puzzle_names(&self.tree), held: Some(&self.held), stays: Some(&self.stays) };
-        let mut spots = Vec::new();
-        let rect = Rect { x: 0.0, y: 0.0, w: self.size.0 as f32, h: self.size.1 as f32 };
-        lay.place(&self.tree, rect, &mut Vec::new(), &mut spots);
-        let puzzles: Vec<String> = lay.puzzles.into_values().collect();
+        self.tree.out_of_menus();
+        let (mut spots, mut puzzles) = self.lay_out();
+        let squeezed = self.squeezed_rows(&spots);
+        if !squeezed.is_empty() {
+            for path in &squeezed {
+                if let Some(n) = self.tree.at_mut(path) {
+                    n.become_menu();
+                }
+            }
+            (spots, puzzles) = self.lay_out();
+        }
         self.stays.settle();
         self.spots = spots;
         self.laid = Some(now);
@@ -24,6 +29,23 @@ impl<M: Clone> Ui<M> {
         self.settle_edits();
         self.settle_focus();
         self.keep_drop();
+    }
+
+    fn lay_out(&self) -> (Vec<Spot>, Vec<String>) {
+        let lay = Lay { fonts: &self.fonts, texts: &self.texts, scale: self.scale, scrolled: &self.scrolls, splits: Some(&self.splits.places), natural: Default::default(), bento: Default::default(),
+                        named: self.labels == Labels::Always, whole: Default::default(), puzzles: puzzle_names(&self.tree), held: Some(&self.held), stays: Some(&self.stays) };
+        let mut spots = Vec::new();
+        let rect = Rect { x: 0.0, y: 0.0, w: self.size.0 as f32, h: self.size.1 as f32 };
+        lay.place(&self.tree, rect, &mut Vec::new(), &mut spots);
+        (spots, lay.puzzles.into_values().collect())
+    }
+
+    fn squeezed_rows(&self, spots: &[Spot]) -> Vec<Vec<usize>> {
+        let lay = Lay { fonts: &self.fonts, texts: &self.texts, scale: self.scale, scrolled: &self.scrolls, splits: Some(&self.splits.places), natural: Default::default(), bento: Default::default(),
+                        named: false, whole: Default::default(), puzzles: Default::default(), held: Some(&self.held), stays: Some(&self.stays) };
+        spots.iter().filter(|s| {
+            self.tree.at(&s.path).is_some_and(|n| matches!(n.what, What::Choice { arrows: None, .. }) && s.rect.w + 0.5 < lay.measure(n, f32::MAX / 4.0).0)
+        }).map(|s| s.path.clone()).collect()
     }
 
     fn forget_what_went(&mut self) {

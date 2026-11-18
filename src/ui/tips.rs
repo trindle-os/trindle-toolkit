@@ -96,6 +96,9 @@ impl<M: Clone> Ui<M> {
             return self.eye_name(id).map(str::to_string);
         }
         let node = self.node(id)?;
+        if node.hushed {
+            return None;
+        }
         if let (Some(i), Some(crate::role::Role::Toolbar { tools, .. })) = (self.tool_at(id), node.says.as_deref().and_then(|s| s.role.as_ref())) {
             return tools.get(i).map(|t| t.0.clone());
         }

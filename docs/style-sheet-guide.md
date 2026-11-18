@@ -1,6 +1,6 @@
-# The style sheet, for an AI writing one
+# The style sheet guide
 
-This file is for an AI (or a person) asked to write a Trindle theme or a person's own style sheet. It lists every key the sheet has, what each one takes, Trindle's own value and what it changes, then gives the plain rules to follow and a full worked example. Follow it exactly: a value the sheet cannot take is passed over and Trindle's own is used in its place.
+This file is for anyone, a person or a program, asked to write a Trindle theme or a person's own style sheet. It lists every key the sheet has, what each one takes, Trindle's own value and what it changes, then gives the plain rules to follow and a full worked example. Follow it exactly: a value the sheet cannot take is passed over and Trindle's own is used in its place.
 
 The keys here are read from `share/style.css`, Trindle's own sheet, which is built into the toolkit. A test holds this file to it, so every key the sheet has is listed below.
 
@@ -217,7 +217,7 @@ Room between cards; between any other two things; round the page; inside a card.
 | `--trindle-page-padding` | `24` | a number, 8 to 48 |
 | `--trindle-card-padding` | `18` | a number, 8 to 40 |
 
-The gap scale: the fixed room the parts keep between and round their own pieces. Here each is a number of points; any other sheet names a step instead (none, tiny, small, medium, roomy, large, huge), which is the number given here. See docs/style-sheet-for-ai.md.
+The gap scale: the fixed room the parts keep between and round their own pieces. Here each is a number of points; any other sheet names a step instead (none, tiny, small, medium, roomy, large, huge), which is the number given here. See the style sheet guide in Trindle Help.
 
 | Key | Trindle's own | Takes | What it changes |
 | --- | --- | --- | --- |

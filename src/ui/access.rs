@@ -159,6 +159,8 @@ impl<M: Clone> Ui<M> {
         window.set_label(title);
         window.set_bounds(bounds(Rect { x: 0.0, y: 0.0, w: self.size.0 as f32, h: self.size.1 as f32 }));
         let mut told = Told::default();
+        self.told_shares.borrow_mut().clear();
+        self.told_at.set(Some(std::time::Instant::now()));
         for s in &self.spots {
             self.tell_spot(&mut told, s);
         }
@@ -189,6 +191,11 @@ impl<M: Clone> Ui<M> {
         tree.toolkit_name = Some("Trindle Toolkit".into());
         tree.toolkit_version = Some(env!("CARGO_PKG_VERSION").into());
         TreeUpdate { nodes, tree: Some(tree), tree_id: TreeId::ROOT, focus: self.access_focus() }
+    }
+
+    pub(crate) fn figures_changed(&self, now: std::time::Instant) -> bool {
+        self.told_at.get().is_some_and(|t| now.duration_since(t) >= std::time::Duration::from_secs(1))
+            && self.told_shares.borrow().iter().any(|(share, told)| share.get() != *told)
     }
 
     pub fn act(&mut self, req: &ActionRequest) -> Reply<M> {

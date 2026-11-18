@@ -2,7 +2,7 @@
 
 `ring(share, size)` is a ring that fills clockwise from the top as `share` goes from 0 to 1, for a job whose end can be guessed. `.tone(..)` colours it: `Tone::Accent` for something the person asked for that is going ahead, `Tone::Problem` for a failure. A tone stays when the ring is full.
 
-`tiles::standard_ring(share, across)` is the thicker ring with round ends for downloads, installs and an amount of a limit, with the percentage on its left. `standard_ring_with(share, figure, across)` puts your own figure there, such as "4 of 5", or none. With `None` as the share, the standard ring turns while the end cannot be guessed (a picture shows one frame of that).
+`tiles::standard_ring(share, across)` is the thicker ring with round ends for downloads, installs and an amount of a limit, with the percentage on its left. `standard_ring_with(share, figure, across)` puts your own figure there, such as "4 of 5", or none. With `None` as the share, the standard ring turns while the end cannot be guessed (a picture shows one frame of that); it is an alive drawing, so it turns with no rebuild of the view. For a figure that changes often, keep a `tiles::RingShare`, build the ring with `standard_ring_shared(&share, across)` and call `share.set(Some(v))` as the figure comes in: the ring repaints alone. Its words, if any, stay in your view.
 
 ![Three rings, then a standard ring at 64 per cent and one marked 4 of 5](../images/widgets/ring.png)
 

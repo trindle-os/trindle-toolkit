@@ -151,7 +151,8 @@ pub enum What<M> {
              drop_on: Option<Box<dyn Fn(usize) -> bool>>,
              middle: Option<Box<dyn Fn(usize) -> M>>,
              arrows: Option<Arrows<M>> },
-    Dropdown { options: Vec<String>, chosen: Option<usize>, tip: String, choose: Box<dyn Fn(usize) -> M> },
+    Dropdown { options: Vec<String>, chosen: Option<usize>, tip: String, choose: Box<dyn Fn(usize) -> M>,
+               strip: Option<Box<What<M>>> },
     Scroll(Box<Node<M>>),
     ScrollX(Box<Node<M>>),
     List { rows: Vec<Item>, chosen: Option<usize>, choose: Box<dyn Fn(usize) -> M>, open: Option<Box<dyn Fn(usize) -> M>>, row: f32, many: Option<Many<M>>,
@@ -431,6 +432,7 @@ pub struct Node<M> {
     pub context: Option<Box<dyn Fn() -> Vec<MenuRow<M>>>>,
     pub round: Option<(f32, f32)>,
     pub leads: Option<String>,
+    pub hushed: bool,
     pub why: Option<String>,
     pub whole: Option<String>,
     pub own_labels: bool,
@@ -522,6 +524,7 @@ pub struct Says {
     pub alert: bool,
     pub busy: bool,
     pub progress: Option<Option<f32>>,
+    pub following: Option<crate::tiles::RingShare>,
     pub reading: Option<Reading>,
     pub menu: Option<Vec<SaidRow>>,
     pub table: Option<SaidTable>,
@@ -575,7 +578,7 @@ pub struct Span {
 const SLIDE_ROOM: f32 = 100_000.0;
 
 fn node<M>(what: What<M>, width: Length) -> Node<M> {
-    Node { what, width, height: Length::Shrink, key: None, escape: None, first: false, grab: 0, off: false, flat: false, chip: false, snug: false, opacity: 1.0, lit: 0.0, cut: 0, keep_lines: 0, seek: None, nudge: None, glow: 0, sunk: false, filled: false, tint: 0.0, beside: false, stacks: false, wraps: false, twice: false, own_act: None, side: false, area: None, floats: false, span: None, band: false, outside: None, current: false, claims: None, context: None, round: None, leads: None, why: None, whole: None, own_labels: false, quiet: false, when_armed: None, kept: None, says: None }
+    Node { what, width, height: Length::Shrink, key: None, escape: None, first: false, grab: 0, off: false, flat: false, chip: false, snug: false, opacity: 1.0, lit: 0.0, cut: 0, keep_lines: 0, seek: None, nudge: None, glow: 0, sunk: false, filled: false, tint: 0.0, beside: false, stacks: false, wraps: false, twice: false, own_act: None, side: false, area: None, floats: false, span: None, band: false, outside: None, current: false, claims: None, context: None, round: None, leads: None, hushed: false, why: None, whole: None, own_labels: false, quiet: false, when_armed: None, kept: None, says: None }
 }
 
 pub fn column<M>(items: Vec<Node<M>>) -> Node<M> {
@@ -996,7 +999,7 @@ pub(crate) const CHEVRON_GAP: f32 = 8.0;
 
 pub fn dropdown<M>(options: Vec<String>, chosen: Option<usize>, tip: impl Into<String>, choose: impl Fn(usize) -> M + 'static) -> Node<M> {
     let chosen = chosen.filter(|&i| i < options.len());
-    node(What::Dropdown { options, chosen, tip: tip.into(), choose: Box::new(choose) }, Length::Shrink)
+    node(What::Dropdown { options, chosen, tip: tip.into(), choose: Box::new(choose), strip: None }, Length::Shrink)
 }
 
 pub fn is_short(options: &[String]) -> bool {

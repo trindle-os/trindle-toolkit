@@ -240,3 +240,23 @@ fn a_made_up_press_cannot_arm_a_button_of_an_act_only_the_person_may_do() {
     assert_eq!(click(&mut ui, 7), vec![Msg::Gone]);
     assert!(!ui.is_armed("off"));
 }
+
+#[test]
+fn a_hushed_button_has_no_label_but_keeps_its_name() {
+    let tree: Node<Msg> = row(vec![button("dialog-information-symbolic", "About Wi-Fi").hushed().on_press(Msg::Go).key("i")]);
+    let mut ui = Ui::new(tree, Theme::new(false, "#fbc711"));
+    ui.size = (400, 200);
+    ui.settle();
+    assert_eq!(ui.label_of("i"), None);
+    assert_eq!(ui.node("i").unwrap().buttons()[0].0, "About Wi-Fi");
+}
+
+#[test]
+fn choosers_in_a_row_are_hushed_and_round_buttons_are_not() {
+    let tree: Node<Msg> = row(vec![switch(true, "Wi-Fi", Msg::On).key("s"), button("x", "Save").on_press(Msg::Go).key("b")]).choosers_hushed();
+    let mut ui = Ui::new(tree, Theme::new(false, "#fbc711"));
+    ui.size = (400, 200);
+    ui.settle();
+    assert_eq!(ui.label_of("s"), None);
+    assert_eq!(ui.label_of("b").as_deref(), Some("Save"));
+}

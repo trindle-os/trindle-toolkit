@@ -1,3 +1,9 @@
+rust-trindle-toolkit (0.9.1~beta.4-1) UNRELEASED; urgency=medium
+
+  * Beta 4: GPU start tried in a child process, American English words, style sheet guide renamed.
+
+ -- Trindle <toolkit@trindle.org>  Sun, 15 Nov 2026 12:00:00 +0000
+
 rust-trindle-toolkit (0.9.0~beta.1-1) UNRELEASED; urgency=medium
 
   * First package of the Trindle Toolkit as its own source package.

@@ -135,14 +135,14 @@ mod tests {
     fn a_number_where_a_step_is_asked_is_named_once_with_its_steps_and_the_guide() {
         let said = lint(":root {\n  --trindle-gap-small: 5;\n  --trindle-board-lane: 75px;\n  --trindle-gap-large: huge;\n}\n");
         assert_eq!(said, vec![
-            "Line 2: --trindle-gap-small can only be one of these: none, tiny, small, medium, roomy, large, huge. Trindle ignores any other value. See docs/style-sheet-for-ai.md.",
-            "Line 3: --trindle-board-lane can only be one of these: smaller, small, normal, large, larger. Trindle ignores any other value. See docs/style-sheet-for-ai.md.",
+            "Line 2: --trindle-gap-small can only be one of these: none, tiny, small, medium, roomy, large, huge. Trindle ignores any other value. See the style sheet guide in Trindle Help.",
+            "Line 3: --trindle-board-lane can only be one of these: smaller, small, normal, large, larger. Trindle ignores any other value. See the style sheet guide in Trindle Help.",
         ]);
-        assert!(super::super::check(":root { --trindle-gap-small: 5; }").unwrap_err().why.contains("docs/style-sheet-for-ai.md"));
+        assert!(super::super::check(":root { --trindle-gap-small: 5; }").unwrap_err().why.contains("the style sheet guide in Trindle Help"));
         assert!(super::super::check(":root { --trindle-gap-small: tiny; --trindle-board-lane: larger; }").is_ok());
     }
 
-    const GUIDE: &str = include_str!("../../docs/style-sheet-for-ai.md");
+    const GUIDE: &str = include_str!("../../docs/style-sheet-guide.md");
 
     #[test]
     fn the_guide_lists_every_key_with_its_kind_and_its_example_is_clean() {

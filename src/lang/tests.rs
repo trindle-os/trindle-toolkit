@@ -718,7 +718,7 @@ fn every_language_has_the_month_names_used_inside_a_date() {
     let mut seen = 0;
     for entry in std::fs::read_dir(&root).unwrap() {
         let dir = entry.unwrap().path();
-        if !dir.is_dir() || dir.file_name().is_some_and(|n| n == "en") {
+        if !dir.is_dir() || dir.file_name().is_some_and(|n| n == "en" || n == "en-US") {
             continue;
         }
         let keys = parse(&std::fs::read_to_string(dir.join("toolkit.ftl")).unwrap()).order;
@@ -735,4 +735,93 @@ fn every_language_has_the_month_names_used_inside_a_date() {
 fn the_tests_read_the_built_in_english_whatever_the_machine_has_or_says() {
     assert_eq!(chosen_tag(), "en");
     assert_eq!(t_with("kit-spin-less", &[("what", Arg::from("x"))]), "Decrease x");
+}
+
+#[test]
+fn tests_of_programs_built_with_the_testing_feature_read_the_built_in_english_alone() {
+    assert!(super::built_in_only());
+}
+
+const BRITISH_STARTS: [&str; 17] = ["colour", "licence", "grey", "favourite", "centre", "aeroplane", "cancelled", "catalogue", "dialogue", "behaviour",
+                                    "organis", "recognis", "minimis", "maximis", "customis", "initialis", "synchronis"];
+const BRITISH_WORDS: [&str; 3] = ["bin", "tick", "ticks"];
+
+fn message_words(dir: &str) -> std::collections::BTreeMap<String, String> {
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("share/lang").join(dir);
+    let mut all = std::collections::BTreeMap::new();
+    for (_, text) in folder_files(&root) {
+        let mut key = None;
+        for line in text.lines() {
+            if let Some((k, v)) = line.split_once('=').filter(|(k, _)| !k.is_empty() && !k.starts_with(char::is_whitespace) && !k.starts_with('#')) {
+                key = Some(k.trim().to_string());
+                all.insert(k.trim().to_string(), v.to_string());
+            } else if let (Some(k), true) = (&key, line.starts_with(char::is_whitespace)) {
+                all.get_mut(k).unwrap().push_str(&format!("\n{line}"));
+            }
+        }
+    }
+    all.values_mut().for_each(|v| {
+        let mut out = String::new();
+        let mut rest = v.as_str();
+        while let Some(i) = rest.find('$') {
+            out.push_str(&rest[..i]);
+            let tail = &rest[i + 1..];
+            rest = &tail[tail.find(|c: char| !(c.is_alphanumeric() || c == '-' || c == '_')).unwrap_or(tail.len())..];
+        }
+        out.push_str(rest);
+        *v = out;
+    });
+    all
+}
+
+fn british(text: &str) -> Option<String> {
+    let low = text.to_lowercase();
+    low.split(|c: char| !c.is_alphabetic()).find(|w| BRITISH_STARTS.iter().any(|b| w.starts_with(b)) || BRITISH_WORDS.contains(w)).map(str::to_string)
+}
+
+#[test]
+fn the_american_folder_has_no_british_form_and_only_keys_english_has() {
+    let (en, us) = (message_words("en"), message_words("en-US"));
+    assert!(!us.is_empty(), "the American folder holds lines");
+    for (key, words) in &us {
+        assert!(en.contains_key(key), "en-US has {key}, which en does not");
+        assert!(british(words).is_none(), "en-US {key} has the British form {:?}", british(words));
+        assert_ne!(words, &en[key], "en-US {key} is the same as English, so it need not be there");
+    }
+}
+
+#[test]
+fn every_english_line_with_a_british_form_has_an_american_line() {
+    let (en, us) = (message_words("en"), message_words("en-US"));
+    let missing: Vec<_> = en.iter().filter(|(k, w)| british(w).is_some() && !us.contains_key(*k)).map(|(k, _)| k.as_str()).collect();
+    assert!(missing.is_empty(), "English lines with a British form and no en-US line: {missing:?}");
+}
+
+#[test]
+fn the_british_check_sees_the_forms_and_leaves_ordinary_words() {
+    assert_eq!(british("Highlight colour").as_deref(), Some("colour"));
+    assert_eq!(british("Minimise").as_deref(), Some("minimise"));
+    assert_eq!(british("Empty the bin").as_deref(), Some("bin"));
+    assert!(british("Raise the noise, otherwise promise").is_none());
+}
+
+#[test]
+fn switching_the_language_reaches_every_thread_and_keeps_old_words_valid() {
+    let words = |tag: &str, key: &str, text: &str| {
+        let mut b = Bundle::from_files(tag, &[]);
+        b.fill_from(Bundle::from_text(tag, &format!("{key} = {text}\n")));
+        Catalogue::new(b, english())
+    };
+    let current = Current::new();
+    let first = current.get(|| words("en", "kit-progress", "Progress"));
+    assert_eq!(first.plain("kit-progress"), "Progress");
+    let before = first.plain("kit-progress");
+    current.set(words("fr", "kit-progress", "Progression"));
+    let seen = std::thread::scope(|s| s.spawn(|| (current.get(|| unreachable!()).chosen.lang.clone(), current.get(|| unreachable!()).plain("kit-progress"))).join().unwrap());
+    assert_eq!(seen, ("fr".to_string(), "Progression"), "another thread reads the new words");
+    current.set(words("ar", "kit-progress", "التقدم"));
+    assert_eq!(current.get(|| unreachable!()).chosen.lang, "ar");
+    assert_eq!(before, "Progress", "words from the old list are still readable");
+    current.clear();
+    assert_eq!(current.get(|| words("en", "kit-progress", "Progress")).chosen.lang, "en", "reset goes back to the first words");
 }

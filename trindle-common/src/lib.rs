@@ -6,3 +6,4 @@ pub mod ini;
 pub mod notify;
 mod sys;
 pub mod wav;
+pub mod wifi;

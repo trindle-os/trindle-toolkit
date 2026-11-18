@@ -71,6 +71,14 @@ impl<M: Clone> Ui<M> {
     }
 
     pub(super) fn spinning(&self) -> bool {
-        self.moving && self.spots.iter().any(|s| matches!(self.tree.at(&s.path).map(|n| &n.what), Some(What::Spinner { .. })))
+        self.moving && self.spots.iter().any(|s| matches!(self.tree.at(&s.path), Some(n) if turns(n)))
+    }
+}
+
+pub(super) fn turns<M>(node: &Node<M>) -> bool {
+    match &node.what {
+        What::Spinner { .. } | What::Drawing { alive: true, .. } => true,
+        What::Button { working: Some(_), .. } => node.says.as_deref().is_some_and(|s| s.following.is_some()),
+        _ => false,
     }
 }
