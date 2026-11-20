@@ -137,9 +137,10 @@ impl Lay<'_> {
             What::Entry { .. } => (self.px(theme::ENTRY_MIN_WIDTH), self.px(theme::sheet().entry_height)),
             What::List { rows, row, .. } => (self.px(theme::ENTRY_MIN_WIDTH), self.px(*row) * rows.len() as f32),
             What::Dropdown { options, chosen, .. } => {
-                let shown = chosen.and_then(|i| options.get(i)).map_or(nothing_chosen(), String::as_str);
-                let l = self.texts.get(self.fonts, shown, &Words::Plain.style(self.scale), None);
-                let wide = l.width.ceil() + 2.0 * self.px(theme::sheet().entry_padding) + self.px(CHEVRON_GAP) + self.px(CHEVRON);
+                let style = Words::Plain.style(self.scale);
+                let widest = options.iter().map(String::as_str).chain(std::iter::once(nothing_chosen()).filter(|_| chosen.is_none()))
+                    .map(|o| self.texts.get(self.fonts, o, &style, None).width).fold(0.0, f32::max);
+                let wide = widest.ceil() + 2.0 * self.px(theme::sheet().entry_padding) + self.px(CHEVRON_GAP) + self.px(CHEVRON);
                 (wide.max(self.px(theme::ENTRY_MIN_WIDTH)), self.px(theme::sheet().dropdown_height))
             }
             What::Choice { options, arrows, .. } => ((self.pills(options, arrows.as_ref().map(|a| a.subs.as_slice())).iter().sum::<f32>() + 2.0 * self.px(theme::sheet().tabs_padding)).min(max_w.max(0.0)),

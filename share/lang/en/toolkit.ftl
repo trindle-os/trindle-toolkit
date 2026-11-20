@@ -142,7 +142,7 @@ kit-theme-not-colour = Trindle can't read --{ $name } as a colour.
 kit-theme-not-number = Trindle can't read --{ $name } as a number.
 # Fault in a theme file the person is trying: a setting that should be a shadow is not one Trindle can read.
 kit-theme-not-shadow = Trindle can't read --{ $name } as a shadow.
-# Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the file that explains them.
+# Fault in a theme or style sheet: a setting that takes only named steps was given something else. $steps is the list of steps, $guide the name of the guide that explains them.
 kit-theme-not-step = --{ $name } can only be one of these: { $steps }. Trindle ignores any other value. See { $guide }.
 # Fault in a theme file the person is trying: nothing in it is a setting Trindle knows.
 kit-theme-nothing-known = Trindle doesn't recognise any settings in this file, so nothing would change.

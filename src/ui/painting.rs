@@ -151,7 +151,7 @@ impl<M: Clone> Ui<M> {
                     w::put_frame(canvas, spot.rect, frames, true);
                     done.push(spot.rect);
                 }
-                What::Spinner { .. } | What::Drawing { alive: true, .. } => {
+                _ if super::timing::turns(node) => {
                     let whole = Rect { x: 0.0, y: 0.0, w: canvas.width() as f32, h: canvas.height() as f32 };
                     let seen = spot.clip.map_or(spot.rect, |c| c.intersect(&spot.rect)).intersect(&whole);
                     let (x, y) = (seen.x.floor(), seen.y.floor());

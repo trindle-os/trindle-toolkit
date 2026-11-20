@@ -43,3 +43,5 @@ kit-notify-bad-arguments = 이 호출에는 올바르지 않은 인수입니다.
 kit-once-raise-only = 여기서는 Raise만 지원됩니다
 kit-print-too-long = 문서가 200쪽보다 깁니다
 kit-print-no-room = 페이지를 그릴 메모리가 부족합니다
+
+kit-bus-bad-path = 이 객체 경로는 올바르지 않아요.

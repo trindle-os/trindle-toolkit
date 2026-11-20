@@ -206,6 +206,9 @@ pub(super) fn wake_later<A: App + 'static>(events: &Loop, held: &Rc<RefCell<Held
             h.wake = None;
             let (turning, before) = (h.ui.only_turns(), h.ui.stands());
             let redraw = h.ui.tick(Instant::now());
+            if h.ui.figures_changed(Instant::now()) {
+                h.tell();
+            }
             (redraw, turning && h.ui.only_turns() && h.ui.stands() == before)
         };
         wake_later(&ev, &held, &window);

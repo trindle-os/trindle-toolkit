@@ -64,3 +64,6 @@ kit-fonts-sample = いろはにほへと ちりぬるを わかよたれそ
 kit-fonts-sample-tip = { $family }の{ $words }
 kit-fonts-use = このフォントを使う
 kit-fonts-choose-first = 先にフォントを選んでください。
+
+# What the palette's list of matching actions is called; the screen reader says it.
+kit-palette-list = 一致する操作

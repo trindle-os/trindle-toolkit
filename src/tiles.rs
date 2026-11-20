@@ -294,26 +294,64 @@ pub fn standard_ring<M>(share: Option<f32>, across: f32) -> Node<M> {
 }
 
 pub fn standard_ring_with<M>(share: Option<f32>, figure: Option<String>, across: f32) -> Node<M> {
-    let ring = drawing((across, across), "", move |canvas, pen| {
-        let mut s = Sketch::fit(canvas, pen, (84.0, 84.0));
-        let track = s.track();
-        s.ring((42.0, 42.0), 34.0, 15.0, track);
-        let hl = s.highlight();
-        match share {
-            Some(v) => s.arc((42.0, 42.0), 34.0, 15.0, 0.0, v, hl),
-            None => {
-                static START: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
-                const TURN_MS: u128 = 1200;
-                let from = if super::motion::reduced() { 0.0 } else { (START.get_or_init(std::time::Instant::now).elapsed().as_millis() % TURN_MS) as f32 / TURN_MS as f32 };
-                s.arc((42.0, 42.0), 34.0, 15.0, from, 0.3, hl);
-            }
-        }
-    })
+    let ring = drawing((across, across), "", move |canvas, pen| ring_paint(canvas, pen, share))
     .progress(share)
     .called(crate::t!("kit-progress"));
+    let ring = if share.is_none() && !super::motion::reduced() { ring.alive() } else { ring };
     match figure {
         Some(f) => row(vec![super::widget::title(f), ring]).gap(crate::theme::gaps().roomy).centred(),
         None => ring,
+    }
+}
+
+#[derive(Clone, Default, Debug)]
+pub struct RingShare(std::rc::Rc<std::cell::Cell<Option<f32>>>);
+
+impl PartialEq for RingShare {
+    fn eq(&self, other: &Self) -> bool {
+        std::rc::Rc::ptr_eq(&self.0, &other.0)
+    }
+}
+
+impl RingShare {
+    pub fn new(share: Option<f32>) -> Self {
+        Self(std::rc::Rc::new(std::cell::Cell::new(share.map(|v| v.clamp(0.0, 1.0)))))
+    }
+
+    pub fn get(&self) -> Option<f32> {
+        self.0.get()
+    }
+
+    pub fn set(&self, share: Option<f32>) -> bool {
+        let share = share.filter(|v| !v.is_nan()).map(|v| v.clamp(0.0, 1.0));
+        let changed = self.0.get() != share;
+        self.0.set(share);
+        changed
+    }
+}
+
+pub fn standard_ring_shared<M>(share: &RingShare, across: f32) -> Node<M> {
+    let (now, kept, share) = (share.get(), share.clone(), share.clone());
+    drawing((across, across), "", move |canvas, pen| ring_paint(canvas, pen, share.get()))
+        .alive()
+        .progress(now)
+        .following(&kept)
+        .called(crate::t!("kit-progress"))
+}
+
+fn ring_paint(canvas: &mut PixmapMut, pen: &Pen, share: Option<f32>) {
+    let mut s = Sketch::fit(canvas, pen, (84.0, 84.0));
+    let track = s.track();
+    s.ring((42.0, 42.0), 34.0, 15.0, track);
+    let hl = s.highlight();
+    match share {
+        Some(v) => s.arc((42.0, 42.0), 34.0, 15.0, 0.0, v, hl),
+        None => {
+            static START: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
+            const TURN_MS: u128 = 1200;
+            let from = if super::motion::reduced() { 0.0 } else { (START.get_or_init(std::time::Instant::now).elapsed().as_millis() % TURN_MS) as f32 / TURN_MS as f32 };
+            s.arc((42.0, 42.0), 34.0, 15.0, from, 0.3, hl);
+        }
     }
 }
 
@@ -440,5 +478,17 @@ mod tests {
         assert!(fill_colour(1.0, false).is_none());
         assert!(fill_colour(1.0, true).is_some());
         assert!(fill_colour(0.5, true).is_none());
+    }
+
+    #[test]
+    fn a_shared_figure_is_clamped_and_says_whether_it_changed() {
+        let s = RingShare::new(Some(2.0));
+        assert_eq!(s.get(), Some(1.0));
+        assert!(!s.set(Some(1.0)));
+        assert!(s.set(Some(-3.0)) && s.get() == Some(0.0));
+        assert!(s.set(Some(f32::NAN)) && s.get().is_none());
+        let other = s.clone();
+        other.set(Some(0.25));
+        assert_eq!(s.get(), Some(0.25), "a clone is another handle on the same figure");
     }
 }

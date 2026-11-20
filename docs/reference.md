@@ -47,7 +47,7 @@ All are functions in `widget`, and each returns a `Node<M>` where `M` is your `M
 | `switch(on, tip, change)` | An on/off switch |
 | `slider(value, min, max, step, tip, change)` | A slider |
 | `entry(text, tip, change)` | A one-line text box; `.on_submit(msg)` for Enter, `.secret()` for a password, `.purpose(input::Purpose::Phone)` (or `Digits`, `Number`, `Address`, `Email`, `Name`, `Date`, `Time`, `Pin`) so an on-screen keyboard shows the right keys |
-| `choice(options, chosen, tip, choose)` | A strip of a few short answers, one chosen |
+| `choice(options, chosen, tip, choose)` | A strip of a few short answers, one chosen; given less room than its answers need it is laid out as a dropdown |
 | `dropdown(options, chosen, tip, choose)` | A closed box that opens a list of answers |
 | `one_of(options, chosen, tip, choose)` | `choice` or `dropdown`, whichever suits the answers |
 | `list(rows, chosen, choose)` | Rows to choose one of, built with `item(text)`; give it a name with `.called(..)` (a test build warns while painting a list with none; `Ui::unnamed_lists`). `.on_reorder(f)` lets rows be dragged to a new place; `.on_move_in(f)` lets rows be dragged in from another list of the window that lets its rows be dragged, and `f` is given that list's key, its row and the gap here (give the keyboard a menu row or button that does the same). With `.many(picked, pick)` several can be picked, and a band dragged across the list picks every row it crosses. The band begins only where it cannot be taken for a row: in the room below the last row (give the list a height to have some), or anywhere on it with Ctrl held, when it adds to what was picked. A plain press on a row stays the row's own (choose it, or drag it with `on_reorder` or out to another program); Ctrl and a click that does not move still picks or drops one row |
@@ -86,6 +86,11 @@ All are functions in `widget`, and each returns a `Node<M>` where `M` is your `M
 | `tiles::empty_picture(icon, sentence, next)`, `tiles::skeleton(lines)` | An empty state with a large quiet icon over one sentence and the one next step; grey bars for lines that are still loading (still, so no reduce-motion setting is needed) |
 | `tiles::empty_state(sentence, next)`, `tiles::loading_state(height)`, `tiles::error_state(words, retry)` | What a card shows with nothing yet (a sentence and the one next step), while it loads (the standard ring, the height kept so nothing jumps), and when it could not be read (red words and the button that tries again) |
 | `tiles::standard_ring(share, across)`, `standard_ring_with(share, figure, across)` | The ring for a download or an amount of a limit: thick, round ends, the percentage on its left when known; `None` for the empty track |
+| `tiles::RingShare`, `tiles::standard_ring_shared(&share, across)` | A standard ring (no figure in words) that reads `share.set(Some(0.4))` as it is painted, so a new figure repaints the ring alone with no rebuild of the view; the screen reader hears the current figure, told again at most once a second (`Node::following(&share)`) |
+| `Node::working_following(&share, tone)` | A round button's working line following a `tiles::RingShare`: repainted alone, and the screen reader hears the figure as its description at most once a second |
+| `lang::switch_to(&tags)` | Changes the language in use, on every thread at once; build the window's view again afterwards (`Shown::change(\|_\| {})`) so it shows the new words |
+| `lang::generation()` | Goes up by one on every `lang::switch_to`, also to the same tags; key caches on it |
+| `lang::in_use()` | The tags last switched to, else `choice()`; `Fonts::new()` follows it |
 | `tiles::fill_bar(share, tip)` | How full something is, across a card, turning to the busy or bad colour only when nearly full; the same size with no share |
 | `tiles::time_pie(share, across, colours)` | A solid pie filling clockwise from the top, for time passing or left |
 | `tiles::tile_head(icon, name, end)` | The top of a card: its icon in a grey circle, its name, then anything beside it such as an i |

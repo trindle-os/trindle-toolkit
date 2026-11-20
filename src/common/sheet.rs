@@ -278,7 +278,7 @@ pub enum Step {
 pub const GAPS: [&str; 7] = ["none", "tiny", "small", "medium", "roomy", "large", "huge"];
 pub const SIZES: [(&str, f32); 5] = [("smaller", 0.75), ("small", 0.875), ("normal", 1.0), ("large", 1.25), ("larger", 1.5)];
 pub const UNIT: f32 = 2.0;
-pub const GUIDE: &str = "docs/style-sheet-for-ai.md";
+pub const GUIDE: &str = "the style sheet guide in Trindle Help";
 
 pub fn step_kind(name: &str) -> Option<Step> {
     static KINDS: std::sync::OnceLock<HashMap<String, Step>> = std::sync::OnceLock::new();

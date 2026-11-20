@@ -359,6 +359,41 @@ fn a_drawing_can_be_a_job_with_progress() {
 }
 
 #[test]
+fn a_shared_ring_is_read_at_its_current_figure_and_told_once_a_second() {
+    use crate::tiles::{standard_ring_shared, RingShare};
+    use std::time::{Duration, Instant};
+    let share = RingShare::new(Some(0.1));
+    let (mut ui, t) = told(column(vec![standard_ring_shared::<Msg>(&share, 40.0).key("ring")]));
+    assert_eq!(part(&t, "ring", Piece::Widget).numeric_value(), Some(0.1f32 as f64));
+    let now = Instant::now();
+    assert!(!ui.figures_changed(now + Duration::from_secs(2)), "nothing changed");
+    share.set(Some(0.6));
+    assert!(!ui.figures_changed(now), "a change is not told within a second of the last telling");
+    assert!(ui.figures_changed(now + Duration::from_secs(2)), "a change is told after a second");
+    let t = ui.access("");
+    let ring = part(&t, "ring", Piece::Widget);
+    assert_eq!(ring.numeric_value(), Some(0.6f32 as f64), "the figure now, not the one the view was built with");
+    assert_eq!(ring.value(), Some(&*crate::numbers::percent(0.6f32 as f64, 0)));
+    assert!(!ui.figures_changed(now + Duration::from_secs(4)), "told, so nothing is waiting");
+}
+
+#[test]
+fn a_working_button_following_a_shared_figure_describes_the_current_figure() {
+    use crate::tiles::RingShare;
+    use crate::widget::{button, Tone};
+    use std::time::{Duration, Instant};
+    let share = RingShare::new(Some(0.2));
+    let (mut ui, t) = told(column(vec![button("view-refresh-symbolic", "Look again").working_following(&share, Tone::Calm).key("look")]));
+    assert_eq!(part(&t, "look", Piece::Widget).role(), Role::Button, "it stays a button");
+    assert_eq!(part(&t, "look", Piece::Widget).description(), Some(&*crate::numbers::percent(0.2f32 as f64, 0)));
+    share.set(Some(0.9));
+    assert!(!ui.figures_changed(Instant::now()), "not within a second of the last telling");
+    assert!(ui.figures_changed(Instant::now() + Duration::from_secs(2)));
+    let t = ui.access("");
+    assert_eq!(part(&t, "look", Piece::Widget).description(), Some(&*crate::numbers::percent(0.9f32 as f64, 0)));
+}
+
+#[test]
 fn a_tree_view_tells_its_rows_level_and_which_are_open() {
     use super::super::super::widget::{tree, tree_row};
     let rows = vec![tree_row(item("Documents"), 0).branch(true), tree_row(item("Letters"), 1).branch(false), tree_row(item("Notes"), 1)];

@@ -47,3 +47,16 @@ kit-showcase-large = 크게
 kit-showcase-size = 크기
 kit-showcase-town = 도시
 kit-showcase-in-card = 카드 안의 텍스트
+
+# trindle-lang-check, which lists the words a language still lacks: its help.
+kit-lang-check-usage =
+    사용법: trindle-lang-check [--missing [language]] [folder]
+    폴더 아래의 언어 파일을 검사해요(기본값은 현재 폴더).
+    --missing을 쓰면 각 언어(또는 지정한 언어)에 빠진 문구를 모두 보여 줘요.
+
+# trindle-lang-check: there is no English folder to check against. $folder is where it looked.
+kit-lang-check-no-english = { $folder }에서 share/lang/en 폴더를 찾을 수 없어요.
+
+kit-showcase-town-first = 노스필드
+
+kit-showcase-town-second = 이스트윅

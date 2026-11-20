@@ -89,3 +89,16 @@ kit-showcase-size = サイズ
 kit-showcase-town = 町
 
 kit-showcase-in-card = カード内の文章
+
+# trindle-lang-check, which lists the words a language still lacks: its help.
+kit-lang-check-usage =
+    使い方: trindle-lang-check [--missing [言語]] [フォルダ]
+    フォルダ内の言語ファイルを調べます (省略すると、このフォルダ)。
+    --missing を付けると、各言語 (または指定した言語) に足りないすべての言葉を一覧にします。
+
+# trindle-lang-check: there is no English folder to check against. $folder is where it looked.
+kit-lang-check-no-english = { $folder } に share/lang/en フォルダが見つかりませんでした。
+
+kit-showcase-town-first = Northfield
+
+kit-showcase-town-second = Eastwick

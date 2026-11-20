@@ -30,6 +30,7 @@ pub enum Why {
     NoService,
     ServiceOtherGpu,
     ServiceGone,
+    Crashes,
 }
 
 impl Why {
@@ -46,6 +47,7 @@ impl Why {
             Why::NoService => "no drawing service answers",
             Why::ServiceOtherGpu => "the drawing service draws on another GPU than the compositor's",
             Why::ServiceGone => "the drawing service went away or stopped answering",
+            Why::Crashes => "starting the GPU crashed or hung a trial run, so the processor draws",
         }
     }
 }
@@ -151,6 +153,42 @@ thread_local! {
     static CHOSEN: RefCell<Option<(PathBuf, Result<Rc<Shared>, Why>)>> = const { RefCell::new(None) };
 }
 
+const PROBE_LIMIT: std::time::Duration = std::time::Duration::from_secs(20);
+
+pub(crate) fn start_survives(node: &Path) -> bool {
+    let kept = probe_file(node);
+    start_survives_with(kept.as_deref(), PROBE_LIMIT, || {
+        gbm::open_node(node).and_then(gbm::Device::new).is_some_and(|d| Gpu::on(d).is_some())
+    })
+}
+
+fn probe_file(node: &Path) -> Option<PathBuf> {
+    let boot = std::fs::read_to_string("/proc/sys/kernel/random/boot_id").ok()?;
+    let boot: String = boot.trim().chars().filter(|c| c.is_ascii_hexdigit()).collect();
+    let dir = PathBuf::from(std::env::var_os("XDG_RUNTIME_DIR")?);
+    let node = node.file_name()?.to_string_lossy().chars().filter(|c| c.is_ascii_alphanumeric()).collect::<String>();
+    (!boot.is_empty() && dir.is_absolute()).then(|| dir.join(format!("trindle-gpu-start-{boot}-{node}")))
+}
+
+pub(crate) fn start_survives_with(kept: Option<&Path>, limit: std::time::Duration, trial: impl FnOnce() -> bool) -> bool {
+    use crate::sys::probe::{in_child, Outcome};
+    match kept.and_then(|k| std::fs::read_to_string(k).ok()).as_deref().map(str::trim) {
+        Some("crash") => return false,
+        Some("pass") => return true,
+        _ => {}
+    }
+    let (safe, keep) = match in_child(limit, trial) {
+        Outcome::Passed | Outcome::Refused => (true, Some("pass")),
+        Outcome::Crashed(_) => (false, Some("crash")),
+        Outcome::TimedOut => (false, None),
+        Outcome::NoChild => (true, None),
+    };
+    if let (Some(k), Some(word)) = (kept, keep) {
+        let _ = std::fs::write(k, word);
+    }
+    safe
+}
+
 pub(crate) fn gpu_for(display: &Display) -> Result<Rc<Shared>, Why> {
     let env_gpu = on("TRINDLE_DRAWN_BY_GPU") || on("TRINDLE_DRAWN_BY_SERVICE");
     let asked = !wants_gpu(chosen(), crate::theme::drawn_by_processor(), env_gpu);
@@ -160,9 +198,11 @@ pub(crate) fn gpu_for(display: &Display) -> Result<Rc<Shared>, Why> {
     if let Some(r) = known {
         return r.and_then(|s| if s.lost.get() { Err(Why::Failed) } else { Ok(s) });
     }
-    let r = choose(asked, offered, || node.clone(), gl::libraries, |n| gbm::Device::new(gbm::open_node(n)?),
-                   |d| Gpu::on(d.clone()), Gpu::renderer, gpu::agrees)
-        .map(|(device, gpu)| Rc::new(Shared::new(device, gpu)));
+    let crashes = offered && gl::libraries() && node.as_deref().is_some_and(|n| !start_survives(n));
+    let r = if crashes { Err(Why::Crashes) } else {
+        choose(asked, offered, || node.clone(), gl::libraries, |n| gbm::Device::new(gbm::open_node(n)?),
+               |d| Gpu::on(d.clone()), Gpu::renderer, gpu::agrees)
+    }.map(|(device, gpu)| Rc::new(Shared::new(device, gpu)));
     if let (Err(why), false) = (&r, asked) {
         say(Kind::Processor, || format!("the processor draws: {why:?}"));
     }
@@ -345,6 +385,38 @@ mod soak;
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn kept_file(name: &str) -> PathBuf {
+        let p = std::env::temp_dir().join(format!("trindle-probe-test-{}-{name}", std::process::id()));
+        let _ = std::fs::remove_file(&p);
+        p
+    }
+
+    #[test]
+    fn a_start_that_crashes_is_not_made_here_and_is_remembered() {
+        let k = kept_file("crash");
+        let lim = std::time::Duration::from_secs(5);
+        assert!(!start_survives_with(Some(&k), lim, || std::process::abort()));
+        assert_eq!(std::fs::read_to_string(&k).unwrap(), "crash");
+        assert!(!start_survives_with(Some(&k), lim, || true));
+        let _ = std::fs::remove_file(&k);
+    }
+
+    #[test]
+    fn a_start_that_works_is_remembered_and_one_that_hangs_is_not() {
+        let k = kept_file("pass");
+        let lim = std::time::Duration::from_secs(5);
+        assert!(start_survives_with(Some(&k), lim, || true));
+        assert_eq!(std::fs::read_to_string(&k).unwrap(), "pass");
+        let _ = std::fs::remove_file(&k);
+        assert!(!start_survives_with(Some(&k), std::time::Duration::from_millis(200), || loop { std::thread::sleep(std::time::Duration::from_secs(1)) }));
+        assert!(!k.exists());
+    }
+
+    #[test]
+    fn a_start_with_no_memory_still_runs_the_trial() {
+        assert!(!start_survives_with(None, std::time::Duration::from_secs(5), || std::process::abort()));
+    }
 
     fn with(fail: usize) -> Result<(u8, u8), Why> {
         let ok = |n: usize| n != fail;
@@ -590,7 +662,7 @@ mod tests {
 
     #[test]
     fn every_why_has_words_and_a_name_for_the_startup_line() {
-        let all = [Why::Asked, Why::NoDmabuf, Why::NoLibraries, Why::NoNode, Why::NoContext, Why::Software, Why::SelfTest, Why::Failed, Why::NoService, Why::ServiceOtherGpu, Why::ServiceGone];
+        let all = [Why::Asked, Why::NoDmabuf, Why::NoLibraries, Why::NoNode, Why::NoContext, Why::Software, Why::SelfTest, Why::Failed, Why::NoService, Why::ServiceOtherGpu, Why::ServiceGone, Why::Crashes];
         for w in all {
             assert!(!w.words().is_empty());
             let line = crate::ui::Drawer::Processor(w).line("org.example.App");

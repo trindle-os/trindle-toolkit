@@ -360,3 +360,23 @@ fn a_letter_asked_for_as_an_emoji_is_coloured_though_the_main_font_has_it() {
     assert_eq!(drawn("\u{2764}"), 0, "alone it is a letter of the main font");
     assert!(drawn("\u{2764}\u{fe0f}") > 300);
 }
+
+#[test]
+fn fonts_follow_a_language_switch_and_the_generation_counts_every_switch() {
+    let kept = Fonts::new();
+    let fixed = Fonts::for_language(&[]);
+    assert!(kept.preferred().is_empty());
+    let before = crate::lang::generation();
+    let seen = kept.generation();
+    crate::lang::note_switch(&["ar".to_string()]);
+    assert_eq!(crate::lang::generation(), before + 1);
+    assert_ne!(kept.generation(), seen, "layouts made before are laid out again");
+    assert!(kept.preferred().contains(&"Noto Sans Arabic".to_string()));
+    assert!(fixed.preferred().is_empty(), "fonts made for one language keep it");
+    assert_eq!(crate::lang::in_use(), vec!["ar".to_string()]);
+    crate::lang::note_switch(&["ar".to_string()]);
+    assert_eq!(crate::lang::generation(), before + 2, "the same tags count too");
+    crate::lang::note_switch(&[]);
+    assert!(kept.preferred().is_empty());
+    assert!(Fonts::new().preferred().is_empty());
+}

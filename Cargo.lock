@@ -1384,14 +1384,14 @@ dependencies = [
 
 [[package]]
 name = "trindle-common"
-version = "0.9.0-beta.1"
+version = "0.9.1-beta.4"
 dependencies = [
  "libc",
 ]
 
 [[package]]
 name = "trindle-toolkit"
-version = "0.9.0-beta.1"
+version = "0.9.1-beta.4"
 dependencies = [
  "ab_glyph_rasterizer",
  "accesskit",

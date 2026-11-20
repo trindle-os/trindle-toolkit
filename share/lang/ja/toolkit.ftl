@@ -841,3 +841,9 @@ kit-numerals-latin = 常に 0 から 9
 kit-numerals-native = その言語固有の数字
 kit-date-week-short = 週
 kit-date-week = 第{ $week }週
+
+# Said by a screen reader for a tab that carries a count, such as unread messages: its title, then the count.
+kit-tab-count = { $title }、{ $count }
+
+# What a screen reader calls the list of suggestions under a text box; $name is what the box is called.
+kit-complete-list = { $name } の候補

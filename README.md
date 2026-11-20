@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.9.0--beta.1-fbc711?style=flat-square&labelColor=172640" alt="Version 0.9.0-beta.1" />
+  <img src="https://img.shields.io/badge/version-0.9.1--beta.4-fbc711?style=flat-square&labelColor=172640" alt="Version 0.9.1-beta.4" />
   <img src="https://img.shields.io/badge/licence-GPL--3.0--or--later-7fd99a?style=flat-square&labelColor=172640" alt="Licence GPL-3.0-or-later" />
   <img src="https://img.shields.io/badge/Rust-1.85-5eb6ff?style=flat-square&labelColor=172640" alt="Rust 1.85" />
   <img src="https://img.shields.io/badge/GTK%20and%20Qt-none-c2c2cc?style=flat-square&labelColor=172640" alt="No GTK, no Qt" />
@@ -296,7 +296,7 @@ The toolkit keeps no database. It reads these, and writes nothing of its own:
 | Language files, a folder per language | `~/.config/trindle/lang/`, then `trindle/lang` and `trindle-toolkit/lang` under each data folder |
 | Fonts in your home folder | Read whole into memory by each program when its fonts are first looked for, up to 64 MB a file, because a font written over while mapped would end the program; a larger one stays mapped. A big collection under your home folder costs that memory in every program |
 
-A name the sheet does not have is ignored, a value that cannot be read gives way to the built-in one, and every number is held within the limits written beside it in `share/style.css`, so no sheet can break a layout. A gap or size marked `(gap step)` or `(size step)` there takes only the name of a step, such as `small` or `larger`, never a number. [docs/style-sheet-for-ai.md](docs/style-sheet-for-ai.md) lists every key, what it takes and what it changes, with plain rules and a worked example for an AI (or a person) writing a theme or a sheet of their own. `share/lang/README.md` explains how to add a language.
+A name the sheet does not have is ignored, a value that cannot be read gives way to the built-in one, and every number is held within the limits written beside it in `share/style.css`, so no sheet can break a layout. A gap or size marked `(gap step)` or `(size step)` there takes only the name of a step, such as `small` or `larger`, never a number. [docs/style-sheet-guide.md](docs/style-sheet-guide.md) lists every key, what it takes and what it changes, with plain rules and a worked example for anyone writing a theme or a sheet of their own. `share/lang/README.md` explains how to add a language.
 
 ## Security
 

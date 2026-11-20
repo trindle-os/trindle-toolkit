@@ -8,7 +8,7 @@ Only the latest release is supported. There is no long-term support branch and n
 
 | Version | Supported |
 |---|---|
-| 0.9.0-beta.1 | yes |
+| 0.9.1-beta.4 | yes |
 | anything older | no |
 
 ## Reporting a vulnerability

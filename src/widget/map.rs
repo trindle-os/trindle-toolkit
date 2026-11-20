@@ -52,6 +52,7 @@ impl<M: 'static> Node<M> {
             }),
             round: self.round,
             leads: self.leads,
+            hushed: self.hushed,
             why: self.why,
             whole: self.whole,
             own_labels: self.own_labels,
@@ -120,8 +121,8 @@ fn map_what<M: 'static, N: 'static>(what: &mut What<M>, f: &Rc<dyn Fn(M) -> N>) 
                 super::Arrows { subs, opening: via(opening, f), pick: Box::new(move |i, row| f2(pick(i, row))) as Box<dyn Fn(usize, usize) -> N> }
             }),
         },
-        What::Dropdown { options, chosen, tip, choose } => What::Dropdown {
-            options: std::mem::take(options), chosen: *chosen, tip: std::mem::take(tip), choose: via(replace(choose, never()), f),
+        What::Dropdown { options, chosen, tip, choose, .. } => What::Dropdown {
+            options: std::mem::take(options), chosen: *chosen, tip: std::mem::take(tip), choose: via(replace(choose, never()), f), strip: None,
         },
         What::Scroll(inner) => What::Scroll(boxed(inner, f)),
         What::ScrollX(inner) => What::ScrollX(boxed(inner, f)),
