@@ -52,6 +52,7 @@ impl<M: 'static> Node<M> {
             }),
             round: self.round,
             leads: self.leads,
+            hushed: self.hushed,
             why: self.why,
             whole: self.whole,
             own_labels: self.own_labels,

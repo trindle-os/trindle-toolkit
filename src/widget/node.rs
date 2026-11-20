@@ -619,6 +619,22 @@ impl<M> Node<M> {
         self
     }
 
+    /// Keeps the hover label away, for a part whose look already says what it is; the name read aloud stays.
+    pub fn hushed(mut self) -> Self {
+        self.hushed = true;
+        self
+    }
+
+    /// `hushed`, for every switch, tick box, slider, strip and dropdown inside, whose words sit beside them already.
+    pub fn choosers_hushed(mut self) -> Self {
+        match &mut self.what {
+            What::Switch { .. } | What::Tick { .. } | What::Slider { .. } | What::Choice { .. } | What::Dropdown { .. } => self.hushed = true,
+            What::Row { items, .. } | What::Column { items, .. } => *items = std::mem::take(items).into_iter().map(Node::choosers_hushed).collect(),
+            _ => {}
+        }
+        self
+    }
+
     pub fn spoken(mut self, name: impl Into<String>) -> Self {
         if let What::Entry { spoken, .. } | What::Button { spoken, .. } = &mut self.what {
             *spoken = Some(name.into());

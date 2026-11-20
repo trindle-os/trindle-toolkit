@@ -426,7 +426,8 @@ fn is_menu(ui: &Ui<Msg>) -> Option<bool> {
 #[test]
 fn a_strip_without_the_room_for_its_answers_is_a_dropdown_in_every_language() {
     crate::lang::each::each_language(|tag, long| {
-        let words: Vec<String> = long[..3].to_vec();
+        let words: Vec<String> = long.iter().filter(|w| w.chars().count() <= 60).take(3).cloned().collect();
+        assert_eq!(words.len(), 3, "{tag}: three short enough lines");
         let mut ui = Ui::new(strip_page(&words, 1), Theme::new(false, "#fbc711"));
         ui.size = (4000, 200);
         ui.settle();

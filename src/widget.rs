@@ -432,6 +432,7 @@ pub struct Node<M> {
     pub context: Option<Box<dyn Fn() -> Vec<MenuRow<M>>>>,
     pub round: Option<(f32, f32)>,
     pub leads: Option<String>,
+    pub hushed: bool,
     pub why: Option<String>,
     pub whole: Option<String>,
     pub own_labels: bool,
@@ -577,7 +578,7 @@ pub struct Span {
 const SLIDE_ROOM: f32 = 100_000.0;
 
 fn node<M>(what: What<M>, width: Length) -> Node<M> {
-    Node { what, width, height: Length::Shrink, key: None, escape: None, first: false, grab: 0, off: false, flat: false, chip: false, snug: false, opacity: 1.0, lit: 0.0, cut: 0, keep_lines: 0, seek: None, nudge: None, glow: 0, sunk: false, filled: false, tint: 0.0, beside: false, stacks: false, wraps: false, twice: false, own_act: None, side: false, area: None, floats: false, span: None, band: false, outside: None, current: false, claims: None, context: None, round: None, leads: None, why: None, whole: None, own_labels: false, quiet: false, when_armed: None, kept: None, says: None }
+    Node { what, width, height: Length::Shrink, key: None, escape: None, first: false, grab: 0, off: false, flat: false, chip: false, snug: false, opacity: 1.0, lit: 0.0, cut: 0, keep_lines: 0, seek: None, nudge: None, glow: 0, sunk: false, filled: false, tint: 0.0, beside: false, stacks: false, wraps: false, twice: false, own_act: None, side: false, area: None, floats: false, span: None, band: false, outside: None, current: false, claims: None, context: None, round: None, leads: None, hushed: false, why: None, whole: None, own_labels: false, quiet: false, when_armed: None, kept: None, says: None }
 }
 
 pub fn column<M>(items: Vec<Node<M>>) -> Node<M> {

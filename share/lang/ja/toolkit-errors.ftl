@@ -85,3 +85,5 @@ kit-once-raise-only = ここで使えるのは Raise だけです
 kit-print-too-long = 文書が 200 ページを超えています
 
 kit-print-no-room = ページを描画するためのメモリが足りません
+
+kit-bus-bad-path = このオブジェクトパスは正しくありません。

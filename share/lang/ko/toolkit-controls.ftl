@@ -45,3 +45,6 @@ kit-fonts-sample = 다람쥐 헌 쳇바퀴에 타고파
 kit-fonts-sample-tip = { $family }, { $words }
 kit-fonts-use = 이 글꼴 사용
 kit-fonts-choose-first = 먼저 글꼴을 고르세요.
+
+# What the palette's list of matching actions is called; the screen reader says it.
+kit-palette-list = 일치하는 동작
